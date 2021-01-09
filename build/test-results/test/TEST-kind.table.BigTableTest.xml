@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="kind.table.BigTableTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-01-09T00:12:06" hostname="Michaels-MacBook-Pro-2.local" time="0.877">
+  <properties/>
+  <testcase name="test_1M_addColumn" classname="kind.table.BigTableTest" time="0.877"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
