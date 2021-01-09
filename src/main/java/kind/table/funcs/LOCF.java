@@ -26,13 +26,15 @@ public final class LOCF implements Func<Table> {
 
     @Override
     public Table eval(Table table) {
-
-
         final Table copy = table.copy();
-        final Column column = table.getColumn(this.col);
+        final Column column = copy.getColumn(this.col);
+
+        if (!acceptColumn(column)) {
+            throw new UnsupportedColumnException(column);
+        }
 
         Object priorInstance = null;
-        final List values = table.getValues(this.col);
+        final List values = copy.getValues(this.col);
 
         for (int i = 0; i < values.size(); i++) {
             final Object value = values.get(i);
@@ -45,8 +47,6 @@ public final class LOCF implements Func<Table> {
         }
 
         return copy;
-
-
     }
 
 }

@@ -40,12 +40,14 @@ public class LinearInterpolation implements Func<Table> {
     @Override
     public Table eval(Table table) {
         final Table copy = table.copy();
-        final Column column = table.getColumn(this.col);
+        final Column column = copy.getColumn(this.col);
+        if (!acceptColumn(column)) {
+            throw new UnsupportedColumnException(column);
+        }
 
         Number priorInstance = null;
-
         final List<Integer> unitOfWork = new ArrayList<>();
-        final List<Number> values = table.getValues(this.col);
+        final List<Number> values = copy.getValues(this.col);
 
         for (int i = 0; i < values.size(); i++) {
             final Number value = values.get(i);
@@ -70,9 +72,7 @@ public class LinearInterpolation implements Func<Table> {
 
                         copy.set(e.intValue(), this.col, column.cast(val));
                         mult++;
-
                     }
-
                     unitOfWork.clear();
                 }
                 priorInstance = value;
@@ -80,7 +80,6 @@ public class LinearInterpolation implements Func<Table> {
         }
 
         return copy;
-
 
     }
 

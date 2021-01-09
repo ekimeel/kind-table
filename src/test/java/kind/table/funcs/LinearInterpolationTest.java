@@ -7,7 +7,6 @@ import org.junit.Test;
 
 public class LinearInterpolationTest {
 
-
     @Test
     public void test_eval_withIntegerColumn(){
         final Table table = new Table();
