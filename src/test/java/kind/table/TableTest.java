@@ -5,11 +5,8 @@ import kind.table.cols.InstantColumn;
 import kind.table.cols.IntegerColumn;
 import kind.table.cols.StringColumn;
 import org.junit.Test;
-
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static org.junit.Assert.*;
@@ -208,22 +205,6 @@ public class TableTest {
         assertEquals(3, tableA.getRow(2).size());
     }
 
-    @Test
-    public void test_() {
-
-        final Table tableA = new Table();
-
-        tableA.addColumn(new InstantColumn("timestamp"));
-        tableA.addColumn(new IntegerColumn("value"));
-
-        LocalDate now = LocalDate.now().with(firstDayOfYear());
-
-        for (int i = 0; i < 525600; i++) {
-            tableA.addRow(new Row(now, i));
-            now = now.plus(1, ChronoUnit.MINUTES);
-        }
-
-    }
 
 
 }
