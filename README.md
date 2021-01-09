@@ -1,5 +1,6 @@
 ## Kind Tables
-![Build Status](https://github.com/ekimeel/kind-table/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=main)
+![Build Status](https://github.com/ekimeel/kind-table/workflows/Build/badge.svg?branch=main)
+![Publish Status](https://github.com/ekimeel/kind-table/workflows/Publish/badge.svg?branch=main)
 
 ### Table setup
 
