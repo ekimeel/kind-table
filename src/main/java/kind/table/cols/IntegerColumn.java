@@ -4,6 +4,16 @@ import java.io.Serializable;
 
 public class IntegerColumn extends NumberColumn<Integer> implements Serializable {
 
+    /**
+     * returns a new [[IntegerColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[IntegerColumn]] with the provided name
+     */
+    public static IntegerColumn of(String name) {
+        return new IntegerColumn(name);
+    }
+
     public IntegerColumn(String name) {
         super(name);
     }

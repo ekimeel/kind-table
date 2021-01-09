@@ -1,10 +1,19 @@
 package kind.table.cols;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Date;
 
 public class DateColumn extends Column<Date> implements Serializable {
+
+    /**
+     * returns a new [[DateColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[DateColumn]] with the provided name
+     */
+    public static DateColumn of(String name) {
+        return new DateColumn(name);
+    }
 
     public DateColumn(String name) {
         super(name);

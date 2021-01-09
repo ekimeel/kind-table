@@ -155,4 +155,11 @@ public class Row implements Copyable<Row> {
 
         return copy;
     }
+
+    @Override
+    public String toString() {
+        return "row: {\"index=\"" + index + "\", \"values\"=" + values().size() + " }";
+    }
+
+
 }

@@ -4,6 +4,16 @@ import java.io.Serializable;
 
 public class LongColumn extends NumberColumn<Long> implements Serializable {
 
+    /**
+     * returns a new [[LongColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[LongColumn]] with the provided name
+     */
+    public static LongColumn of(String name) {
+        return new LongColumn(name);
+    }
+
     public LongColumn(String name) {
         super(name);
     }

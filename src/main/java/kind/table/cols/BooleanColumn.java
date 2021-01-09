@@ -4,6 +4,16 @@ import java.io.Serializable;
 
 public class BooleanColumn extends Column<Boolean> implements Serializable {
 
+    /**
+     * returns a new [[BooleanColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[BooleanColumn]] with the provided name
+     */
+    public static BooleanColumn of(String name) {
+        return new BooleanColumn(name);
+    }
+
     public BooleanColumn(String name) {
         super(name);
     }
