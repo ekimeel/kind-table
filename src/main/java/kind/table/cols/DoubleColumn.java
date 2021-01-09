@@ -4,6 +4,16 @@ import java.io.Serializable;
 
 public final class DoubleColumn extends NumberColumn<Double> implements Serializable {
 
+    /**
+     * returns a new [[DoubleColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[DoubleColumn]] with the provided name
+     */
+    public static DoubleColumn of(String name) {
+        return new DoubleColumn(name);
+    }
+
     public DoubleColumn(String name) {
         super(name);
     }

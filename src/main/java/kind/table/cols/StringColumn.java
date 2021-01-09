@@ -4,6 +4,16 @@ import java.io.Serializable;
 
 public class StringColumn extends Column<String> implements Serializable {
 
+    /**
+     * returns a new [[StringColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[StringColumn]] with the provided name
+     */
+    public static StringColumn of(String name) {
+        return new StringColumn(name);
+    }
+
     public StringColumn(String name) {
         super(name);
     }
