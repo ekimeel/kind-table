@@ -1,10 +1,7 @@
 package kind.table.funcs;
 
 import kind.table.*;
-import kind.table.cols.Column;
-import kind.table.cols.DoubleColumn;
-import kind.table.cols.IntegerColumn;
-import kind.table.cols.LongColumn;
+import kind.table.cols.*;
 
 import java.util.OptionalInt;
 
@@ -15,6 +12,11 @@ public final class Max<T extends Number> implements Func<T> {
 
     public Max(int col) {
         this.col = col;
+    }
+
+    @Override
+    public boolean acceptColumn(Column column) {
+        return (column instanceof NumberColumn);
     }
 
     @Override

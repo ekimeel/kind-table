@@ -2,6 +2,9 @@ package kind.table.funcs;
 
 import kind.table.cols.Column;
 import kind.table.Table;
+import kind.table.cols.IntegerColumn;
+import kind.table.cols.NumberColumn;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -27,6 +30,11 @@ public class LinearInterpolation implements Func<Table> {
         this.col = col;
         this.decimalPrecision = decimalPrecision;
         this.roundingMode = roundingMode;
+    }
+
+    @Override
+    public boolean acceptColumn(Column column) {
+        return (column instanceof NumberColumn);
     }
 
     @Override

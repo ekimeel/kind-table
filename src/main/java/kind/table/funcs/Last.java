@@ -14,6 +14,11 @@ public final class Last<T extends Number> implements Func<T> {
     }
 
     @Override
+    public boolean acceptColumn(Column column) {
+        return true;
+    }
+
+    @Override
     public T eval(Table table) {
         this.table = table;
         if (table == null) {

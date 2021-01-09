@@ -4,6 +4,7 @@ import com.google.common.math.Stats;
 import kind.table.*;
 import kind.table.cols.Column;
 import kind.table.cols.DoubleColumn;
+import kind.table.cols.NumberColumn;
 
 import java.util.List;
 
@@ -14,6 +15,11 @@ public final class Mean implements Func<java.lang.Double> {
 
     public Mean(int col) {
         this.col = col;
+    }
+
+    @Override
+    public boolean acceptColumn(Column column) {
+        return (column instanceof NumberColumn);
     }
 
     @Override

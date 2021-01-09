@@ -6,16 +6,11 @@ import kind.table.cols.InstantColumn;
 import kind.table.cols.IntegerColumn;
 import kind.table.cols.StringColumn;
 import org.junit.Test;
-
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
-import java.time.temporal.ChronoUnit;
 import java.util.Locale;
-
-import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 
 public class TableTest {
 

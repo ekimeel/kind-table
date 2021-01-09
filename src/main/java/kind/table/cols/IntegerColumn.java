@@ -2,7 +2,7 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public class IntegerColumn extends Column<Integer> implements Serializable {
+public class IntegerColumn extends NumberColumn<Integer> implements Serializable {
 
     public IntegerColumn(String name) {
         super(name);
