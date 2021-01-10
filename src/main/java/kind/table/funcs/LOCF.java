@@ -27,7 +27,7 @@ public final class LOCF implements Func<Table> {
     @Override
     public Table eval(Table table) {
         final Table copy = table.copy();
-        final Column column = copy.getColumn(this.col);
+        final Column column = copy.getCol(this.col);
 
         if (!acceptColumn(column)) {
             throw new UnsupportedColumnException(column);

@@ -15,7 +15,7 @@ class RowCopier {
         final TableSettings settings = from.getSettings();
 
         if (settings != null && from.getRowCount() > THREAD_MODE) {
-            final List<List<Row>> partitions = Lists.partition(from.rows(),
+            final List<List<Row>> partitions = Lists.partition(from.getRows(),
                     from.getRowCount() / settings.getMaxAllowableThreads());
 
             final ExecutorService executor = Executors.newFixedThreadPool(settings.getMaxAllowableThreads());
@@ -36,7 +36,7 @@ class RowCopier {
                 throw new RuntimeException("InterruptedException", e);
             }
         } else {
-            for (Row row : from.rows()) {
+            for (Row row : from.getRows()) {
                 to.addRow(row.copy());
             }
         }

@@ -1,14 +1,10 @@
 package kind.table;
 
 import kind.table.cols.DoubleColumn;
-import kind.table.cols.InstantColumn;
 import kind.table.cols.IntegerColumn;
 import kind.table.cols.StringColumn;
 import org.junit.Test;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
-import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static org.junit.Assert.*;
 
 public class TableTest {
@@ -170,8 +166,8 @@ public class TableTest {
         assertEquals(tableA.getRowCount(), tableB.getRowCount());
         assertEquals(tableA.getColumnCount(), tableB.getColumnCount());
 
-        assertEquals("Odd", tableB.getColumn(0).getName());
-        assertEquals("Even", tableB.getColumn(1).getName());
+        assertEquals("Odd", tableB.getCol(0).getName());
+        assertEquals("Even", tableB.getCol(1).getName());
 
         assertEquals((Integer)1, tableB.get(0,0));
         assertEquals((Integer)3, tableB.get(1,0));

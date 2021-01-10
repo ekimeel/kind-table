@@ -1,10 +1,8 @@
 package kind.table.funcs;
 
-import com.google.common.math.Stats;
 import kind.table.Row;
 import kind.table.Table;
 import kind.table.cols.Column;
-import kind.table.cols.DoubleColumn;
 import kind.table.cols.ListColumn;
 
 import java.util.List;
@@ -28,10 +26,10 @@ public final class GroupBy implements Func<Table> {
     @Override
     public Table eval(Table table) {
 
-        final Column column = table.getColumn(col);
+        final Column column = table.getCol(col);
 
         final Map<Object, List<Row>> grouping = table.
-                rows().
+                getRows().
                 stream().
                 collect(Collectors.groupingBy((r) -> r.get(this.col)));
 

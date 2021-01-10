@@ -11,42 +11,42 @@ import java.util.stream.Stream;
 
 public class Table implements Copyable<Table>{
 
-    private final List<Column> columns;
+    private final Columns columns;
     private List<Row> rows;
     private final TableSettings settings;
 
     public Table() {
-        this.columns = new ArrayList<>();
+        this.columns = new Columns();
         this.rows = new ArrayList<>();
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
     public Table(TableSettings settings){
-        this.columns = new ArrayList<>();
+        this.columns = new Columns();
         this.rows = new ArrayList<>();
         this.settings = settings;
     }
 
     public Table(List<Column> columns) {
-        this.columns = columns;
+        this.columns = new Columns(columns);
         this.rows = new ArrayList<>();
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
     public Table(List<Column> columns, TableSettings settings) {
-        this.columns = columns;
+        this.columns = new Columns(columns);
         this.rows = new ArrayList<>();
         this.settings = settings;
     }
 
     public Table(List<Column> columns, List<Row> rows) {
-        this.columns = columns;
+        this.columns = new Columns(columns);
         this.rows = rows;
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
     public Table(List<Column> columns, List<Row> rows, TableSettings settings) {
-        this.columns = columns;
+        this.columns = new Columns(columns);
         this.rows = rows;
         this.settings = settings;
     }
@@ -83,7 +83,7 @@ public class Table implements Copyable<Table>{
     public String[] getColumnNames() {
         final String[] cols = new String[columns.size()];
         int i = 0;
-        for (Column col : columns) {
+        for (Column col : getCols()) {
             cols[i] = col.getName();
             i++;
         }
@@ -104,8 +104,11 @@ public class Table implements Copyable<Table>{
      * @param name The column name
      * @return The column if found, otherwise null
      */
-    public Column getColumn(String name){
-        final Optional<Column> result = this.columns.stream().filter(t -> t.getName().equals(name)).findFirst();
+    public Column getCol(String name){
+
+        final Optional<Column> result = getCols().stream().filter(t ->
+                t.getName().equals(name)
+        ).findFirst();
 
         return (!result.isPresent())? null : result.get();
     }
@@ -115,7 +118,7 @@ public class Table implements Copyable<Table>{
      * @param index The column index
      * @return The column if found, otherwise null
      */
-    public Column getColumn(Integer index) {
+    public Column getCol(Integer index) {
         return this.columns.get(index);
     }
 
@@ -125,7 +128,7 @@ public class Table implements Copyable<Table>{
      * @return The column name if found, otherwise null
      */
     public Integer getColumnIndex(String name){
-        final Column column = getColumn(name);
+        final Column column = getCol(name);
         return (column == null)? null : column.getIndex();
     }
 
@@ -134,8 +137,12 @@ public class Table implements Copyable<Table>{
      * @param name
      * @return Returns true if the current table as a column with the same name, otherwise false
      */
-    public boolean hasColumn(String name) {
-        return this.getColumn(name) != null;
+    public boolean hasCol(String name) {
+        return this.getCol(name) != null;
+    }
+
+    public boolean hasCol(int index) {
+        return this.columns.hasIndex(index);
     }
 
     /**
@@ -155,12 +162,12 @@ public class Table implements Copyable<Table>{
         } else {
             this.columns.add(column);
         }
-        return hasColumn(column.getName());
+        return hasCol(column.getName());
     }
 
     private boolean acceptColumn(Column column) {
         if (column == null) return false;
-        if (hasColumn(column.getName())) return false;
+        if (hasCol(column.getName())) return false;
 
         return true;
     }
@@ -196,9 +203,9 @@ public class Table implements Copyable<Table>{
      * @param columns A list of columns
      * @return Returns true if columns are added, otherwise false.
      */
-    public boolean setColumns(List<Column> columns){
+    public void setColumns(Collection<Column> columns){
         this.columns.clear();
-        return this.columns.addAll(columns);
+        this.columns.addAll(columns);
     }
 
     /**
@@ -347,16 +354,30 @@ public class Table implements Copyable<Table>{
     }
 
     public Iterator<Column> columnIterator() {
-        return columns.iterator();
+        return columns.values().iterator();
     }
 
     public <T> T eval(Func func) {
         return (T) func.eval(this);
     }
 
-    public List<Row> rows(){
-        return this.rows;
+    /**
+     * Returns an unmodifiable list of current rows
+     * @return
+     */
+    public List<Row> getRows(){
+        return Collections.unmodifiableList(this.rows);
     }
+
+    /**
+     * Returns an unmodifiable list of current cols
+     * @return
+     */
+    public Collection<Column> getCols(){
+        return Collections.unmodifiableCollection(this.columns.values());
+    }
+
+
 
     /**
      * Returns the first row in the current table or null if the table is empty.
@@ -396,7 +417,7 @@ public class Table implements Copyable<Table>{
                         this.settings.copy()
         );
 
-        for (Column col : columns) {
+        for (Column col : columns.values()) {
             copy.addColumn((Column) col.copy());
         }
 
@@ -452,6 +473,52 @@ public class Table implements Copyable<Table>{
 
     private synchronized void indexRows() {
         this.rows.sort(Comparator.comparingInt(Row::getIndex));
+        for (int i = 0; i < getRowCount(); i++) {
+            rows.get(i).setIndex(i);
+        }
+
+    }
+
+    /**
+     * Removes the values and the column from the table, re-indexing of columns is called subsequently.
+     *
+     * @param col a valid column
+     * @return Returns true if the column was removed an no longer exists in the current table
+     *
+     */
+    public boolean removeCol(Column col) {
+        return removeCol(col.getName());
+    }
+
+    /**
+     * Removes the values and the column from the table and returns the removed
+     * values.
+     *
+     * @param col
+     * @return the removed values
+     */
+    public synchronized boolean removeCol(String col) {
+        if (!hasCol(col)) {
+            return false;
+        }
+
+        if (isEmpty()) {
+            this.columns.remove(getCol(col));
+            this.columns.indexCols();
+            return !this.hasCol(col);
+        }
+
+        final Column column = getCol(col);
+
+        final Iterator<Row> iterator = rowIterator();
+        while (iterator.hasNext()) {
+            final Row row = iterator.next();
+            row.values().remove(column.getIndex());
+        }
+
+        this.columns.remove(column);
+        return !this.hasCol(col);
+
     }
 
     public void print(PrintStream ps) {

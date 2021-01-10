@@ -2,7 +2,6 @@ package kind.table.funcs;
 
 import kind.table.cols.Column;
 import kind.table.Table;
-import kind.table.cols.IntegerColumn;
 import kind.table.cols.NumberColumn;
 
 import java.math.BigDecimal;
@@ -40,7 +39,7 @@ public class LinearInterpolation implements Func<Table> {
     @Override
     public Table eval(Table table) {
         final Table copy = table.copy();
-        final Column column = copy.getColumn(this.col);
+        final Column column = copy.getCol(this.col);
         if (!acceptColumn(column)) {
             throw new UnsupportedColumnException(column);
         }
