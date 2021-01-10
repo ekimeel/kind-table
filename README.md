@@ -31,5 +31,32 @@ Example:
 | StringColumn  |java.lang.String|   |   |   |
 | BooleanColumn |java.lang.Boolean|   |   |   |
 
+#### Table Functions
+Table functions accept a table and produce an output. 
+
+Examples:
+```java
+// returns the average of column 0
+final Double max = table.eval(new Mean(0));
+
+// returns a new table grouped by column 2
+final Table group = table.eval(new GroupBy(2));
+
+```
+
+
+| Function         | Output   | Description   |   
+|---------------|---|---|
+| First |Any|Returns the first value in a column |   |
+| GroupBy  |Table| |
+| KeepCols    |Table|   | 
+| Last  |Any|   |
+| LinearInterpolation |Table|   |
+| LOCF |Table|Last observation carried forward (LOCF)| 
+| Max | Number | Returns the max value in a column |
+| Mean | Double | Returns the mean (average) value in a column |
+| Min | Number | Returns the min value in a column |
+| StandardDeviation | Double | Returns the entire population's standard deviation |
+| Sum | Number | Returns the sum (total) value in a column |
 
 ### Advanced
