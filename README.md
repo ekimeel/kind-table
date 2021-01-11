@@ -41,12 +41,12 @@ final Double max = table.eval(new Mean(0));
 
 // returns a new table grouped by column 2
 final Table group = table.eval(new GroupBy(2));
-
 ```
 
 
 | Function         | Output   | Description   |   
 |---------------|---|---|
+| Copy |Table |Creates a copy of a table|
 | First |Any|Returns the first value in a column |   |
 | GroupBy  |Table| |
 | KeepCols    |Table|   | 
