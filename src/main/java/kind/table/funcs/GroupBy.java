@@ -1,12 +1,9 @@
 package kind.table.funcs;
 
-import com.google.common.math.Stats;
 import kind.table.Row;
 import kind.table.Table;
 import kind.table.cols.Column;
-import kind.table.cols.DoubleColumn;
 import kind.table.cols.ListColumn;
-
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
