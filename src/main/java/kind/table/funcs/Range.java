@@ -30,11 +30,11 @@ public class Range<T extends Number> implements Func<T> {
 
         final Column column = table.getCol(this.col);
 
-        if (column instanceof DoubleColumn){
+        if (column instanceof DblColumn){
             return (T) rangeDouble();
-        } else if (column instanceof IntegerColumn){
+        } else if (column instanceof IntColumn){
             return (T) rangeInteger();
-        } else if (column instanceof LongColumn){
+        } else if (column instanceof LngColumn){
             return (T) rangeLong();
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support column type %.",

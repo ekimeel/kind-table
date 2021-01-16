@@ -1,24 +1,33 @@
 package kind.table;
 
-import kind.table.cols.Column;
+import kind.table.cols.*;
 
 import java.util.*;
 
 public class TableBuilder {
 
-    private String name;
-    private final List<Column> columns = new ArrayList<>();
+    private final List<Column> cols = new ArrayList<>();
     private final List<Row> rows = new ArrayList<>();
 
-
-    public TableBuilder withName(String name) {
-        this.name = name;
+    public TableBuilder withCol(Column column) {
+        this.cols.add(column);
         return this;
     }
 
-    public TableBuilder withColumn(Column column) {
-        this.columns.add(column);
-        return this;
+    public TableBuilder withStrCol(String name) {
+        return withCol(StrColumn.of(name));
+    }
+
+    public TableBuilder withIntCol(String name) {
+        return withCol(IntColumn.of(name));
+    }
+
+    public TableBuilder withLngCol(String name) {
+        return withCol(LngColumn.of(name));
+    }
+
+    public TableBuilder withBoolCol(String name) {
+        return withCol(BoolColumn.of(name));
     }
 
     public TableBuilder addRow(Object[] row) {
@@ -32,7 +41,7 @@ public class TableBuilder {
 
     public Table build() {
 
-        final Table table = new Table(this.columns);
+        final Table table = new Table(this.cols);
 
         return table;
     }

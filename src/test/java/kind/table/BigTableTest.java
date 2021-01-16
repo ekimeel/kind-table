@@ -1,9 +1,9 @@
 package kind.table;
 
-import kind.table.cols.DoubleColumn;
-import kind.table.cols.IntegerColumn;
-import kind.table.cols.LongColumn;
-import kind.table.cols.StringColumn;
+import kind.table.cols.DblColumn;
+import kind.table.cols.IntColumn;
+import kind.table.cols.LngColumn;
+import kind.table.cols.StrColumn;
 import kind.table.funcs.Max;
 import kind.table.funcs.Mean;
 import kind.table.funcs.Min;
@@ -20,8 +20,8 @@ public class BigTableTest {
 
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("ColA"));
-        table.addColumn(new IntegerColumn("ColB"));
+        table.addCol(new IntColumn("ColA"));
+        table.addCol(new IntColumn("ColB"));
 
         for (int i = 0; i < 100000; i++) {
             table.addRow(new Row(i, i + 1));
@@ -36,7 +36,7 @@ public class BigTableTest {
 
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("ColA"));
+        table.addCol(new IntColumn("ColA"));
         for (int i = 0; i < 1000000; i++) {
             table.addRow(new Row(i));
         }
@@ -50,9 +50,9 @@ public class BigTableTest {
     public void test_1M_copy(){
         final Table tableA = new Table();
 
-        tableA.addColumn(new IntegerColumn("ColA"));
-        tableA.addColumn(new DoubleColumn("ColB"));
-        tableA.addColumn(new StringColumn("ColC"));
+        tableA.addCol(new IntColumn("ColA"));
+        tableA.addCol(new DblColumn("ColB"));
+        tableA.addCol(new StrColumn("ColC"));
 
         for (int i = 0; i < 1000000; i++) {
             tableA.addRow(new Row(i, i * 0.1, "val_" + i ));
@@ -84,9 +84,9 @@ public class BigTableTest {
     public void test_1M_addColumn() {
         final Table tableA = new Table();
 
-        tableA.addColumn(new IntegerColumn("ColA"));
-        tableA.addColumn(new DoubleColumn("ColB"));
-        tableA.addColumn(new StringColumn("ColC"));
+        tableA.addCol(new IntColumn("ColA"));
+        tableA.addCol(new DblColumn("ColB"));
+        tableA.addCol(new StrColumn("ColC"));
 
         for (int i = 0; i < 1000000; i++) {
             tableA.addRow(new Row(i, i * 0.1, "val_" + i));
@@ -94,7 +94,7 @@ public class BigTableTest {
 
         assertEquals(3, tableA.getColumnCount());
 
-        tableA.addColumn(new LongColumn("ColD"));
+        tableA.addCol(new LngColumn("ColD"));
 
         assertEquals(4, tableA.getColumnCount());
         assertNull(tableA.getFirstRow().get(3));

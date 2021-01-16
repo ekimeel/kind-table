@@ -3,8 +3,8 @@ package kind.table.time;
 import kind.table.Row;
 import kind.table.Table;
 import kind.table.cols.InstantColumn;
-import kind.table.cols.IntegerColumn;
-import kind.table.cols.StringColumn;
+import kind.table.cols.IntColumn;
+import kind.table.cols.StrColumn;
 import org.junit.Test;
 import java.time.Duration;
 import java.time.Instant;
@@ -19,8 +19,8 @@ public class TableTest {
 
         final Table tableA = new Table();
 
-        tableA.addColumn(new InstantColumn("timestamp"));
-        tableA.addColumn(new IntegerColumn("value"));
+        tableA.addCol(new InstantColumn("timestamp"));
+        tableA.addCol(new IntColumn("value"));
 
         Instant now = Instant.now();
 
@@ -30,7 +30,7 @@ public class TableTest {
         }
 
 
-        tableA.addColumn(new StringColumn("weekday"), row -> {
+        tableA.addCol(new StrColumn("weekday"), row -> {
             final Instant instant = row.get(0);
 
             final String weekday = instant.atZone(ZoneId.of("UTC")).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);

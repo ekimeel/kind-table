@@ -1,9 +1,9 @@
 package kind.table.funcs;
 
 import kind.table.*;
-import kind.table.cols.DoubleColumn;
-import kind.table.cols.IntegerColumn;
-import kind.table.cols.LongColumn;
+import kind.table.cols.DblColumn;
+import kind.table.cols.IntColumn;
+import kind.table.cols.LngColumn;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -14,8 +14,8 @@ public class MaxTest {
     public void test_eval_withIntegerColumn(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new IntegerColumn("Even"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new IntColumn("Even"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(0, 0));
@@ -29,8 +29,8 @@ public class MaxTest {
     public void test_eval_withDoubleColumn(){
         final Table table = new Table();
 
-        table.addColumn(new DoubleColumn(("Odd")));
-        table.addColumn(new DoubleColumn("Even"));
+        table.addCol(new DblColumn(("Odd")));
+        table.addCol(new DblColumn("Even"));
 
         table.addRow(new Row(3.3, 2.2));
         table.addRow(new Row(5.5, 4.4));
@@ -44,8 +44,8 @@ public class MaxTest {
     public void test_eval_withLongColumn(){
         final Table table = new Table();
 
-        table.addColumn(new LongColumn(("Odd")));
-        table.addColumn(new LongColumn("Even"));
+        table.addCol(new LngColumn(("Odd")));
+        table.addCol(new LngColumn("Even"));
 
         table.addRow(new Row(10L, 20L));
         table.addRow(new Row(30L, 40L));

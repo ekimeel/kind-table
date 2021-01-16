@@ -2,7 +2,7 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public class StringColumn extends Column<String> implements Serializable {
+public class StrColumn extends Column<String> implements Serializable {
 
     /**
      * returns a new [[StringColumn]] with the provided name
@@ -10,11 +10,11 @@ public class StringColumn extends Column<String> implements Serializable {
      * @param name a valid name
      * @return a new [[StringColumn]] with the provided name
      */
-    public static StringColumn of(String name) {
-        return new StringColumn(name);
+    public static StrColumn of(String name) {
+        return new StrColumn(name);
     }
 
-    public StringColumn(String name) {
+    public StrColumn(String name) {
         super(name);
     }
 
@@ -29,6 +29,6 @@ public class StringColumn extends Column<String> implements Serializable {
 
     @Override
     public Column copy() {
-        return new StringColumn(getName());
+        return new StrColumn(getName());
     }
 }

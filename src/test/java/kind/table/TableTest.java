@@ -1,8 +1,8 @@
 package kind.table;
 
-import kind.table.cols.DoubleColumn;
-import kind.table.cols.IntegerColumn;
-import kind.table.cols.StringColumn;
+import kind.table.cols.DblColumn;
+import kind.table.cols.IntColumn;
+import kind.table.cols.StrColumn;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -22,8 +22,8 @@ public class TableTest {
     public void test_addColumn(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("colA"));
-        table.addColumn(new IntegerColumn("colB"));
+        table.addCol(new IntColumn("colA"));
+        table.addCol(new IntColumn("colB"));
 
         assertEquals(2, table.getColumnCount());
     }
@@ -32,9 +32,9 @@ public class TableTest {
     public void test_addColumnWithDuplicateName(){
         final Table table = new Table();
 
-        assertTrue(table.addColumn(new IntegerColumn("colA")));
-        assertTrue(table.addColumn(new IntegerColumn("colB")));
-        assertFalse(table.addColumn(new IntegerColumn("colA"))); // duplicate col name
+        assertTrue(table.addCol(new IntColumn("colA")));
+        assertTrue(table.addCol(new IntColumn("colB")));
+        assertFalse(table.addCol(new IntColumn("colA"))); // duplicate col name
 
         assertEquals(2, table.getColumnCount());
     }
@@ -43,8 +43,8 @@ public class TableTest {
     public void test_addRows(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new IntegerColumn("Even"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new IntColumn("Even"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(3, 4));
@@ -78,9 +78,9 @@ public class TableTest {
     public void test_getValues(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new DoubleColumn("Even"));
-        table.addColumn(new StringColumn("Name"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new DblColumn("Even"));
+        table.addCol(new StrColumn("Name"));
 
         table.addRow(new Row(1, 2.0, "Foo"));
         table.addRow(new Row(3, 4.0, "Bar"));
@@ -105,8 +105,8 @@ public class TableTest {
         final Table table = new Table();
         assertTrue(table.isEmpty());
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new IntegerColumn("Even"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new IntColumn("Even"));
 
         assertTrue(table.isEmpty());
         table.addRow(new Row(1, 2));
@@ -117,8 +117,8 @@ public class TableTest {
     public void test_getFirstRow(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new IntegerColumn("Even"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new IntColumn("Even"));
 
         assertNull(table.getFirstRow());
 
@@ -138,8 +138,8 @@ public class TableTest {
     public void test_getValues_withBadIndex(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new IntegerColumn("Even"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new IntColumn("Even"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(3, 4));
@@ -153,8 +153,8 @@ public class TableTest {
     public void test_copy() {
         final Table tableA = new Table();
 
-        tableA.addColumn(new IntegerColumn("Odd"));
-        tableA.addColumn(new IntegerColumn("Even"));
+        tableA.addCol(new IntColumn("Odd"));
+        tableA.addCol(new IntColumn("Even"));
 
         tableA.addRow(new Row(1, 2));
         tableA.addRow(new Row(3, 4));
@@ -182,8 +182,8 @@ public class TableTest {
     public void test_addColumn_withNonEmptyTable() {
         final Table tableA = new Table();
 
-        tableA.addColumn(new IntegerColumn("Odd"));
-        tableA.addColumn(new IntegerColumn("Even"));
+        tableA.addCol(new IntColumn("Odd"));
+        tableA.addCol(new IntColumn("Even"));
 
         tableA.addRow(new Row(1, 2));
         tableA.addRow(new Row(3, 4));
@@ -194,7 +194,7 @@ public class TableTest {
         assertEquals(2, tableA.getRow(1).size());
         assertEquals(2, tableA.getRow(2).size());
 
-        tableA.addColumn(new StringColumn("New"));
+        tableA.addCol(new StrColumn("New"));
         assertEquals(3, tableA.getColumnCount());
         assertEquals(3, tableA.getRow(0).size());
         assertEquals(3, tableA.getRow(1).size());

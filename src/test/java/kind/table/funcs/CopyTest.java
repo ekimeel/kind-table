@@ -2,7 +2,7 @@ package kind.table.funcs;
 
 import kind.table.Row;
 import kind.table.Table;
-import kind.table.cols.IntegerColumn;
+import kind.table.cols.IntColumn;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,8 +13,8 @@ public class CopyTest {
     public void test_eval(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("Odd"));
-        table.addColumn(new IntegerColumn("Even"));
+        table.addCol(new IntColumn("Odd"));
+        table.addCol(new IntColumn("Even"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(0, 0));

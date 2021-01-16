@@ -154,26 +154,26 @@ public class Table implements Copyable<Table>{
      * @param column
      * @return
      */
-    public synchronized boolean addColumn(Column column) {
-        if (!acceptColumn(column)) return false;
+    public synchronized boolean addCol(Column column) {
+        if (!acceptCol(column)) return false;
 
         if (!isEmpty()) {
-            addColumn(column, (row) -> row.append(null) );
+            addCol(column, (row) -> row.append(null) );
         } else {
             this.columns.add(column);
         }
         return hasCol(column.getName());
     }
 
-    private boolean acceptColumn(Column column) {
+    private boolean acceptCol(Column column) {
         if (column == null) return false;
         if (hasCol(column.getName())) return false;
 
         return true;
     }
 
-    public synchronized void addColumn(Column column, Function<Row, Row> map) {
-        if (!acceptColumn(column) || map == null) return;
+    public synchronized void addCol(Column column, Function<Row, Row> map) {
+        if (!acceptCol(column) || map == null) return;
 
         column.setIndex(this.columns.size() - 1);
         this.columns.add(column);
@@ -438,7 +438,7 @@ public class Table implements Copyable<Table>{
         );
 
         for (Column col : columns.values()) {
-            copy.addColumn((Column) col.copy());
+            copy.addCol((Column) col.copy());
         }
 
         final RowCopier rowCopier = new RowCopier();

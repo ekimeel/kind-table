@@ -27,11 +27,11 @@ public final class Max<T extends Number> implements Func<T> {
 
         final Column column = table.getCol(this.col);
 
-        if (column instanceof DoubleColumn){
+        if (column instanceof DblColumn){
             return (T) maxDouble();
-        } else if (column instanceof IntegerColumn){
+        } else if (column instanceof IntColumn){
             return (T) maxInteger();
-        } else if (column instanceof LongColumn){
+        } else if (column instanceof LngColumn){
             return (T) maxLong();
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support column type %.",

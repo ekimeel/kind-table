@@ -25,11 +25,11 @@ Example:
 #### Column Types
 | Class         | Data Type  | Examples|   |   |
 |---------------|---|---|---|---|
-| IntegerColumn |java.lang.Integer| 1, 10, 1000 |   |   |
-| DoubleColumn  |java.lang.Double| 1.1, 10.01, 1000.0001 |   |   |
-| LongColumn    |java.lang.Long| 290902910101091 |   |   |
-| StringColumn  |java.lang.String| "Hello", "World"|   |   |
-| BooleanColumn |java.lang.Boolean| true, false|   |   |
+| IntColumn |java.lang.Integer| 1, 10, 1000 |   |   |
+| DblColumn  |java.lang.Double| 1.1, 10.01, 1000.0001 |   |   |
+| LngColumn    |java.lang.Long| 290902910101091 |   |   |
+| StrColumn  |java.lang.String| "Hello", "World"|   |   |
+| BoolColumn |java.lang.Boolean| true, false|   |   |
 | RowColumn     |java.util.List| ```List<kind.table.Row>``` |
 
 #### Table Functions

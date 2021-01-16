@@ -2,7 +2,7 @@ package kind.table.funcs;
 
 import com.google.common.math.Stats;
 import kind.table.cols.Column;
-import kind.table.cols.DoubleColumn;
+import kind.table.cols.DblColumn;
 import kind.table.Table;
 import kind.table.cols.NumberColumn;
 
@@ -35,7 +35,7 @@ public final class StandardDeviation implements Func<Double> {
 
         final Column column = table.getCol(this.col);
 
-        if (column instanceof DoubleColumn) {
+        if (column instanceof DblColumn) {
             return Stats.of(table.getVals(col)).populationStandardDeviation();
         } else {
             final List<Double> values = table.valuesToDoubles(col);

@@ -1,6 +1,6 @@
 package kind.table.funcs;
 
-import kind.table.cols.IntegerColumn;
+import kind.table.cols.IntColumn;
 import kind.table.Row;
 import kind.table.Table;
 import org.junit.Test;
@@ -11,8 +11,8 @@ public class LinearInterpolationTest {
     public void test_eval_withIntegerColumn(){
         final Table table = new Table();
 
-        table.addColumn(new IntegerColumn("ColA"));
-        table.addColumn(new IntegerColumn("ColB"));
+        table.addCol(new IntColumn("ColA"));
+        table.addCol(new IntColumn("ColB"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(3, 4));

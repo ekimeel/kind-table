@@ -43,10 +43,10 @@ public final class GroupBy implements Func<Table> {
                 collect(Collectors.groupingBy((r) -> r.get(this.col)));
 
         final Table result = new Table(table.getSettings());
-        result.addColumn((Column) column.copy());
+        result.addCol((Column) column.copy());
 
         final RowColumn rowColumn = new RowColumn(column.getName() + COLUMN_POSTFIX);
-        result.addColumn(rowColumn);
+        result.addCol(rowColumn);
 
         for(Map.Entry<Object, List<Row>> entry : grouping.entrySet()) {
             result.addRow(new Row(entry.getKey(), entry.getValue()));
@@ -76,7 +76,7 @@ public final class GroupBy implements Func<Table> {
                 final Object eval = subject.eval(aggFunc);
                 final Column aggCol = ColumnFactory.from(aggName, eval);
                 if (aggCol != null) {
-                    table.addColumn(aggCol);
+                    table.addCol(aggCol);
                     int col = table.getColIndex(aggCol.getName());
                     table.set(rowIndex, col, eval);
                 }

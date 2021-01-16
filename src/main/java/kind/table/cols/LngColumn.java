@@ -2,19 +2,19 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public class LongColumn extends NumberColumn<Long> implements Serializable {
+public class LngColumn extends NumberColumn<Long> implements Serializable {
 
     /**
-     * returns a new [[LongColumn]] with the provided name
+     * returns a new [[LngColumn]] with the provided name
      *
      * @param name a valid name
-     * @return a new [[LongColumn]] with the provided name
+     * @return a new [[LngColumn]] with the provided name
      */
-    public static LongColumn of(String name) {
-        return new LongColumn(name);
+    public static LngColumn of(String name) {
+        return new LngColumn(name);
     }
 
-    public LongColumn(String name) {
+    public LngColumn(String name) {
         super(name);
     }
 
@@ -31,6 +31,6 @@ public class LongColumn extends NumberColumn<Long> implements Serializable {
 
     @Override
     public Column copy() {
-        return new LongColumn(getName());
+        return new LngColumn(getName());
     }
 }
