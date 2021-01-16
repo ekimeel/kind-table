@@ -29,7 +29,7 @@ public final class Mean implements Func<java.lang.Double> {
             return null;
         }
 
-        final Column column = table.getCol(this.col);
+        final Column column = table.getColByIndex(this.col);
 
         if (column instanceof DblColumn) {
             return Stats.of(table.getVals(col)).mean();

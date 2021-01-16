@@ -27,7 +27,7 @@ public final class Sum<T extends Number>  implements Func<T> {
             return null;
         }
 
-        final Column column = table.getCol(this.col);
+        final Column column = table.getColByIndex(this.col);
         final List<T> values = table.getVals(this.col);
 
         if (column instanceof DblColumn){

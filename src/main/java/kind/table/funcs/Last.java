@@ -25,7 +25,7 @@ public final class Last<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getCol(this.col);
+        final Column column = table.getColByIndex(this.col);
         return table.get(table.getRowCount()-1,col);
     }
 

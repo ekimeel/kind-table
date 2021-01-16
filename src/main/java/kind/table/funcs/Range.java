@@ -28,7 +28,7 @@ public class Range<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getCol(this.col);
+        final Column column = table.getColByIndex(this.col);
 
         if (column instanceof DblColumn){
             return (T) rangeDouble();

@@ -99,12 +99,22 @@ public class Table implements Copyable<Table>{
         return this.rows.size();
     }
 
+    public Column getCol(Object any) {
+        if (any instanceof Integer) {
+            return getColByIndex((Integer) any);
+        } else {
+            return getColByName((String)any);
+        }
+
+
+    }
+
     /**
      * Returns the column of the provided name if available, otherwise null
      * @param name The column name
      * @return The column if found, otherwise null
      */
-    public Column getCol(String name){
+    public Column getColByName(String name){
 
         final Optional<Column> result = getCols().stream().filter(t ->
                 t.getName().equals(name)
@@ -118,7 +128,7 @@ public class Table implements Copyable<Table>{
      * @param index The column index
      * @return The column if found, otherwise null
      */
-    public Column getCol(Integer index) {
+    public Column getColByIndex(Integer index) {
         return this.columns.get(index);
     }
 
@@ -128,7 +138,7 @@ public class Table implements Copyable<Table>{
      * @return The column name if found, otherwise null
      */
     public Integer getColIndex(String name){
-        final Column column = getCol(name);
+        final Column column = getColByName(name);
         return (column == null)? null : column.getIndex();
     }
 
@@ -138,7 +148,7 @@ public class Table implements Copyable<Table>{
      * @return Returns true if the current table as a column with the same name, otherwise false
      */
     public boolean hasCol(String name) {
-        return this.getCol(name) != null;
+        return this.getColByName(name) != null;
     }
 
     public boolean hasCol(int index) {
@@ -222,6 +232,16 @@ public class Table implements Copyable<Table>{
             return added;
         }
         return false;
+    }
+
+    /**
+     * Creates a row from the provided values and returns true if added, otherwise false
+     *
+     * @param vals
+     * @return
+     */
+    public boolean addRow(Object... vals) {
+        return addRow(new Row(vals));
     }
 
     /**
@@ -523,11 +543,11 @@ public class Table implements Copyable<Table>{
         }
 
         if (isEmpty()) {
-            this.columns.remove(getCol(col));
+            this.columns.remove(getColByName(col));
             return !this.hasCol(col);
         }
 
-        final Column column = getCol(col);
+        final Column column = getColByName(col);
 
 
         //todo: evaluate if parallel processing for removal is worth it (allowParallelProcessing)

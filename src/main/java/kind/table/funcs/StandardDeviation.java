@@ -33,7 +33,7 @@ public final class StandardDeviation implements Func<Double> {
             return null;
         }
 
-        final Column column = table.getCol(this.col);
+        final Column column = table.getColByIndex(this.col);
 
         if (column instanceof DblColumn) {
             return Stats.of(table.getVals(col)).populationStandardDeviation();

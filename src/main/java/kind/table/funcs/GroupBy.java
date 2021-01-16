@@ -16,6 +16,11 @@ public final class GroupBy implements Func<Table> {
     private final int col;
     private final List<GroupColumn> aggs;
 
+    public static GroupBy of(int col, String col1, Func func1) {
+        return new GroupBy(col, GroupColumn.of(col1,func1));
+    }
+    public static GroupBy of(int col, GroupColumn... groupColumns) { return new GroupBy(col, groupColumns); }
+
     public GroupBy(int col) {
         this.col = col;
         this.aggs = new ArrayList<>();
@@ -40,7 +45,7 @@ public final class GroupBy implements Func<Table> {
         final Map<Object, List<Row>> grouping = table.
                 getRows().
                 stream().
-                collect(Collectors.groupingBy((r) -> r.get(this.col)));
+                collect(Collectors.groupingBy((r) -> r.get(column.getIndex())));
 
         final Table result = new Table(table.getSettings());
         result.addCol((Column) column.copy());

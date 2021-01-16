@@ -1,7 +1,9 @@
 package kind.table;
 
-import kind.table.cols.IntColumn;
-import kind.table.cols.StrColumn;
+import kind.table.cols.GroupColumn;
+import kind.table.funcs.First;
+import kind.table.funcs.GroupBy;
+import kind.table.funcs.Sum;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -11,13 +13,28 @@ public class TableBuilderTest {
     @Test
     public void test() {
 
-        Table t = new TableBuilder().
+        final Table table = new TableBuilder().
                 withStrCol("team").
                 withStrCol("player").
                 withIntCol("score").
                 build();
 
-        assertNotNull(t);
+
+        table.addRow("team-a", "player #10", 1);
+        table.addRow("team-a", "player #12", 2);
+        table.addRow("team-a", "player #4", 1);
+        table.addRow("team-b", "player #5", 1);
+        table.addRow("team-b", "player #19", 1);
+
+        final Table result = table.
+                eval(GroupBy.of(0,"total score", Sum.of(2))).
+                sortr("total score");
+
+        assertEquals(2, result.getRowCount());
+
+
+
+
 
     }
 

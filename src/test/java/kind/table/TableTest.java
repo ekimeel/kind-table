@@ -166,8 +166,8 @@ public class TableTest {
         assertEquals(tableA.getRowCount(), tableB.getRowCount());
         assertEquals(tableA.getColumnCount(), tableB.getColumnCount());
 
-        assertEquals("Odd", tableB.getCol(0).getName());
-        assertEquals("Even", tableB.getCol(1).getName());
+        assertEquals("Odd", tableB.getColByIndex(0).getName());
+        assertEquals("Even", tableB.getColByIndex(1).getName());
 
         assertEquals((Integer)1, tableB.get(0,0));
         assertEquals((Integer)3, tableB.get(1,0));

@@ -10,6 +10,8 @@ import kind.table.cols.Column;
  */
 public final class First<T> implements Func<T> {
 
+    public static <E> First<E> of(int col) { return new First<E>(col); }
+
     private final Integer col;
     private Table table;
 

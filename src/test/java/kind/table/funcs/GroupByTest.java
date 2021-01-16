@@ -39,8 +39,8 @@ public class GroupByTest {
 
         assertEquals(3, result.getRowCount());
         assertEquals(2, result.getColumnCount());
-        assertTrue(result.getCol(0) instanceof StrColumn);
-        assertTrue(result.getCol(1) instanceof RowColumn);
+        assertTrue(result.getColByIndex(0) instanceof StrColumn);
+        assertTrue(result.getColByIndex(1) instanceof RowColumn);
 
     }
 
