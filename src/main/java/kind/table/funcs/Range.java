@@ -45,7 +45,7 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     private Double rangeDouble() {
-        final List<Double> values = table.getValues(col).stream().mapToDouble(x -> ((Number)x).intValue())
+        final List<Double> values = table.getVals(col).stream().mapToDouble(x -> ((Number)x).intValue())
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -55,7 +55,7 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     private Integer rangeInteger() {
-        final List<Integer> values = table.getValues(col).stream().mapToInt(x -> ((Number)x).intValue())
+        final List<Integer> values = table.getVals(col).stream().mapToInt(x -> ((Number)x).intValue())
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -65,7 +65,7 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     private Long rangeLong() {
-        final List<Long> values = table.getValues(col).stream().mapToLong(x -> ((Number)x).longValue())
+        final List<Long> values = table.getVals(col).stream().mapToLong(x -> ((Number)x).longValue())
                 .boxed()
                 .collect(Collectors.toList());
 

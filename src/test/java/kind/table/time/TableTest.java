@@ -37,7 +37,6 @@ public class TableTest {
             return row.append(weekday);
         });
 
-        tableA.print(System.out);
 
 
     }

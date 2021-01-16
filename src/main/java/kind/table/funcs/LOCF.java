@@ -34,7 +34,7 @@ public final class LOCF implements Func<Table> {
         }
 
         Object priorInstance = null;
-        final List values = copy.getValues(this.col);
+        final List values = copy.getVals(this.col);
 
         for (int i = 0; i < values.size(); i++) {
             final Object value = values.get(i);

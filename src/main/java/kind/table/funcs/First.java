@@ -8,7 +8,7 @@ import kind.table.cols.Column;
  *
  * @param <T>
  */
-public final class First<T extends Number> implements Func<T> {
+public final class First<T> implements Func<T> {
 
     private final Integer col;
     private Table table;

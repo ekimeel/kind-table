@@ -20,7 +20,7 @@ public class SumTest {
         table.addRow(new Row(3, 4));
         table.addRow(new Row(5, 6));
 
-        final Integer sum = table.eval(new Sum(0));
+        final Integer sum = table.eval(new Sum<>(0));
         assertEquals((Integer)9, sum);
     }
 
@@ -35,7 +35,7 @@ public class SumTest {
         table.addRow(new Row(3.3, 4.4));
         table.addRow(new Row(5.5, 6.6));
 
-        final Double sum = table.eval(new Sum(0));
+        final Double sum = table.eval(new Sum<>(0));
         assertEquals((Double) 9.9, sum);
     }
 
@@ -50,7 +50,7 @@ public class SumTest {
         table.addRow(new Row(30L, 40L));
         table.addRow(new Row(50L, 60L));
 
-        final Long sum = table.eval(new Sum(0));
+        final Long sum = table.eval(Sum.of(0));
         assertEquals((Long) 90L, sum);
     }
 }

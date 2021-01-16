@@ -46,7 +46,7 @@ public class LinearInterpolation implements Func<Table> {
 
         Number priorInstance = null;
         final List<Integer> unitOfWork = new ArrayList<>();
-        final List<Number> values = copy.getValues(this.col);
+        final List<Number> values = copy.getVals(this.col);
 
         for (int i = 0; i < values.size(); i++) {
             final Number value = values.get(i);

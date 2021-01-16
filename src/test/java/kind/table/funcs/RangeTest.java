@@ -21,7 +21,7 @@ public class RangeTest {
         table.addRow(new Row(0, 0));
         table.addRow(new Row(5, 6));
 
-        final Integer result = table.eval(new Range(0));
+        final Integer result = table.eval(new Range<>(0));
         assertEquals((Integer)5, result);
     }
 
@@ -36,7 +36,7 @@ public class RangeTest {
         table.addRow(new Row(5.5, 4.4));
         table.addRow(new Row(1.1, 6.6));
 
-        final Double result = table.eval(new Range(0));
+        final Double result = table.eval(new Range<>(0));
         assertEquals((Double) 4.0, result);
     }
 
@@ -51,7 +51,7 @@ public class RangeTest {
         table.addRow(new Row(30L, 40L));
         table.addRow(new Row(50L, 60L));
 
-        final Long min = table.eval(new Range(0));
+        final Long min = table.eval(new Range<>(0));
         assertEquals((Long) 40L, min);
     }
 }

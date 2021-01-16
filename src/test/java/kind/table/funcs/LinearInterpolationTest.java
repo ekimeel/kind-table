@@ -26,7 +26,6 @@ public class LinearInterpolationTest {
 
         final Table table2 = table.eval(new LinearInterpolation(1));
 
-        table2.print(System.out);
     }
 
 }

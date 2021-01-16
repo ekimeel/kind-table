@@ -9,6 +9,7 @@ public final class KeepCols implements Func<Table> {
 
     private final List<Integer> cols = new ArrayList();
 
+    public static KeepCols of(int... cols) { return new KeepCols(cols); }
     public KeepCols(int... cols) {
         Arrays.stream(cols).forEach( (i) -> this.cols.add(i));
     }
@@ -18,15 +19,6 @@ public final class KeepCols implements Func<Table> {
         return true;
     }
 
-    private boolean containsIndex(int colIndex) {
-        boolean result = false;
-        for(int i : this.cols) {
-            if (i == colIndex) {
-                result = true;
-            }
-        }
-        return result;
-    }
 
     @Override
     public Table eval(Table table) {

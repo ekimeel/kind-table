@@ -27,25 +27,25 @@ public class Table implements Copyable<Table>{
         this.settings = settings;
     }
 
-    public Table(List<Column> columns) {
+    public Table(Collection<Column> columns) {
         this.columns = new Columns(columns);
         this.rows = new ArrayList<>();
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
-    public Table(List<Column> columns, TableSettings settings) {
+    public Table(Collection<Column> columns, TableSettings settings) {
         this.columns = new Columns(columns);
         this.rows = new ArrayList<>();
         this.settings = settings;
     }
 
-    public Table(List<Column> columns, List<Row> rows) {
+    public Table(Collection<Column> columns, List<Row> rows) {
         this.columns = new Columns(columns);
         this.rows = rows;
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
-    public Table(List<Column> columns, List<Row> rows, TableSettings settings) {
+    public Table(Collection<Column> columns, List<Row> rows, TableSettings settings) {
         this.columns = new Columns(columns);
         this.rows = rows;
         this.settings = settings;
@@ -127,7 +127,7 @@ public class Table implements Copyable<Table>{
      * @param name The column name
      * @return The column name if found, otherwise null
      */
-    public Integer getColumnIndex(String name){
+    public Integer getColIndex(String name){
         final Column column = getCol(name);
         return (column == null)? null : column.getIndex();
     }
@@ -224,6 +224,17 @@ public class Table implements Copyable<Table>{
         return false;
     }
 
+    /**
+     * Adds all the provided rows to the current table and returns the total row size
+     *
+     * @param rows Rows to add
+     * @return count of all rows
+     */
+    public int addRows(Collection<Row> rows){
+        rows.forEach( (i) -> this.addRow(i));
+        return rows.size();
+    }
+
 
     /**
      * Evaluates if the provided row can be added to the current table and returns true if so, otherwise false.
@@ -297,14 +308,23 @@ public class Table implements Copyable<Table>{
      * @throws IndexOutOfBoundsException
      * @return A list of typed values in the provided col
      */
-    public <T> List<T> getValues(int col){
+    public <T> List<T> getVals(int col){
 
         final List results = this.rows.stream()
                 .map(i -> i.get(col))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         return results;
+    }
 
+    /**
+     * Returns all values in the provided column
+     * @param col
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getVals(Column col) {
+        return getVals(col.getIndex());
     }
 
     /**
@@ -314,7 +334,7 @@ public class Table implements Copyable<Table>{
      * @return A list of Double values in the provided col
      */
     public List<Double> valuesToDoubles(int col){
-        return getValues(col)
+        return getVals(col)
                 .stream()
                 .mapToDouble(x -> ((Number)x).doubleValue())
                 .boxed()
@@ -328,7 +348,7 @@ public class Table implements Copyable<Table>{
      * @return A list of Integer values in the provided col
      */
     public List<Integer> valuesToInt(int col){
-        return getValues(col)
+        return getVals(col)
                 .stream()
                 .mapToInt(x -> ((Number)x).intValue())
                 .boxed()
@@ -342,7 +362,7 @@ public class Table implements Copyable<Table>{
      * @return A list of Long values in the provided col
      */
     public List<Long> valuesToLong(int col){
-        return getValues(col)
+        return getVals(col)
                 .stream()
                 .mapToLong(x -> ((Number)x).longValue())
                 .boxed()
@@ -357,8 +377,8 @@ public class Table implements Copyable<Table>{
         return columns.values().iterator();
     }
 
-    public <T> T eval(Func func) {
-        return (T) func.eval(this);
+    public <T> T eval(Func<T> func) {
+        return func.eval(this);
     }
 
     /**
@@ -433,7 +453,7 @@ public class Table implements Copyable<Table>{
      * @return new table with simple comparator sorting
      */
     public Table sort(final String col) {
-        return sort(getColumnIndex(col));
+        return sort(getColIndex(col));
     }
 
     /**
@@ -441,7 +461,7 @@ public class Table implements Copyable<Table>{
      * @return new table with simple comparator sorting in reverse
      */
     public Table sortr(final String col) {
-        return sortr(getColumnIndex(col));
+        return sortr(getColIndex(col));
     }
 
     /**
@@ -504,12 +524,13 @@ public class Table implements Copyable<Table>{
 
         if (isEmpty()) {
             this.columns.remove(getCol(col));
-            this.columns.indexCols();
             return !this.hasCol(col);
         }
 
         final Column column = getCol(col);
 
+
+        //todo: evaluate if parallel processing for removal is worth it (allowParallelProcessing)
         final Iterator<Row> iterator = rowIterator();
         while (iterator.hasNext()) {
             final Row row = iterator.next();
@@ -517,6 +538,7 @@ public class Table implements Copyable<Table>{
         }
 
         this.columns.remove(column);
+
         return !this.hasCol(col);
 
     }

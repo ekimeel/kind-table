@@ -2,7 +2,6 @@ package kind.table.funcs;
 
 import kind.table.*;
 import kind.table.cols.*;
-
 import java.util.OptionalInt;
 
 public final class Max<T extends Number> implements Func<T> {
@@ -43,11 +42,11 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     private Double maxDouble() {
-        return table.getValues(col).stream().mapToDouble( x -> ((Number)x).doubleValue()).max().getAsDouble();
+        return table.getVals(col).stream().mapToDouble(x -> ((Number)x).doubleValue()).max().getAsDouble();
     }
 
     private Integer maxInteger() {
-        OptionalInt v = table.getValues(col)
+        OptionalInt v = table.getVals(col)
                 .stream()
                 .mapToInt( x -> ((Number)x).intValue())
                 .max();
@@ -57,6 +56,6 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     private Long maxLong() {
-        return table.getValues(col).stream().mapToLong( x -> ((Number)x).longValue()).max().getAsLong();
+        return table.getVals(col).stream().mapToLong(x -> ((Number)x).longValue()).max().getAsLong();
     }
 }

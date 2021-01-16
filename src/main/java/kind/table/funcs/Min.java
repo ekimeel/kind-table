@@ -41,14 +41,14 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     private Double minDouble() {
-        return table.getValues(col).stream().mapToDouble( x -> ((Number)x).doubleValue()).min().getAsDouble();
+        return table.getVals(col).stream().mapToDouble(x -> ((Number)x).doubleValue()).min().getAsDouble();
     }
 
     private Integer minInteger() {
-        return table.getValues(col).stream().mapToInt( x -> ((Number)x).intValue()).min().getAsInt();
+        return table.getVals(col).stream().mapToInt(x -> ((Number)x).intValue()).min().getAsInt();
     }
 
     private Long minLong() {
-        return table.getValues(col).stream().mapToLong( x -> ((Number)x).longValue()).min().getAsLong();
+        return table.getVals(col).stream().mapToLong(x -> ((Number)x).longValue()).min().getAsLong();
     }
 }

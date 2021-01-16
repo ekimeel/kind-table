@@ -12,7 +12,7 @@ public final class Columns implements Serializable {
     public Columns() {
     }
 
-    public Columns(List<Column> cols) {
+    public Columns(Collection<Column> cols) {
         super();
         cols.forEach( (i) -> this.values.put(size(), i));
     }
@@ -54,12 +54,11 @@ public final class Columns implements Serializable {
     }
 
     protected synchronized void indexCols() {
-        final Iterator<Map.Entry<Integer, Column>> i = this.values.entrySet().iterator();
-        while(i.hasNext()) {
-            final Map.Entry<Integer, Column> entry = i.next();
-            entry.getValue().setIndex(size());
-            this.values.put(size(), entry.getValue());
-        }
+        //todo: shift around instead of collect, clear, add
+        final Collection<Column> cols = new ArrayList<>(size());
+        this.values.forEach( (k, v) -> cols.add(v));
+        this.values.clear();
+        cols.forEach( c -> this.add(c));
     }
 
 }

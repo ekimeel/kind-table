@@ -21,7 +21,7 @@ public class FirstTest {
         table.addRow(new Row(0, 0));
         table.addRow(new Row(5, 6));
 
-        final Integer value = table.eval(new First(0));
+        final Integer value = table.eval(new First<>(0));
         assertEquals((Integer)1, value);
     }
 
@@ -36,7 +36,7 @@ public class FirstTest {
         table.addRow(new Row(5.5, 4.4));
         table.addRow(new Row(1.1, 6.6));
 
-        final Double value = table.eval(new First(1));
+        final Double value = table.eval(new First<>(1));
         assertEquals((Double) 2.2, value);
     }
 
@@ -51,7 +51,7 @@ public class FirstTest {
         table.addRow(new Row(30L, 40L));
         table.addRow(new Row(50L, 60L));
 
-        final Long value = table.eval(new First(1));
+        final Long value = table.eval(new First<>(1));
         assertEquals((Long)20L, value);
     }
 

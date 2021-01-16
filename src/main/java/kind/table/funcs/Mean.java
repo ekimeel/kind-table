@@ -32,7 +32,7 @@ public final class Mean implements Func<java.lang.Double> {
         final Column column = table.getCol(this.col);
 
         if (column instanceof DoubleColumn) {
-            return Stats.of(table.getValues(col)).mean();
+            return Stats.of(table.getVals(col)).mean();
         } else {
             final List<Double> values = table.valuesToDoubles(col);
             return Stats.of(values).mean();

@@ -1,19 +1,17 @@
-package kind.table.funcs;
+package kind.table;
 
-import kind.table.Row;
-import kind.table.Table;
+import kind.table.cols.GroupColumn;
 import kind.table.cols.IntegerColumn;
-import kind.table.cols.RowColumn;
 import kind.table.cols.StringColumn;
+import kind.table.funcs.GroupBy;
+import kind.table.funcs.KeepCols;
+import kind.table.funcs.Sum;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class GroupByTest {
-
+public class IntegrationTest {
 
     @Test
-    public void test_eval(){
+    public void test(){
         final Table table = new Table();
 
         table.addColumn(StringColumn.of("team"));
@@ -35,13 +33,15 @@ public class GroupByTest {
         table.addRow(new Row("c-team", "player-2", 15));
         table.addRow(new Row("c-team", "player-2", 12));
 
-        final Table result = table.eval(new GroupBy(0));
 
-        assertEquals(3, result.getRowCount());
-        assertEquals(2, result.getColumnCount());
-        assertTrue(result.getCol(0) instanceof StringColumn);
-        assertTrue(result.getCol(1) instanceof RowColumn);
+        Table result = table.
+                eval(KeepCols.of(0, 2)).
+                eval(new GroupBy(0,
+                        GroupColumn.of("Total", Sum.of(1))));
+
+        //result.print(System.out);
+
+
 
     }
-
 }

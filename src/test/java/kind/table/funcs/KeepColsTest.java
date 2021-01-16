@@ -26,6 +26,8 @@ public class KeepColsTest {
         assertEquals(2, result.getColumnCount());
         assertEquals(3, result.getRowCount());
 
-        result.print(System.out);
+        assertEquals(StringColumn.class, result.getCol(0).getClass());
+        assertEquals(IntegerColumn.class, result.getCol(1).getClass());
+
     }
 }

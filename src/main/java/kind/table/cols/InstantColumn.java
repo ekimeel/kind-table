@@ -5,6 +5,15 @@ import java.time.Instant;
 import java.util.Date;
 
 public class InstantColumn extends Column<Instant> implements Serializable {
+    /**
+     * returns a new [[InstantColumn]] with the provided name
+     *
+     * @param name a valid name
+     * @return a new [[InstantColumn]] with the provided name
+     */
+    public static InstantColumn of(String name) {
+        return new InstantColumn(name);
+    }
 
     public InstantColumn(String name) {
         super(name);

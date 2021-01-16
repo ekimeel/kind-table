@@ -1,6 +1,6 @@
 package kind.table;
 
-
+import com.google.common.base.Joiner;
 import java.io.Serializable;
 import java.util.*;
 
@@ -158,7 +158,8 @@ public class Row implements Copyable<Row> {
 
     @Override
     public String toString() {
-        return "row: {\"index=\"" + index + "\", \"values\"=" + values().size() + " }";
+        return "row: {\"index=\"" + index +
+                "\", \"values\"=[" + Joiner.on(',').join(values) + "] }";
     }
 
 

@@ -23,13 +23,14 @@ Example:
 ```
 
 #### Column Types
-| Class         | Data Type  |   |   |   |
+| Class         | Data Type  | Examples|   |   |
 |---------------|---|---|---|---|
-| IntegerColumn |java.lang.Integer|   |   |   |
-| DoubleColumn  |java.lang.Double|   |   |   |
-| LongColumn    |java.lang.Long|   |   |   |
-| StringColumn  |java.lang.String|   |   |   |
-| BooleanColumn |java.lang.Boolean|   |   |   |
+| IntegerColumn |java.lang.Integer| 1, 10, 1000 |   |   |
+| DoubleColumn  |java.lang.Double| 1.1, 10.01, 1000.0001 |   |   |
+| LongColumn    |java.lang.Long| 290902910101091 |   |   |
+| StringColumn  |java.lang.String| "Hello", "World"|   |   |
+| BooleanColumn |java.lang.Boolean| true, false|   |   |
+| RowColumn     |java.util.List| ```List<kind.table.Row>``` |
 
 #### Table Functions
 Table functions accept a table and produce an output. 

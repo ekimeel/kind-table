@@ -36,7 +36,7 @@ public final class StandardDeviation implements Func<Double> {
         final Column column = table.getCol(this.col);
 
         if (column instanceof DoubleColumn) {
-            return Stats.of(table.getValues(col)).populationStandardDeviation();
+            return Stats.of(table.getVals(col)).populationStandardDeviation();
         } else {
             final List<Double> values = table.valuesToDoubles(col);
             return Stats.of(values).populationStandardDeviation();

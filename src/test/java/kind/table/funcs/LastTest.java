@@ -21,7 +21,7 @@ public class LastTest {
         table.addRow(new Row(0, 0));
         table.addRow(new Row(5, 6));
 
-        final Integer value = table.eval(new Last(0));
+        final Integer value = table.eval(new Last<>(0));
         assertEquals((Integer)5, value);
     }
 
@@ -36,7 +36,7 @@ public class LastTest {
         table.addRow(new Row(5.5, 4.4));
         table.addRow(new Row(1.1, 6.6));
 
-        final Double value = table.eval(new Last(1));
+        final Double value = table.eval(new Last<>(1));
         assertEquals((Double)6.6, value);
     }
 
@@ -51,7 +51,7 @@ public class LastTest {
         table.addRow(new Row(30L, 40L));
         table.addRow(new Row(50L, 60L));
 
-        final Long value = table.eval(new Last(1));
+        final Long value = table.eval(new Last<>(1));
         assertEquals((Long)60L, value);
     }
 
