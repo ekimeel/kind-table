@@ -25,7 +25,7 @@ public class CopyTest {
         assertEquals(3, result.getRowCount());
         assertEquals(2, result.getColumnCount());
 
-        assertEquals((Integer)6, result.eval(new Sum(0)));
-        assertEquals((Integer)8, result.eval(new Sum(1)));
+        assertEquals((Integer)6, result.eval(Sum.of("Odd")));
+        assertEquals((Integer)8, result.eval(Sum.of("Even")));
     }
 }

@@ -21,7 +21,7 @@ public class StandardDeviationTest {
         table.addRow(new Row(0, 0));
         table.addRow(new Row(5, 6));
 
-        final Double value = table.eval(new StandardDeviation(0));
+        final Double value = table.eval(StandardDeviation.of("Odd"));
         assertEquals(2.1602, value, 0.0001);
     }
 
@@ -36,7 +36,7 @@ public class StandardDeviationTest {
         table.addRow(new Row(5.5, 4.4));
         table.addRow(new Row(1.1, 6.6));
 
-        final Double value = table.eval(new StandardDeviation(0));
+        final Double value = table.eval(StandardDeviation.of("Odd"));
         assertEquals((Double) 1.7962, value, 0.0001);
     }
 
@@ -51,7 +51,7 @@ public class StandardDeviationTest {
         table.addRow(new Row(30L, 40L));
         table.addRow(new Row(50L, 60L));
 
-        final Double value = table.eval(new StandardDeviation(0));
+        final Double value = table.eval(StandardDeviation.of(0));
         assertEquals(16.3299, value, 0.0001);
     }
 

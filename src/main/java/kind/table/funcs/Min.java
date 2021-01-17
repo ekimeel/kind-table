@@ -5,11 +5,14 @@ import kind.table.cols.*;
 
 public final class Min<T extends Number> implements Func<T> {
 
-    private final Integer col;
+    public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
     private Table table;
 
-    public Min(int col) {
-        this.col = col;
+    private Min(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -19,12 +22,11 @@ public final class Min<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        this.table = table;
         if (table == null) {
             return null;
         }
-
-        final Column column = table.getColByIndex(this.col);
+        this.table = table;
+        final Column column = table.getColByRef(this.colRef);
 
         if (column instanceof DblColumn){
             return (T) minDouble();
@@ -41,14 +43,23 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     private Double minDouble() {
-        return table.getVals(col).stream().mapToDouble(x -> ((Number)x).doubleValue()).min().getAsDouble();
+        return table.getVals(colRef)
+                .stream()
+                .mapToDouble(x -> ((Number)x).doubleValue())
+                .min().getAsDouble();
     }
 
     private Integer minInteger() {
-        return table.getVals(col).stream().mapToInt(x -> ((Number)x).intValue()).min().getAsInt();
+        return table.getVals(colRef)
+                .stream()
+                .mapToInt(x -> ((Number)x).intValue())
+                .min().getAsInt();
     }
 
     private Long minLong() {
-        return table.getVals(col).stream().mapToLong(x -> ((Number)x).longValue()).min().getAsLong();
+        return table.getVals(colRef)
+                .stream()
+                .mapToLong(x -> ((Number)x).longValue())
+                .min().getAsLong();
     }
 }

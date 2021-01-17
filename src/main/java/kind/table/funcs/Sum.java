@@ -5,14 +5,16 @@ import kind.table.cols.*;
 
 import java.util.List;
 
-public final class Sum<T extends Number>  implements Func<T> {
+public final class Sum<T extends Number> implements Func<T> {
 
-    private final Integer col;
+    public static <E extends Number> Sum<E> of(String col) { return new Sum<>(ColRef.of(col)); }
+    public static <E extends Number> Sum<E> of(int col) { return new Sum<>(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
     private Table table;
 
-    public static <E extends Number> Sum<E> of(int col) { return new Sum<>(col); }
-    public Sum(int col) {
-        this.col = col;
+    public Sum(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -27,8 +29,8 @@ public final class Sum<T extends Number>  implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByIndex(this.col);
-        final List<T> values = table.getVals(this.col);
+        final Column column = table.getColByRef(this.colRef);
+        final List<T> values = table.getVals(this.colRef);
 
         if (column instanceof DblColumn){
             return (T)sumDouble(values);

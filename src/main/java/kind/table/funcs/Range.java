@@ -9,11 +9,14 @@ import java.util.stream.Collectors;
 
 public class Range<T extends Number> implements Func<T> {
 
-    private final Integer col;
+    public static <E extends Number> Range<E> of(String col) { return new Range<>(ColRef.of(col)); }
+    public static <E extends Number> Range<E> of(int col) { return new Range<>(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
     private Table table;
 
-    public Range(int col) {
-        this.col = col;
+    private Range(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class Range<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByIndex(this.col);
+        final Column column = table.getColByRef(this.colRef);
 
         if (column instanceof DblColumn){
             return (T) rangeDouble();
@@ -45,7 +48,8 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     private Double rangeDouble() {
-        final List<Double> values = table.getVals(col).stream().mapToDouble(x -> ((Number)x).intValue())
+        final List<Double> values = table.getVals(colRef)
+                .stream().mapToDouble(x -> ((Number)x).intValue())
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -55,7 +59,8 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     private Integer rangeInteger() {
-        final List<Integer> values = table.getVals(col).stream().mapToInt(x -> ((Number)x).intValue())
+        final List<Integer> values = table.getVals(colRef)
+                .stream().mapToInt(x -> ((Number)x).intValue())
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -65,7 +70,8 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     private Long rangeLong() {
-        final List<Long> values = table.getVals(col).stream().mapToLong(x -> ((Number)x).longValue())
+        final List<Long> values = table.getVals(colRef)
+                .stream().mapToLong(x -> ((Number)x).longValue())
                 .boxed()
                 .collect(Collectors.toList());
 

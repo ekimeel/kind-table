@@ -4,6 +4,8 @@ package kind.table.cols;
  *
  */
 public final class ColRef {
+
+    public static ColRef of(Object any) { return new ColRef(any); }
     private final String strRef;
     private final Integer intRef;
 

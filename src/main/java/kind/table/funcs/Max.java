@@ -6,16 +6,14 @@ import java.util.OptionalInt;
 
 public final class Max<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Max<E> of(String col) { return new Max<E>(col); }
-    public static <E extends Number> Max<E> of(int col) { return new Max<E>(col); }
-    private final ColRef ref;
+    public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
     private Table table;
 
-    public Max(String ref) {
-        this.ref = new ColRef(ref);
-    }
-    public Max(int ref) {
-        this.ref = new ColRef(ref);
+    public Max(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -30,7 +28,7 @@ public final class Max<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.ref);
+        final Column column = table.getColByRef(this.colRef);
 
         if (column instanceof DblColumn){
             return (T) maxDouble();
@@ -47,11 +45,14 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     private Double maxDouble() {
-        return table.getVals(ref).stream().mapToDouble(x -> ((Number)x).doubleValue()).max().getAsDouble();
+        return table.getVals(colRef)
+                .stream()
+                .mapToDouble(x -> ((Number)x).doubleValue())
+                .max().getAsDouble();
     }
 
     private Integer maxInteger() {
-        OptionalInt v = table.getVals(ref)
+        OptionalInt v = table.getVals(colRef)
                 .stream()
                 .mapToInt( x -> ((Number)x).intValue())
                 .max();
@@ -61,6 +62,9 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     private Long maxLong() {
-        return table.getVals(ref).stream().mapToLong(x -> ((Number)x).longValue()).max().getAsLong();
+        return table.getVals(colRef)
+                .stream()
+                .mapToLong(x -> ((Number)x).longValue())
+                .max().getAsLong();
     }
 }

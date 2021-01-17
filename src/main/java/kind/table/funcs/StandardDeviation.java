@@ -1,6 +1,7 @@
 package kind.table.funcs;
 
 import com.google.common.math.Stats;
+import kind.table.cols.ColRef;
 import kind.table.cols.Column;
 import kind.table.cols.DblColumn;
 import kind.table.Table;
@@ -14,11 +15,14 @@ import java.util.List;
  */
 public final class StandardDeviation implements Func<Double> {
 
-    private final Integer col;
+    public static StandardDeviation of(String col) { return new StandardDeviation(ColRef.of(col)); }
+    public static StandardDeviation of(int col) { return new StandardDeviation(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
     private Table table;
 
-    public StandardDeviation(int col) {
-        this.col = col;
+    private StandardDeviation(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -33,12 +37,12 @@ public final class StandardDeviation implements Func<Double> {
             return null;
         }
 
-        final Column column = table.getColByIndex(this.col);
+        final Column column = table.getColByRef(this.colRef);
 
         if (column instanceof DblColumn) {
-            return Stats.of(table.getVals(col)).populationStandardDeviation();
+            return Stats.of(table.getVals(colRef)).populationStandardDeviation();
         } else {
-            final List<Double> values = table.valuesToDoubles(col);
+            final List<Double> values = table.valuesToDoubles(column.getIndex());
             return Stats.of(values).populationStandardDeviation();
         }
     }

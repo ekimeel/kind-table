@@ -27,8 +27,8 @@ public class BigTableTest {
             table.addRow(new Row(i, i + 1));
         }
 
-        assertEquals((Integer)704982704, table.eval(new Sum<>(0)));
-        assertEquals((Integer)705082704, table.eval(new Sum<>(1)));
+        assertEquals((Integer)704982704, table.eval(Sum.of(0)));
+        assertEquals((Integer)705082704, table.eval(Sum.of(1)));
     }
 
     @Test
@@ -41,9 +41,9 @@ public class BigTableTest {
             table.addRow(new Row(i));
         }
 
-        assertEquals((Integer)999999, table.eval(new Max(0)));
-        assertEquals((Integer)0, table.eval(new Min(0)));
-        assertEquals(499999.5, table.eval(new Mean(0)), 0.0001);
+        assertEquals((Integer)999999, table.eval(Max.of(0)));
+        assertEquals((Integer)0, table.eval(Min.of(0)));
+        assertEquals(499999.5, table.eval(Mean.of("ColA")), 0.0001);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class BigTableTest {
         assertEquals(tableA.getColumnCount(), tableB.getColumnCount());
         assertEquals(tableA.getRowCount(), tableB.getRowCount());
 
-        final Integer sumColA_TableA = tableA.eval(new Sum<>(0));
-        final Integer sumColA_TableB = tableB.eval(new Sum<>(0));
+        final Integer sumColA_TableA = tableA.eval(Sum.of("ColA"));
+        final Integer sumColA_TableB = tableB.eval(Sum.of("ColA"));
         assertEquals(sumColA_TableA, sumColA_TableB);
 
         final Row lastRow_TableA = tableA.getLastRow();

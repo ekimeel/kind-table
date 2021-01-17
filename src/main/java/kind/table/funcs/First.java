@@ -1,6 +1,7 @@
 package kind.table.funcs;
 
 import kind.table.*;
+import kind.table.cols.ColRef;
 import kind.table.cols.Column;
 
 /**
@@ -10,13 +11,13 @@ import kind.table.cols.Column;
  */
 public final class First<T> implements Func<T> {
 
-    public static <E> First<E> of(int col) { return new First<E>(col); }
+    public static <E> First<E> of(int col) { return new First<>(ColRef.of(col)); }
+    public static <E> First<E> of(String col) { return new First<>(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
 
-    private final Integer col;
-    private Table table;
-
-    public First(int col) {
-        this.col = col;
+    private First(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -26,13 +27,11 @@ public final class First<T> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-
-        this.table = table;
         if (table == null) {
             return null;
         }
-
-        return table.getFirstRow().get(col);
+        final Column col = table.getColByRef(colRef);
+        return table.getFirstRow().get(col.getIndex());
     }
 
 

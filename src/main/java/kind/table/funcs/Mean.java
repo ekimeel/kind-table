@@ -2,19 +2,22 @@ package kind.table.funcs;
 
 import com.google.common.math.Stats;
 import kind.table.*;
+import kind.table.cols.ColRef;
 import kind.table.cols.Column;
 import kind.table.cols.DblColumn;
 import kind.table.cols.NumberColumn;
 
 import java.util.List;
 
-public final class Mean implements Func<java.lang.Double> {
+public final class Mean implements Func<Double> {
 
-    private final Integer col;
-    private Table table;
+    public static Mean of(String col) { return new Mean(ColRef.of(col)); }
+    public static Mean of(int col) { return new Mean(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
 
-    public Mean(int col) {
-        this.col = col;
+    private Mean(ColRef colRef) {
+        this.colRef = colRef;
     }
 
     @Override
@@ -24,17 +27,16 @@ public final class Mean implements Func<java.lang.Double> {
 
     @Override
     public Double eval(Table table) {
-        this.table = table;
         if (table == null) {
             return null;
         }
 
-        final Column column = table.getColByIndex(this.col);
+        final Column column = table.getColByRef(this.colRef);
 
         if (column instanceof DblColumn) {
-            return Stats.of(table.getVals(col)).mean();
+            return Stats.of(table.getVals(colRef)).mean();
         } else {
-            final List<Double> values = table.valuesToDoubles(col);
+            final List<Double> values = table.valuesToDoubles(column.getIndex());
             return Stats.of(values).mean();
         }
     }

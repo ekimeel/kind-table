@@ -1,16 +1,19 @@
 package kind.table.funcs;
 
+import kind.table.cols.ColRef;
 import kind.table.cols.Column;
 import kind.table.Table;
 
 
-public final class Last<T extends Number> implements Func<T> {
+public final class Last<T> implements Func<T> {
 
-    private final Integer col;
-    private Table table;
+    public static <E> Last<E> of(int col) { return new Last(ColRef.of(col)); }
+    public static <E> Last<E> of(String col) { return new Last(ColRef.of(col)); }
+    /**/
+    private final ColRef colRef;
 
-    public Last(int col) {
-        this.col = col;
+    private Last(ColRef colRef) {
+        this.colRef =colRef;
     }
 
     @Override
@@ -20,13 +23,12 @@ public final class Last<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        this.table = table;
         if (table == null) {
             return null;
         }
 
-        final Column column = table.getColByIndex(this.col);
-        return table.get(table.getRowCount()-1,col);
+        final Column column = table.getColByRef(this.colRef);
+        return table.get(table.getRowCount()-1, column.getIndex());
     }
 
 }
