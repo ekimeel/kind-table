@@ -1,5 +1,6 @@
 package kind.table;
 
+import kind.table.cols.ColRef;
 import kind.table.cols.Column;
 import kind.table.funcs.Func;
 
@@ -105,8 +106,10 @@ public class Table implements Copyable<Table>{
         } else {
             return getColByName((String)any);
         }
+    }
 
-
+    public Column getColByRef(ColRef ref) {
+        return getCol(ref.getRef());
     }
 
     /**
@@ -345,6 +348,16 @@ public class Table implements Copyable<Table>{
      */
     public <T> List<T> getVals(Column col) {
         return getVals(col.getIndex());
+    }
+
+    public <T> List<T> getVals(String name) {
+        return getVals(getColIndex(name));
+    }
+
+    public <T> List<T> getVals(ColRef ref) {
+        return (ref.isInt())?
+                getVals(ref.asInt()) :
+                getVals(ref.asStr());
     }
 
     /**

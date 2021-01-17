@@ -53,4 +53,5 @@ public class SumTest {
         final Long sum = table.eval(Sum.of(0));
         assertEquals((Long) 90L, sum);
     }
+
 }

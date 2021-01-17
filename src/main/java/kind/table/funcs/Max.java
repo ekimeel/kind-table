@@ -6,11 +6,16 @@ import java.util.OptionalInt;
 
 public final class Max<T extends Number> implements Func<T> {
 
-    private final Integer col;
+    public static <E extends Number> Max<E> of(String col) { return new Max<E>(col); }
+    public static <E extends Number> Max<E> of(int col) { return new Max<E>(col); }
+    private final ColRef ref;
     private Table table;
 
-    public Max(int col) {
-        this.col = col;
+    public Max(String ref) {
+        this.ref = new ColRef(ref);
+    }
+    public Max(int ref) {
+        this.ref = new ColRef(ref);
     }
 
     @Override
@@ -25,7 +30,7 @@ public final class Max<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByIndex(this.col);
+        final Column column = table.getColByRef(this.ref);
 
         if (column instanceof DblColumn){
             return (T) maxDouble();
@@ -42,11 +47,11 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     private Double maxDouble() {
-        return table.getVals(col).stream().mapToDouble(x -> ((Number)x).doubleValue()).max().getAsDouble();
+        return table.getVals(ref).stream().mapToDouble(x -> ((Number)x).doubleValue()).max().getAsDouble();
     }
 
     private Integer maxInteger() {
-        OptionalInt v = table.getVals(col)
+        OptionalInt v = table.getVals(ref)
                 .stream()
                 .mapToInt( x -> ((Number)x).intValue())
                 .max();
@@ -56,6 +61,6 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     private Long maxLong() {
-        return table.getVals(col).stream().mapToLong(x -> ((Number)x).longValue()).max().getAsLong();
+        return table.getVals(ref).stream().mapToLong(x -> ((Number)x).longValue()).max().getAsLong();
     }
 }

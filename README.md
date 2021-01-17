@@ -2,15 +2,15 @@
 ![Build Status](https://github.com/ekimeel/kind-table/workflows/Build/badge.svg?branch=main)
 ![Publish Status](https://github.com/ekimeel/kind-table/workflows/Publish/badge.svg?branch=main)
 
-### Table setup
+### Quick Start
 
-
-Example: 
+#### Basic Table: 
+The below example creates a simple three column table with three rows:
 ```java
     final Table table = new Table();
-    table.addColumn(new IntegerColumn("Odd"));
-    table.addColumn(new DoubleColumn("Even"));
-    table.addColumn(new StringColumn("Name"));
+    table.addCol( IntColumn.of("Odd") );
+    table.addCol( DblColumn.of("Even") );
+    table.addCol( StrColumn.of("Name") );
 
     table.addRow(new Row(1, 2.0, "Foo"));
     table.addRow(new Row(3, 4.0, "Bar"));
@@ -19,8 +19,36 @@ Example:
     assertEquals(1, table.get(0,0));
     assertEquals(4.0, table.get(1,1), 0.0);
     assertEquals("Foo Bar", table.getLastRow().get(2));
-
 ```
+#### Table Functions
+
+
+#### Grouping and Sorting Example
+
+```java 
+        final Table table = new TableBuilder().
+                withStrCol("team").
+                withStrCol("player").
+                withIntCol("score").
+                build();
+
+        table.addRow("team-a", "player #10", 1);
+        table.addRow("team-a", "player #12", 2);
+        table.addRow("team-a", "player #4", 1);
+        table.addRow("team-b", "player #5", 1);
+        table.addRow("team-b", "player #19", 1);
+
+        final Table result = table.
+                eval(GroupBy.of(0,"total score", Sum.of(2))).
+                sortr("total score");
+
+        result.print(System.out); // prints the table to the console
+        
+        assertEquals(2, result.getRowCount());
+        assertEquals((Integer)4, result.get(0, 1)); // top score
+        assertEquals("team-a", result.get(0, 0)); // top team
+        
+ ```
 
 #### Column Types
 | Class         | Data Type  | Examples|   |   |

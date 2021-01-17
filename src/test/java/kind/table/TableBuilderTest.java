@@ -19,7 +19,6 @@ public class TableBuilderTest {
                 withIntCol("score").
                 build();
 
-
         table.addRow("team-a", "player #10", 1);
         table.addRow("team-a", "player #12", 2);
         table.addRow("team-a", "player #4", 1);
@@ -30,10 +29,11 @@ public class TableBuilderTest {
                 eval(GroupBy.of(0,"total score", Sum.of(2))).
                 sortr("total score");
 
+        result.print(System.out); // prints the table to the console
+
         assertEquals(2, result.getRowCount());
-
-
-
+        assertEquals((Integer)4, result.get(0, 1)); // top score
+        assertEquals("team-a", result.get(0, 0)); // top team
 
 
     }
