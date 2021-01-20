@@ -7,6 +7,7 @@ public final class TableSettings implements Copyable<TableSettings> {
     public static final int DEFAULT_MAX_ALLOWABLE_THREADS = 4;
     public static final int DEFAULT_EVAL_TIMEOUT = 300;
     public static final int DEFAULT_ALLOW_PARALLEL_PROCESSING_AFTER_ROW = 99999;
+    public static final String DEFAULT_TIMEZONE = "UTC";
     public static final TableSettings DEFAULT_SETTINGS;
 
     static{
@@ -15,7 +16,8 @@ public final class TableSettings implements Copyable<TableSettings> {
                 DEFAULT_MAX_ALLOWABLE_COLUMNS,
                 DEFAULT_MAX_ALLOWABLE_THREADS,
                 DEFAULT_EVAL_TIMEOUT,
-                DEFAULT_ALLOW_PARALLEL_PROCESSING_AFTER_ROW);
+                DEFAULT_ALLOW_PARALLEL_PROCESSING_AFTER_ROW,
+                DEFAULT_TIMEZONE);
     }
 
 
@@ -24,14 +26,17 @@ public final class TableSettings implements Copyable<TableSettings> {
     private final int maxAllowableThreads;
     private final int allowParallelProcessingAfterRow;
     private final int evalTimeout;
+    private final String timeZone;
 
-    public TableSettings(int maxAllowableRows, int maxAllowableColumns, int maxAllowableThreads, int evalTimeout,
-                         int allowThreadsAfterRowCount) {
+
+    TableSettings(int maxAllowableRows, int maxAllowableColumns, int maxAllowableThreads, int evalTimeout,
+                         int allowThreadsAfterRowCount, String timeZone) {
         this.maxAllowableRows = maxAllowableRows;
         this.maxAllowableColumns = maxAllowableColumns;
         this.maxAllowableThreads = maxAllowableThreads;
         this.evalTimeout = evalTimeout;
         this.allowParallelProcessingAfterRow = allowThreadsAfterRowCount;
+        this.timeZone = timeZone;
     }
 
     /**
@@ -75,13 +80,23 @@ public final class TableSettings implements Copyable<TableSettings> {
         return allowParallelProcessingAfterRow;
     }
 
+    /**
+     * Returns the time zone
+     *
+     * @return
+     */
+    public String getTimeZone() {
+        return timeZone;
+    }
+
     @Override
     public TableSettings copy() {
         final TableSettings copy = new TableSettings(this.getMaxAllowableRows(),
                 getMaxAllowableColumns(),
                 getMaxAllowableThreads(),
                 getEvalTimeout(),
-                getAllowParallelProcessingAfterRow());
+                getAllowParallelProcessingAfterRow(),
+                getTimeZone());
 
         return copy;
     }
