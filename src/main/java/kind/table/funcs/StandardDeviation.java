@@ -15,8 +15,8 @@ import java.util.List;
  */
 public final class StandardDeviation implements Func<Double> {
 
-    public static StandardDeviation of(String col) { return new StandardDeviation(ColRef.of(col)); }
-    public static StandardDeviation of(int col) { return new StandardDeviation(ColRef.of(col)); }
+    public static StandardDeviation of(String col) { return new StandardDeviation(ColRef.from(col)); }
+    public static StandardDeviation of(int col) { return new StandardDeviation(ColRef.from(col)); }
     /**/
     private final ColRef colRef;
     private Table table;

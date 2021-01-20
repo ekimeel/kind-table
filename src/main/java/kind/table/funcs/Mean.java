@@ -11,8 +11,8 @@ import java.util.List;
 
 public final class Mean implements Func<Double> {
 
-    public static Mean of(String col) { return new Mean(ColRef.of(col)); }
-    public static Mean of(int col) { return new Mean(ColRef.of(col)); }
+    public static Mean of(String col) { return new Mean(ColRef.from(col)); }
+    public static Mean of(int col) { return new Mean(ColRef.from(col)); }
     /**/
     private final ColRef colRef;
 

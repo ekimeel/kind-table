@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class Range<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Range<E> of(String col) { return new Range<>(ColRef.of(col)); }
-    public static <E extends Number> Range<E> of(int col) { return new Range<>(ColRef.of(col)); }
+    public static <E extends Number> Range<E> of(String col) { return new Range<>(ColRef.from(col)); }
+    public static <E extends Number> Range<E> of(int col) { return new Range<>(ColRef.from(col)); }
     /**/
     private final ColRef colRef;
     private Table table;

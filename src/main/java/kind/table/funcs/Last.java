@@ -7,8 +7,8 @@ import kind.table.Table;
 
 public final class Last<T> implements Func<T> {
 
-    public static <E> Last<E> of(int col) { return new Last(ColRef.of(col)); }
-    public static <E> Last<E> of(String col) { return new Last(ColRef.of(col)); }
+    public static <E> Last<E> of(int col) { return new Last(ColRef.from(col)); }
+    public static <E> Last<E> of(String col) { return new Last(ColRef.from(col)); }
     /**/
     private final ColRef colRef;
 

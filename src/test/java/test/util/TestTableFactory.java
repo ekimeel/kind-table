@@ -1,22 +1,17 @@
-package kind.table.time;
+package test.util;
 
 import kind.table.Row;
 import kind.table.Table;
 import kind.table.cols.InstantColumn;
 import kind.table.cols.IntColumn;
-import kind.table.cols.StrColumn;
-import kind.table.cols.funcs.Weekday;
-import org.junit.Test;
+
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
-public class TableTest {
+public class TestTableFactory {
 
-    @Test
-    public void test_() {
+
+    public static Table timeSeriesData() {
 
         final Table tableA = new Table();
 
@@ -25,14 +20,10 @@ public class TableTest {
 
         Instant now = Instant.now();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 525600; i++) {
             tableA.addRow(new Row(now, i));
             now = now.plus(Duration.ofMinutes(1));
         }
-
-
-        tableA.addCol(Weekday.from("weekday", "timestamp"));
-        tableA.print(System.out);
-
+        return tableA;
     }
 }
