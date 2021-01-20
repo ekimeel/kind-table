@@ -1,10 +1,7 @@
 package kind.table.cols.funcs;
 
-import kind.table.Row;
 import kind.table.Table;
 import kind.table.TableBuilder;
-import kind.table.cols.DateColumn;
-import kind.table.cols.IntColumn;
 import org.junit.Test;
 
 import java.text.DateFormat;
@@ -43,7 +40,6 @@ public class WeekdayTest {
         assertEquals("Friday", tableA.get(4, 2));
         assertEquals("Saturday", tableA.get(5, 2));
         assertEquals("Sunday", tableA.get(6, 2));
-        tableA.print(System.out);
 
     }
 

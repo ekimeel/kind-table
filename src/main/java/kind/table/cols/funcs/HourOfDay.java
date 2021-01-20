@@ -5,6 +5,8 @@ import kind.table.cols.*;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public final class HourOfDay implements ColumnFunc {
 
@@ -61,18 +63,24 @@ public final class HourOfDay implements ColumnFunc {
     }
 
     private void evalWithDate(Table table, Column source) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone(table.getSettings().getTimeZone()));
+
         table.addCol(new StrColumn(this.colName), row -> {
             final java.util.Date date = row.get(source.getIndex());
-            final int weekday = (int)(date.getTime() % 86400000) / 3600000;
-            return row.append(weekday);
+            calendar.setTime(date);
+            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+
+            return row.append(hours);
         });
     }
 
     private void evalWithInstant(Table table, Column source) {
         table.addCol(new StrColumn(this.colName), row -> {
             final Instant instant = row.get(source.getIndex());
-            final Integer hour = instant.atZone(ZoneId.of("UTC"))
-                    .getHour();
+            final String timeZone = table.getSettings().getTimeZone();
+
+            final Integer hour = instant.atZone(ZoneId.of(timeZone)).getHour();
 
             return row.append(hour);
         });
