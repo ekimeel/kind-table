@@ -30,6 +30,10 @@ public class TableBuilder {
         return withCol(BoolColumn.of(name));
     }
 
+    public TableBuilder withDateCol(String name) {
+        return withCol(DateColumn.of(name));
+    }
+
     public TableBuilder addRow(Object[] row) {
         return this.addRow(new Row(Arrays.asList((Object[]) row)));
     }

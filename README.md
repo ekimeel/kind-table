@@ -1,10 +1,13 @@
-## Kind Tables
+# Kind Tables
 ![Build Status](https://github.com/ekimeel/kind-table/workflows/Build/badge.svg?branch=main)
 ![Publish Status](https://github.com/ekimeel/kind-table/workflows/Publish/badge.svg?branch=main)
 
-### Quick Start
+## Quick Start
 
-#### Basic Table: 
+:warning:
+Documentation is a work in progress!
+
+### Basic Table: 
 The below example creates a simple three column table with three rows:
 ```java
     final Table table = new Table();
@@ -20,8 +23,50 @@ The below example creates a simple three column table with three rows:
     assertEquals(4.0, table.get(1,1), 0.0);
     assertEquals("Foo Bar", table.getLastRow().get(2));
 ```
-#### Table Functions
+### Table Functions
 
+### Column Functions
+Column functions are used to add a column to an existing table and append a new value to each row. When the column is added the function performs an 
+evaluation to arrive at a new value insert into each row. 
+
+For example, if you have an existing table with a DateColumn and IntColumn and you want to add quickly add a 
+day-of-the-week (Monday-Sunday) column to the table. You could write your own function or you could use a built-in
+Weekday ColumnFunc:
+
+```java
+        final Table tableA = new TableBuilder()
+                .withDateCol("Date")
+                .withIntCol("Value")
+                .build();
+
+        final DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+        tableA.addRow(sdf.parse("01/18/2021"), 100); // monday
+        tableA.addRow(sdf.parse("01/19/2021"), 200); // tuesday
+        tableA.addRow(sdf.parse("01/20/2021"), 300); // wednesday
+        tableA.addRow(sdf.parse("01/21/2021"), 400); // thursday
+        tableA.addRow(sdf.parse("01/22/2021"), 500); // friday
+        tableA.addRow(sdf.parse("01/23/2021"), 600); // saturday
+        tableA.addRow(sdf.parse("01/24/2021"), 700); // sunday
+
+        assertEquals(2, tableA.getColumnCount());
+        tableA.addCol(Weekday.from("Date")); // Weekday column function
+        assertEquals(3, tableA.getColumnCount()); 
+
+        assertEquals("Monday", tableA.get(0, 2));
+        assertEquals("Tuesday", tableA.get(1, 2));
+        assertEquals("Wednesday", tableA.get(2, 2));
+        assertEquals("Thursday", tableA.get(3, 2));
+        assertEquals("Friday", tableA.get(4, 2));
+        assertEquals("Saturday", tableA.get(5, 2));
+        assertEquals("Sunday", tableA.get(6, 2));
+```
+#### Column Functions
+Below is a current list of Column Functions. You may also extend the ColFunc class to provide your own implementation.
+
+| Class         | Description   | Examples|
+|---------------|---------------|---------|
+| Weekday | Appends a new StrColumn to the provided table with the Day of the week in long format | ``` tableA.addCol(Weekday.from("Date")) ``` |
 
 #### Grouping and Sorting Example
 

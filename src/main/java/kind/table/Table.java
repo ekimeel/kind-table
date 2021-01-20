@@ -2,6 +2,7 @@ package kind.table;
 
 import kind.table.cols.ColRef;
 import kind.table.cols.Column;
+import kind.table.cols.funcs.ColumnFunc;
 import kind.table.funcs.Func;
 
 import java.io.PrintStream;
@@ -176,6 +177,10 @@ public class Table implements Copyable<Table>{
             this.columns.add(column);
         }
         return hasCol(column.getName());
+    }
+
+    public void addCol(ColumnFunc colFunc) {
+        colFunc.eval(this);
     }
 
     private boolean acceptCol(Column column) {
