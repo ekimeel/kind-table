@@ -3,27 +3,23 @@ package kind.table.cols.funcs;
 import kind.table.Table;
 import kind.table.cols.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
-public final class Weekday implements ColumnFunc {
+public final class HourOfDay implements ColumnFunc {
 
-    private static final String DEFAULT_NAME = "Weekday";
-    public static Weekday from(String name, int col) { return new Weekday(name, ColRef.from(col)); }
-    public static Weekday from(int col) { return new Weekday(DEFAULT_NAME, ColRef.from(col)); }
+    private static final String DEFAULT_NAME = "HourOfDay";
+    public static HourOfDay from(String name, int col) { return new HourOfDay(name, ColRef.from(col)); }
+    public static HourOfDay from(int col) { return new HourOfDay(DEFAULT_NAME, ColRef.from(col)); }
     /**/
-    public static Weekday from(String col) { return new Weekday(DEFAULT_NAME, ColRef.from(col)); }
-    public static Weekday from(String name, String col) { return new Weekday(name, ColRef.from(col)); }
+    public static HourOfDay from(String col) { return new HourOfDay(DEFAULT_NAME, ColRef.from(col)); }
+    public static HourOfDay from(String name, String col) { return new HourOfDay(name, ColRef.from(col)); }
     /**/
 
     private final String colName;
     private final ColRef colRef;
 
-    private Weekday(String colName, ColRef colRef) {
+    private HourOfDay(String colName, ColRef colRef) {
         this.colName = colName;
         this.colRef = colRef;
     }
@@ -34,21 +30,9 @@ public final class Weekday implements ColumnFunc {
         else { return false; }
     }
 
-    private void beforeRun(Table table) {
-        if (table.hasCol(colName)) {
-            throw new IllegalArgumentException(String.format("Column [%s] already exists.", colName));
-        }
-
-        final Column column = table.getColByRef(this.colRef);
-        if (!acceptColumn(column)) {
-            throw new IllegalArgumentException(String.format("Column type [%] is not supported by this Column Function",
-                    column.getClass().getSimpleName()));
-        }
-    }
-
 
     /**
-     * Adds a [[StrColumn]] with the weekday (Monday-Sunday) to the table.
+     * Adds a [[IntColumn]] with the hour-of-day (0-23) to the table.
      *
      * @throws IllegalArgumentException If column with name already exists
      * @throws IllegalArgumentException If column type is not supported
@@ -56,7 +40,6 @@ public final class Weekday implements ColumnFunc {
      */
     @Override
     public void eval(Table table) {
-
         if (table.hasCol(colName)) {
             throw new IllegalArgumentException(String.format("Column [%s] already exists.", colName));
         }
@@ -67,25 +50,20 @@ public final class Weekday implements ColumnFunc {
                     column.getClass().getSimpleName()));
         }
 
-
-
         if (column instanceof DateColumn) {
             evalWithDate(table, column);
         } else if (column instanceof InstantColumn) {
             evalWithInstant(table, column);
         } else {
-            //todo: append null;
+            //todo: append null
         }
-
 
     }
 
     private void evalWithDate(Table table, Column source) {
-        final DateFormat format = new SimpleDateFormat("EEEE");
-
         table.addCol(new StrColumn(this.colName), row -> {
             final java.util.Date date = row.get(source.getIndex());
-            final String weekday = format.format(date);
+            final int weekday = (int)(date.getTime() % 86400000) / 3600000;
             return row.append(weekday);
         });
     }
@@ -93,12 +71,11 @@ public final class Weekday implements ColumnFunc {
     private void evalWithInstant(Table table, Column source) {
         table.addCol(new StrColumn(this.colName), row -> {
             final Instant instant = row.get(source.getIndex());
+            final Integer hour = instant.atZone(ZoneId.of("UTC"))
+                    .getHour();
 
-            final String weekday = instant.atZone(ZoneId.of("UTC"))
-                    .getDayOfWeek()
-                    .getDisplayName(TextStyle.FULL, Locale.ENGLISH);
-
-            return row.append(weekday);
+            return row.append(hour);
         });
     }
 }
+
