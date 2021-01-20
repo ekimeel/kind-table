@@ -64,9 +64,10 @@ Weekday ColumnFunc:
 #### Column Functions
 Below is a current list of Column Functions. You may also extend the ColFunc class to provide your own implementation.
 
-| Class         | Description   | Examples|
-|---------------|---------------|---------|
-| Weekday | Appends a new StrColumn to the provided table with the Day of the week in long format | ``` tableA.addCol(Weekday.from("Date")) ``` |
+| Column Function         | Description   | Accepts | Outputs | 
+|---------------|---------------| ------ | ------ |
+| **Weekday** | Appends a new StrColumn to the provided table with the day-of-week in long format |  DateColumn, InstantColumn | StrColumn |
+| **HourOfDay** | Appends a new IntColumn to the provided table with the hour-of-day (0-23) in integer format | DateColumn, InstantColumn | IntColumn
 
 #### Grouping and Sorting Example
 
