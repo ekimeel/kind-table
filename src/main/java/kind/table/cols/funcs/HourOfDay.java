@@ -70,7 +70,6 @@ public final class HourOfDay implements ColumnFunc {
             final java.util.Date date = row.get(source.getIndex());
             calendar.setTime(date);
             int hours = calendar.get(Calendar.HOUR_OF_DAY);
-
             return row.append(hours);
         });
     }
