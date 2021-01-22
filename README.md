@@ -2,6 +2,9 @@
 ![Build Status](https://github.com/ekimeel/kind-table/workflows/Build/badge.svg?branch=main)
 ![Publish Status](https://github.com/ekimeel/kind-table/workflows/Publish/badge.svg?branch=main)
 
+# About
+The kind-table project is designed to be an in-memory table data structure (rows and columns) with robust functionality.  
+
 ## Quick Start
 
 :warning:
