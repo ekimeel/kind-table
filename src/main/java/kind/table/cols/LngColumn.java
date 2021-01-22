@@ -2,7 +2,7 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public class LngColumn extends NumberColumn<Long> implements Serializable {
+public final class LngColumn extends NumberColumn<Long> implements Serializable {
 
     /**
      * returns a new [[LngColumn]] with the provided name

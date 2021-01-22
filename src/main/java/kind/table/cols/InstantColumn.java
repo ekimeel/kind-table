@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
-public class InstantColumn extends Column<Instant> implements Serializable {
+public final class InstantColumn extends Column<Instant> implements Serializable {
     /**
      * returns a new [[InstantColumn]] with the provided name
      *

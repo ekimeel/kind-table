@@ -3,7 +3,7 @@ package kind.table.cols;
 import java.io.Serializable;
 import java.util.Date;
 
-public class DateColumn extends Column<Date> implements Serializable {
+public final class DateColumn extends Column<Date> implements Serializable {
 
     /**
      * returns a new [[DateColumn]] with the provided name

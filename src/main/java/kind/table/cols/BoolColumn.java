@@ -2,7 +2,7 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public class BoolColumn extends Column<Boolean> implements Serializable {
+public final class BoolColumn extends Column<Boolean> implements Serializable {
 
     /**
      * returns a new [[BoolColumn]] with the provided name
@@ -17,6 +17,9 @@ public class BoolColumn extends Column<Boolean> implements Serializable {
     public BoolColumn(String name) {
         super(name);
     }
+    public BoolColumn(String name, int index) {
+        super(name, index);
+    }
 
     @Override
     public Boolean cast(Object value) {
@@ -26,7 +29,7 @@ public class BoolColumn extends Column<Boolean> implements Serializable {
     }
 
     @Override
-    public Column copy() {
-        return new BoolColumn(getName());
+    public BoolColumn copy() {
+        return new BoolColumn(getName(), getIndex());
     }
 }

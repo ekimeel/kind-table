@@ -17,10 +17,10 @@ public final class Join implements Func<Table> {
     public static Join from(ColRef colRef, Table table) { return new Join(colRef, table); }
     /**/
     private final ColRef colRef;
-    private final Table tableB;
-    public Join(ColRef colRef, Table tableB) {
+    private final Table b;
+    public Join(ColRef colRef, Table b) {
         this.colRef = colRef;
-        this.tableB = tableB;
+        this.b = b;
     }
 
     @Override
@@ -31,17 +31,19 @@ public final class Join implements Func<Table> {
 
     @Override
     public Table eval(Table table) {
-        final Table result = table.copy();
-        final Column joinCol = result.getColByRef(colRef);
+
+        //todo: this join logic is a full scan each join, find a better impl
+        final Table a = table.copy();
+        final Column joinCol = a.getColByRef(colRef);
         final ColRef joinColRef = joinCol.toColRef();
 
-        final Map<Integer, Integer> fromToColIndexMap = mapJoinCols(result, table, joinCol);
-        final List<Comparable> keyVals = result.getVals(this.colRef);
+        final Map<Integer, Integer> fromToColIndexMap = mapJoinCols(a, b, joinCol);
+        final List<Comparable> keyVals = a.getVals(this.colRef);
 
         for (int i = 0; i < keyVals.size(); i++) {
             final Comparable keyVal = keyVals.get(i);
-            final Row row = result.getRow(i);
-            final List<Row> joinRows = tableB.getRowsEq(joinColRef, keyVal);
+            final Row row = a.getRow(i);
+            final List<Row> joinRows = b.getRowsEq(joinColRef, keyVal);
 
             if (joinRows.size() > 1) {
                 throwNonUniqueKeysException(keyVal);
@@ -56,7 +58,7 @@ public final class Join implements Func<Table> {
             }
         }
 
-        return result;
+        return a;
 
     }
 
