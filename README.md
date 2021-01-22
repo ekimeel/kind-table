@@ -118,7 +118,6 @@ final Double max = table.eval(new Mean(0));
 final Table group = table.eval(new GroupBy(2));
 ```
 
-
 | Function            | Output | Description               |   
 |---------------------|--------|---------------------------|
 | **Copy**                | Table  |Creates a copy of a table|

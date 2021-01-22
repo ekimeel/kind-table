@@ -14,8 +14,8 @@ public class ColRefTest {
 
     @Test
     public void test_equals_whenNot() {
-        assertEquals(ColRef.of("col 2"), ColRef.of("col 1"));
-        assertEquals(ColRef.of(1), ColRef.of(2));
+        assertNotEquals(ColRef.of("col 2"), ColRef.of("col 1"));
+        assertNotEquals(ColRef.of(1), ColRef.of(2));
     }
 
 }
