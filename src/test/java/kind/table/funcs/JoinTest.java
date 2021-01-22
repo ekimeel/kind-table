@@ -4,6 +4,8 @@ import kind.table.Table;
 import kind.table.TableBuilder;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class JoinTest {
 
     @Test
@@ -26,8 +28,13 @@ public class JoinTest {
         b.addRow("b", "2-b");
         b.addRow("c", "3-b");
 
-        final Table res = a.eval(Join.from("key", b));
-        res.print(System.out);
+        final Table result = a.eval(Join.from("key", b));
+
+        assertEquals(3, result.getRowCount());
+        assertEquals(3, result.getColCount());
+        assertEquals("a,1-a,1-b", result.getRow(0).toCsv());
+        assertEquals("b,2-a,2-b", result.getRow(1).toCsv());
+        assertEquals("c,3-a,3-b", result.getRow(2).toCsv());
 
 
     }

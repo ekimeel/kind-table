@@ -155,11 +155,16 @@ public class Row implements Copyable<Row> {
 
         return copy;
     }
+    public String toCsv() {
+        return Joiner.on(',')
+                .useForNull("null")
+                .join(values);
+    }
 
     @Override
     public String toString() {
         return "row: {\"index=\"" + index +
-                "\", \"values\"=[" + Joiner.on(',').join(values) + "] }";
+                "\", \"values\"=[" + toCsv() + "] }";
     }
 
 
