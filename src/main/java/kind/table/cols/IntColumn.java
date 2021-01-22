@@ -2,7 +2,7 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public class IntColumn extends NumberColumn<Integer> implements Serializable {
+public final class IntColumn extends NumberColumn<Integer> implements Serializable {
 
     /**
      * returns a new [[IntegerColumn]] with the provided name
@@ -16,6 +16,9 @@ public class IntColumn extends NumberColumn<Integer> implements Serializable {
 
     public IntColumn(String name) {
         super(name);
+    }
+    public IntColumn(String name, int index) {
+        super(name, index);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class IntColumn extends NumberColumn<Integer> implements Serializable {
 
     @Override
     public Column copy() {
-        return new IntColumn(getName());
+        return new IntColumn(getName(), getIndex());
     }
 
 }

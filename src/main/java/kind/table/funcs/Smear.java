@@ -7,15 +7,14 @@ import kind.table.cols.NumberColumn;
 import java.util.List;
 
 /*
- * Last observation carried forward (LOCF) is a method of imputing missing data. If a is non-null and
+ * Last observation carried forward (Smear) is a method of imputing missing data. If a is non-null and
  * becomes null, then the last non-null value replaces the null values
  */
-public final class LOCF implements Func<Table> {
+public final class Smear implements Func<Table> {
 
     private final Integer col;
-    private Table table;
 
-    public LOCF(int col) {
+    public Smear(int col) {
         this.col = col;
     }
 

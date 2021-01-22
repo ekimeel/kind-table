@@ -5,7 +5,7 @@ import kind.table.funcs.UnsupportedColumnException;
 
 import java.io.Serializable;
 
-public class GroupColumn extends Column implements Serializable {
+public final class GroupColumn extends Column implements Serializable {
 
     /**
      * returns a new [[GroupColumn]] with the provided name

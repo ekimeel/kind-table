@@ -14,7 +14,7 @@ public class TableTest {
     public void test_emptyTableHasNoColumnsOrRows(){
         final Table table = new Table();
 
-        assertTrue(table.getColumnCount() == 0);
+        assertTrue(table.getColCount() == 0);
         assertTrue(table.getRowCount() == 0);
     }
 
@@ -25,18 +25,18 @@ public class TableTest {
         table.addCol(new IntColumn("colA"));
         table.addCol(new IntColumn("colB"));
 
-        assertEquals(2, table.getColumnCount());
+        assertEquals(2, table.getColCount());
     }
 
     @Test
     public void test_addColumnWithDuplicateName(){
         final Table table = new Table();
 
-        assertTrue(table.addCol(new IntColumn("colA")));
-        assertTrue(table.addCol(new IntColumn("colB")));
-        assertFalse(table.addCol(new IntColumn("colA"))); // duplicate col name
+        assertTrue(table.addCol(new IntColumn("colA")) == 0 );
+        assertTrue(table.addCol(new IntColumn("colB")) == 1);
+        assertNull(table.addCol(new IntColumn("colA"))); // duplicate col name
 
-        assertEquals(2, table.getColumnCount());
+        assertEquals(2, table.getColCount());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class TableTest {
         table.addRow(new Row(5, 6));
 
         assertEquals(3, table.getRowCount());
-        assertEquals(2, table.getColumnCount());
+        assertEquals(2, table.getColCount());
 
         /* row:0, col:0 */
         assertTrue(table.has(0, 0));
@@ -164,7 +164,7 @@ public class TableTest {
         assertNotEquals(tableA, tableB);
 
         assertEquals(tableA.getRowCount(), tableB.getRowCount());
-        assertEquals(tableA.getColumnCount(), tableB.getColumnCount());
+        assertEquals(tableA.getColCount(), tableB.getColCount());
 
         assertEquals("Odd", tableB.getColByIndex(0).getName());
         assertEquals("Even", tableB.getColByIndex(1).getName());
@@ -189,13 +189,13 @@ public class TableTest {
         tableA.addRow(new Row(3, 4));
         tableA.addRow(new Row(5, 6));
 
-        assertEquals(2, tableA.getColumnCount());
+        assertEquals(2, tableA.getColCount());
         assertEquals(2, tableA.getRow(0).size());
         assertEquals(2, tableA.getRow(1).size());
         assertEquals(2, tableA.getRow(2).size());
 
         tableA.addCol(new StrColumn("New"));
-        assertEquals(3, tableA.getColumnCount());
+        assertEquals(3, tableA.getColCount());
         assertEquals(3, tableA.getRow(0).size());
         assertEquals(3, tableA.getRow(1).size());
         assertEquals(3, tableA.getRow(2).size());

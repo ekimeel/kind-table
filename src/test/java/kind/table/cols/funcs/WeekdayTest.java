@@ -29,9 +29,9 @@ public class WeekdayTest {
         tableA.addRow(sdf.parse("01/23/2021"), 600); // saturday
         tableA.addRow(sdf.parse("01/24/2021"), 700); // sunday
 
-        assertEquals(2, tableA.getColumnCount());
+        assertEquals(2, tableA.getColCount());
         tableA.addCol(Weekday.from("Date")); // Weekday column function
-        assertEquals(3, tableA.getColumnCount());
+        assertEquals(3, tableA.getColCount());
 
         assertEquals("Monday", tableA.get(0, 2));
         assertEquals("Tuesday", tableA.get(1, 2));

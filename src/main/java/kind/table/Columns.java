@@ -15,6 +15,7 @@ public final class Columns implements Serializable {
     public Columns(Collection<Column> cols) {
         super();
         cols.forEach( (i) -> this.values.put(size(), i));
+        indexCols();
     }
 
     public Integer size() {
@@ -24,6 +25,7 @@ public final class Columns implements Serializable {
     public boolean add(Column col) {
         col.setIndex(size());
         this.values.put(size(), col);
+        indexCols();
         return true;
     }
 
@@ -58,7 +60,10 @@ public final class Columns implements Serializable {
         final Collection<Column> cols = new ArrayList<>(size());
         this.values.forEach( (k, v) -> cols.add(v));
         this.values.clear();
-        cols.forEach( c -> this.add(c));
+        cols.forEach( (i) -> {
+            i.setIndex(this.size());
+            this.values.put(this.values.size(), i);
+        });
     }
 
 }

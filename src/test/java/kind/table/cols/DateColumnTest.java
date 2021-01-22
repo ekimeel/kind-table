@@ -36,4 +36,13 @@ public class DateColumnTest {
         assertEquals(nowSql.getTime(), nowDate.getTime());
     }
 
+    @Test
+    public void test_copy(){
+        final Column a = new DateColumn("col", 1);
+        final Column b = (Column) a.copy();
+
+        assertEquals(a.getName(), b.getName());
+        assertEquals(b.getIndex(), b.getIndex());
+    }
+
 }

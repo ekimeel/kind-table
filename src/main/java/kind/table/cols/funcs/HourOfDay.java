@@ -11,11 +11,11 @@ import java.util.TimeZone;
 public final class HourOfDay implements ColumnFunc {
 
     private static final String DEFAULT_NAME = "HourOfDay";
-    public static HourOfDay from(String name, int col) { return new HourOfDay(name, ColRef.from(col)); }
-    public static HourOfDay from(int col) { return new HourOfDay(DEFAULT_NAME, ColRef.from(col)); }
+    public static HourOfDay from(String name, int col) { return new HourOfDay(name, ColRef.of(col)); }
+    public static HourOfDay from(int col) { return new HourOfDay(DEFAULT_NAME, ColRef.of(col)); }
     /**/
-    public static HourOfDay from(String col) { return new HourOfDay(DEFAULT_NAME, ColRef.from(col)); }
-    public static HourOfDay from(String name, String col) { return new HourOfDay(name, ColRef.from(col)); }
+    public static HourOfDay from(String col) { return new HourOfDay(DEFAULT_NAME, ColRef.of(col)); }
+    public static HourOfDay from(String name, String col) { return new HourOfDay(name, ColRef.of(col)); }
     /**/
 
     private final String colName;
@@ -70,7 +70,6 @@ public final class HourOfDay implements ColumnFunc {
             final java.util.Date date = row.get(source.getIndex());
             calendar.setTime(date);
             int hours = calendar.get(Calendar.HOUR_OF_DAY);
-
             return row.append(hours);
         });
     }

@@ -17,6 +17,9 @@ public final class DblColumn extends NumberColumn<Double> implements Serializabl
     public DblColumn(String name) {
         super(name);
     }
+    public DblColumn(String name, int index) {
+        super(name, index);
+    }
 
     @Override
     public Double cast(Object value) {
@@ -31,6 +34,6 @@ public final class DblColumn extends NumberColumn<Double> implements Serializabl
 
     @Override
     public Column copy() {
-        return new DblColumn(getName());
+        return new DblColumn(getName(), getIndex());
     }
 }

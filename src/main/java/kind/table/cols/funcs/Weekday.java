@@ -13,11 +13,11 @@ import java.util.Locale;
 public final class Weekday implements ColumnFunc {
 
     private static final String DEFAULT_NAME = "Weekday";
-    public static Weekday from(String name, int col) { return new Weekday(name, ColRef.from(col)); }
-    public static Weekday from(int col) { return new Weekday(DEFAULT_NAME, ColRef.from(col)); }
+    public static Weekday from(String name, int col) { return new Weekday(name, ColRef.of(col)); }
+    public static Weekday from(int col) { return new Weekday(DEFAULT_NAME, ColRef.of(col)); }
     /**/
-    public static Weekday from(String col) { return new Weekday(DEFAULT_NAME, ColRef.from(col)); }
-    public static Weekday from(String name, String col) { return new Weekday(name, ColRef.from(col)); }
+    public static Weekday from(String col) { return new Weekday(DEFAULT_NAME, ColRef.of(col)); }
+    public static Weekday from(String name, String col) { return new Weekday(name, ColRef.of(col)); }
     /**/
 
     private final String colName;

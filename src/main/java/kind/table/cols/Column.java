@@ -10,8 +10,13 @@ public abstract class Column<T> implements Copyable<Column>, Serializable {
     private int index;
     private String name;
 
-    public Column(String name) {
+    protected Column(String name) {
         this.name = name;
+    }
+
+    protected Column(String name, int index) {
+        this.name = name;
+        this.index = index;
     }
 
     public String getName() {
@@ -46,6 +51,10 @@ public abstract class Column<T> implements Copyable<Column>, Serializable {
         Column<?> column = (Column<?>) o;
         return index == column.index &&
                 Objects.equals(name, column.name);
+    }
+
+    public ColRef toColRef() {
+        return ColRef.of(this.name);
     }
 
     @Override

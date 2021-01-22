@@ -6,8 +6,8 @@ import java.util.OptionalInt;
 
 public final class Max<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.from(col)); }
-    public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.from(col)); }
+    public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;

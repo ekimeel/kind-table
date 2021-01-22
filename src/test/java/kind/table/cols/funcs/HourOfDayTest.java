@@ -30,9 +30,9 @@ public class HourOfDayTest {
         tableA.addRow(sdf.parse("01/21/2021 18:05:55"), 400);
         tableA.addRow(sdf.parse("01/21/2021 23:59:59"), 400);
 
-        assertEquals(2, tableA.getColumnCount());
+        assertEquals(2, tableA.getColCount());
         tableA.addCol(HourOfDay.from("DateTime")); // Weekday column function
-        assertEquals(3, tableA.getColumnCount());
+        assertEquals(3, tableA.getColCount());
 
         tableA.print(System.out);
         assertEquals((Integer)6, tableA.get(0, 2));

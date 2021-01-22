@@ -38,7 +38,7 @@ public class GroupByTest {
         final Table result = table.eval(new GroupBy(0));
 
         assertEquals(3, result.getRowCount());
-        assertEquals(2, result.getColumnCount());
+        assertEquals(2, result.getColCount());
         assertTrue(result.getColByIndex(0) instanceof StrColumn);
         assertTrue(result.getColByIndex(1) instanceof RowColumn);
 

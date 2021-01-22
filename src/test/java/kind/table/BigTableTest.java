@@ -61,7 +61,7 @@ public class BigTableTest {
         final Table tableB = tableA.copy();
 
         assertNotEquals(tableA, tableB);
-        assertEquals(tableA.getColumnCount(), tableB.getColumnCount());
+        assertEquals(tableA.getColCount(), tableB.getColCount());
         assertEquals(tableA.getRowCount(), tableB.getRowCount());
 
         final Integer sumColA_TableA = tableA.eval(Sum.of("ColA"));
@@ -92,11 +92,11 @@ public class BigTableTest {
             tableA.addRow(new Row(i, i * 0.1, "val_" + i));
         }
 
-        assertEquals(3, tableA.getColumnCount());
+        assertEquals(3, tableA.getColCount());
 
         tableA.addCol(new LngColumn("ColD"));
 
-        assertEquals(4, tableA.getColumnCount());
+        assertEquals(4, tableA.getColCount());
         assertNull(tableA.getFirstRow().get(3));
         assertNull(tableA.getLastRow().get(3));
 
