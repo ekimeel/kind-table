@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class LOCFTest {
+public class SmearTest {
 
     @Test
     public void test_eval_withIntegerColumn(){
@@ -26,7 +26,7 @@ public class LOCFTest {
         table.addRow(new Row(15, 16));
         table.addRow(new Row(17, 18));
 
-        final Table result = table.eval(new LOCF(1));
+        final Table result = table.eval(new Smear(1));
 
         assertEquals( (Integer) 6, result.get(2, 1)); //
         assertEquals( (Integer) 6, result.get(3, 1)); // was null
