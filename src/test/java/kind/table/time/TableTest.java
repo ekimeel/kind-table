@@ -30,7 +30,6 @@ public class TableTest {
             now = now.plus(Duration.ofMinutes(1));
         }
 
-
         tableA.addCol(Weekday.from("weekday", "timestamp"));
         tableA.print(System.out);
 

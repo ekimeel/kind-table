@@ -23,7 +23,7 @@ public class KeepColsTest {
         table.addRow(new Row("a-team", "player-1", 3));
 
         final Table result = table.eval(new KeepCols(0, 2));
-        assertEquals(2, result.getColumnCount());
+        assertEquals(2, result.getColCount());
         assertEquals(3, result.getRowCount());
 
         assertEquals(StrColumn.class, result.getColByIndex(0).getClass());

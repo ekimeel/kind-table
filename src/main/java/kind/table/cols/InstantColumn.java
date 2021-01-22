@@ -18,6 +18,9 @@ public class InstantColumn extends Column<Instant> implements Serializable {
     public InstantColumn(String name) {
         super(name);
     }
+    public InstantColumn(String name, int index) {
+        super(name, index);
+    }
 
     /**
      *
@@ -50,6 +53,6 @@ public class InstantColumn extends Column<Instant> implements Serializable {
 
     @Override
     public Column copy () {
-        return new InstantColumn(getName());
+        return new InstantColumn(getName(), getIndex());
     }
 }

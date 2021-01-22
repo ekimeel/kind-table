@@ -17,6 +17,9 @@ public class IntColumn extends NumberColumn<Integer> implements Serializable {
     public IntColumn(String name) {
         super(name);
     }
+    public IntColumn(String name, int index) {
+        super(name, index);
+    }
 
     @Override
     public Integer cast(Object value) {

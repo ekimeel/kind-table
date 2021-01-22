@@ -74,7 +74,7 @@ public class Table implements Copyable<Table>{
      * Returns the total size of columns in the current table.
      * @return The number of columns
      */
-    public int getColumnCount(){
+    public int getColCount(){
         return this.columns.size();
     }
 
@@ -139,10 +139,19 @@ public class Table implements Copyable<Table>{
     /**
      * Returns the column index of the provided name if available, otherwise null
      * @param name The column name
-     * @return The column name if found, otherwise null
+     * @return The column index if found, otherwise null
      */
     public Integer getColIndex(String name){
         final Column column = getColByName(name);
+        return (column == null)? null : column.getIndex();
+    }
+    /**
+     * Returns the column index of the provided a ColRef if available, otherwise null
+     * @param colRef The column ref
+     * @return The column index if found, otherwise null
+     */
+    public Integer getColIndex(ColRef colRef){
+        final Column column = getColByRef(colRef);
         return (column == null)? null : column.getIndex();
     }
 
@@ -160,23 +169,23 @@ public class Table implements Copyable<Table>{
     }
 
     /**
-     * Attempts to add the provided column to the table and returns true if the column was added, otherwise false. The
-     * column will not be added if one of the same name already exists.
+     * Attempts to add the provided column to the table and returns the index if the column was added, otherwise null.
+     * The column will not be added if one of the same name already exists.
      *
      * If the current table contains rows a null value will be appended to each row
      *
      * @param column
-     * @return
+     * @return the newly added column index
      */
-    public synchronized boolean addCol(Column column) {
-        if (!acceptCol(column)) return false;
+    public synchronized Integer addCol(Column column) {
+        if (!acceptCol(column)) return null;
 
         if (!isEmpty()) {
             addCol(column, (row) -> row.append(null) );
         } else {
             this.columns.add(column);
         }
-        return hasCol(column.getName());
+        return getColIndex(column.getName());
     }
 
     public void addCol(ColumnFunc colFunc) {
@@ -270,7 +279,7 @@ public class Table implements Copyable<Table>{
      * @return Return true if the row can be added, otherwise false.
      */
     private boolean acceptRow(Row row){
-        if (row.size() != getColumnCount()) {
+        if (row.size() != getColCount()) {
             return false;
         }
         return true;
@@ -308,6 +317,24 @@ public class Table implements Copyable<Table>{
         return this.rows.get(row);
     }
 
+    /**
+     * Returns the rows that are equal to the provided ref and object.
+     *
+     * @param ref a valid column reference
+     * @param eq a value ot compare equals to
+     * @return
+     */
+    public List<Row> getRowsEq(ColRef ref, Comparable eq) {
+        final int index = getColIndex(ref);
+        final Stream<Row> stream = (allowParallelProcessing())?
+                this.rows.parallelStream() :
+                this.rows.stream();
+
+        return stream
+                .filter( (r) -> r.get(index).equals(eq) )
+                .collect(Collectors.toList());
+    }
+
 
     /**
      * Evaluates if the current table has a value at the provided row and col indexes by evaluating row and column
@@ -322,7 +349,7 @@ public class Table implements Copyable<Table>{
             return false;
         }
 
-        if (row >= getRowCount() && col >= getColumnCount()){
+        if (row >= getRowCount() && col >= getColCount()){
             return false;
         }
 

@@ -23,7 +23,7 @@ public class CopyTest {
         final Table result = table.eval(new Copy());
         assertNotEquals(table, result);
         assertEquals(3, result.getRowCount());
-        assertEquals(2, result.getColumnCount());
+        assertEquals(2, result.getColCount());
 
         assertEquals((Integer)6, result.eval(Sum.of("Odd")));
         assertEquals((Integer)8, result.eval(Sum.of("Even")));

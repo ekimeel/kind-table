@@ -17,6 +17,9 @@ public class LngColumn extends NumberColumn<Long> implements Serializable {
     public LngColumn(String name) {
         super(name);
     }
+    public LngColumn(String name, int index) {
+        super(name, index);
+    }
 
     @Override
     public Long cast(Object value) {
@@ -31,6 +34,6 @@ public class LngColumn extends NumberColumn<Long> implements Serializable {
 
     @Override
     public Column copy() {
-        return new LngColumn(getName());
+        return new LngColumn(getName(), getIndex());
     }
 }

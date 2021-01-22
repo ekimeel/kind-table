@@ -17,6 +17,9 @@ public class StrColumn extends Column<String> implements Serializable {
     public StrColumn(String name) {
         super(name);
     }
+    public StrColumn(String name, int index) {
+        super(name, index);
+    }
 
     @Override
     public String cast(Object value) {
@@ -29,6 +32,6 @@ public class StrColumn extends Column<String> implements Serializable {
 
     @Override
     public Column copy() {
-        return new StrColumn(getName());
+        return new StrColumn(getName(), getIndex());
     }
 }

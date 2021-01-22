@@ -5,8 +5,8 @@ import kind.table.cols.*;
 
 public final class Min<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.from(col)); }
-    public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.from(col)); }
+    public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;

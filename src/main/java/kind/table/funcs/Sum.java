@@ -7,8 +7,8 @@ import java.util.List;
 
 public final class Sum<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Sum<E> of(String col) { return new Sum<>(ColRef.from(col)); }
-    public static <E extends Number> Sum<E> of(int col) { return new Sum<>(ColRef.from(col)); }
+    public static <E extends Number> Sum<E> of(String col) { return new Sum<>(ColRef.of(col)); }
+    public static <E extends Number> Sum<E> of(int col) { return new Sum<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;

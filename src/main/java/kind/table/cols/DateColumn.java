@@ -19,6 +19,10 @@ public class DateColumn extends Column<Date> implements Serializable {
         super(name);
     }
 
+    public DateColumn(String name, int index) {
+        super(name, index);
+    }
+
     /**
      *
      * Supports the following class types:
@@ -45,7 +49,7 @@ public class DateColumn extends Column<Date> implements Serializable {
 
     @Override
     public Column copy() {
-        return new DateColumn(getName());
+        return new DateColumn(getName(), getIndex());
     }
 
 }
