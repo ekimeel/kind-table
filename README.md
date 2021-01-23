@@ -120,18 +120,19 @@ final Table group = table.eval(new GroupBy(2));
 
 | Function            | Output | Description               |   
 |---------------------|--------|---------------------------|
-| **Copy**                | Table  |Creates a copy of a table|
-| **First**               | Any    |Returns the first value in a column |   |
-| **GroupBy**             | Table  | |
-| **Join**                | Table  | Inner joins two tables on one key column
-| **KeepCols**            | Table  |   | 
-| **Last**                | Any    |   |
-| **LinearInterpolation** | Table  |   |
-| **Smear**               | Table  | Last non-null value carried forward over nulls (smear)| 
-| **Max**                 | Number | Returns the max value in a column |
-| **Mean**                | Double | Returns the mean (average) value in a column |
-| **Min**                 | Number | Returns the min value in a column |
-| **StandardDeviation**   | Double | Returns the entire population's standard deviation |
-| **Sum**                 | Number | Returns the sum (total) value in a column |
+| **Copy**                | Table        | Creates a copy of a table|
+| **First**               | Any          | Returns the first value in a column |   |
+| **GroupBy**             | Table        | |
+| **Join**                | Table        | Inner joins two tables on one key column
+| **KeepCols**            | Table        |   | 
+| **Last**                | Any          |   |
+| **LinearInterpolation** | Table        |   |
+| **Smear**               | Table        | Last non-null value carried forward over nulls (smear)| 
+| **Split**               | List<Table>  | Splits a table into 1 or many tables based on a provide column to key and group on |
+| **Max**                 | Number       | Returns the max value in a column |
+| **Mean**                | Double       | Returns the mean (average) value in a column |
+| **Min**                 | Number       | Returns the min value in a column |
+| **StandardDeviation**   | Double       | Returns the entire population's standard deviation |
+| **Sum**                 | Number       | Returns the sum (total) value in a column |
 
 ### Advanced
