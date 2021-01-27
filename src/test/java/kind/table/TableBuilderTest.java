@@ -1,7 +1,5 @@
 package kind.table;
 
-import kind.table.cols.GroupColumn;
-import kind.table.funcs.First;
 import kind.table.funcs.GroupBy;
 import kind.table.funcs.Sum;
 import org.junit.Test;

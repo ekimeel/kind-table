@@ -1,5 +1,6 @@
 package kind.table;
 
+import kind.support.Coalesce;
 import kind.table.cols.ColRef;
 import kind.table.cols.Column;
 import kind.table.cols.funcs.ColumnFunc;
@@ -10,6 +11,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import static kind.support.Coalesce.*;
 
 public class Table implements Copyable<Table>{
 
@@ -23,7 +25,15 @@ public class Table implements Copyable<Table>{
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
+    /**
+     * Create a new instance of a table with the provided settings. If the settings provided is null, setting will be
+     * reassigned to TableSettings.DEFAULT_SETTINGS
+     *
+     * @param settings
+     */
     public Table(TableSettings settings){
+        if (settings == null) throw new NullPointerException("Table Settings cannot be null.");
+
         this.columns = new Columns();
         this.rows = new ArrayList<>();
         this.settings = settings;
@@ -186,6 +196,10 @@ public class Table implements Copyable<Table>{
             this.columns.add(column);
         }
         return getColIndex(column.getName());
+    }
+
+    public void addCols(Collection<Column> columns) {
+        columns.forEach( (c) -> this.addCol(c) );
     }
 
     public void addCol(ColumnFunc colFunc) {
