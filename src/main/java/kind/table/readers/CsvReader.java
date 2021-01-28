@@ -18,13 +18,13 @@ public final class CsvReader implements TableReader {
     protected static final Pattern SPLIT_PATTERN = Pattern.compile(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     /**/
     private final Path path;
-    private final boolean hasColumnHeaders;
+    private final boolean hasColHeaders;
     private final boolean hasQuotedValues;
     private final TableSettings tableSettings;
 
     public CsvReader(Path path) {
         this.path = path;
-        this.hasColumnHeaders = DEFAULT_HAS_COLUMN_HEADERS;
+        this.hasColHeaders = DEFAULT_HAS_COLUMN_HEADERS;
         this.hasQuotedValues = DEFAULT_HAS_QUOTED_VALUES;
         this.tableSettings = TableSettings.DEFAULT_SETTINGS;
     }
@@ -32,21 +32,21 @@ public final class CsvReader implements TableReader {
     public CsvReader(Path path, TableSettings tableSettings) {
         this.path = path;
         this.tableSettings = tableSettings;
-        this.hasColumnHeaders = DEFAULT_HAS_COLUMN_HEADERS;
+        this.hasColHeaders = DEFAULT_HAS_COLUMN_HEADERS;
         this.hasQuotedValues = DEFAULT_HAS_QUOTED_VALUES;
     }
 
     public CsvReader(Path path, TableSettings tableSettings, boolean hasColHeaders) {
         this.path = path;
         this.tableSettings = tableSettings;
-        this.hasColumnHeaders = hasColHeaders;
+        this.hasColHeaders = hasColHeaders;
         this.hasQuotedValues = DEFAULT_HAS_QUOTED_VALUES;
     }
 
     public CsvReader(Path path, TableSettings tableSettings, boolean hasColHeaders, boolean hasQuotedValue) {
         this.path = path;
         this.tableSettings = tableSettings;
-        this.hasColumnHeaders = hasColHeaders;
+        this.hasColHeaders = hasColHeaders;
         this.hasQuotedValues = hasQuotedValue;
     }
 
@@ -56,7 +56,7 @@ public final class CsvReader implements TableReader {
     }
 
     public boolean hasColumnHeaders() {
-        return hasColumnHeaders;
+        return hasColHeaders;
     }
 
     private Table readData() {

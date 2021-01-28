@@ -2,8 +2,8 @@ package kind.table.funcs;
 
 import kind.table.Row;
 import kind.table.Table;
-import kind.table.cols.IntColumn;
-import kind.table.cols.StrColumn;
+import kind.table.cols.IntCol;
+import kind.table.cols.StrCol;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,9 +14,9 @@ public class KeepColsTest {
     public void test_eval(){
         final Table table = new Table();
 
-        table.addCol(StrColumn.of("team"));
-        table.addCol(StrColumn.of("player"));
-        table.addCol(IntColumn.of("points"));
+        table.addCol(StrCol.of("team"));
+        table.addCol(StrCol.of("player"));
+        table.addCol(IntCol.of("points"));
 
         table.addRow(new Row("a-team", "player-1", 1));
         table.addRow(new Row("a-team", "player-1", 2));
@@ -26,8 +26,8 @@ public class KeepColsTest {
         assertEquals(2, result.getColCount());
         assertEquals(3, result.getRowCount());
 
-        assertEquals(StrColumn.class, result.getColByIndex(0).getClass());
-        assertEquals(IntColumn.class, result.getColByIndex(1).getClass());
+        assertEquals(StrCol.class, result.getColByIndex(0).getClass());
+        assertEquals(IntCol.class, result.getColByIndex(1).getClass());
 
     }
 }

@@ -2,7 +2,7 @@ package kind.table.funcs;
 
 import kind.table.Row;
 import kind.table.Table;
-import kind.table.cols.IntColumn;
+import kind.table.cols.IntCol;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,11 +10,11 @@ import static org.junit.Assert.*;
 public class SmearTest {
 
     @Test
-    public void test_eval_withIntegerColumn(){
+    public void test_eval_withIntegerCol(){
         final Table table = new Table();
 
-        table.addCol(new IntColumn("ColA"));
-        table.addCol(new IntColumn("ColB"));
+        table.addCol(new IntCol("ColA"));
+        table.addCol(new IntCol("ColB"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(3, 4));
@@ -26,7 +26,7 @@ public class SmearTest {
         table.addRow(new Row(15, 16));
         table.addRow(new Row(17, 18));
 
-        final Table result = table.eval(new Smear(1));
+        final Table result = table.eval(Smear.from(1));
 
         assertEquals( (Integer) 6, result.get(2, 1)); //
         assertEquals( (Integer) 6, result.get(3, 1)); // was null

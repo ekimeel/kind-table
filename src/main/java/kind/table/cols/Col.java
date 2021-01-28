@@ -5,16 +5,16 @@ import kind.table.Copyable;
 import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Column<T> implements Copyable<Column>, Serializable {
+public abstract class Col<T> implements Copyable<Col>, Serializable {
 
     private int index;
     private String name;
 
-    protected Column(String name) {
+    protected Col(String name) {
         this.name = name;
     }
 
-    protected Column(String name, int index) {
+    protected Col(String name, int index) {
         this.name = name;
         this.index = index;
     }
@@ -48,9 +48,9 @@ public abstract class Column<T> implements Copyable<Column>, Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Column<?> column = (Column<?>) o;
-        return index == column.index &&
-                Objects.equals(name, column.name);
+        Col<?> col = (Col<?>) o;
+        return index == col.index &&
+                Objects.equals(name, col.name);
     }
 
     public ColRef toColRef() {

@@ -5,8 +5,8 @@ import kind.table.cols.*;
 
 public final class Min<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.of(col)); }
-    public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> from(String col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> from(int col) { return new Min(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;
@@ -16,8 +16,8 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -26,18 +26,18 @@ public final class Min<T extends Number> implements Func<T> {
             return null;
         }
         this.table = table;
-        final Column column = table.getColByRef(this.colRef);
+        final Col col = table.getColByRef(this.colRef);
 
-        if (column instanceof DblColumn){
+        if (col instanceof DblCol){
             return (T) minDouble();
-        } else if (column instanceof IntColumn){
+        } else if (col instanceof IntCol){
             return (T) minInteger();
-        } else if (column instanceof LngColumn){
+        } else if (col instanceof LngCol){
             return (T)minLong();
         } else {
-            throw new UnsupportedOperationException(String.format("%s does not support column type %.",
+            throw new UnsupportedOperationException(String.format("%s does not support col type %.",
                     this.getClass().getSimpleName(),
-                    column.getClass().getSimpleName()));
+                    col.getClass().getSimpleName()));
         }
 
     }

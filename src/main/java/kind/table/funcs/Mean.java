@@ -2,17 +2,16 @@ package kind.table.funcs;
 
 import com.google.common.math.Stats;
 import kind.table.*;
-import kind.table.cols.ColRef;
-import kind.table.cols.Column;
-import kind.table.cols.DblColumn;
-import kind.table.cols.NumberColumn;
+import kind.table.cols.*;
+import kind.table.cols.Col;
+import kind.table.cols.NumCol;
 
 import java.util.List;
 
 public final class Mean implements Func<Double> {
 
-    public static Mean of(String col) { return new Mean(ColRef.of(col)); }
-    public static Mean of(int col) { return new Mean(ColRef.of(col)); }
+    public static Mean from(String col) { return new Mean(ColRef.of(col)); }
+    public static Mean from(int col) { return new Mean(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
@@ -21,8 +20,8 @@ public final class Mean implements Func<Double> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -31,12 +30,12 @@ public final class Mean implements Func<Double> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.colRef);
+        final Col col = table.getColByRef(this.colRef);
 
-        if (column instanceof DblColumn) {
+        if (col instanceof DblCol) {
             return Stats.of(table.getVals(colRef)).mean();
         } else {
-            final List<Double> values = table.valuesToDoubles(column.getIndex());
+            final List<Double> values = table.valuesToDoubles(col.getIndex());
             return Stats.of(values).mean();
         }
     }

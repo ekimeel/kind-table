@@ -7,8 +7,8 @@ import java.util.List;
 
 public final class Sum<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Sum<E> of(String col) { return new Sum<>(ColRef.of(col)); }
-    public static <E extends Number> Sum<E> of(int col) { return new Sum<>(ColRef.of(col)); }
+    public static <E extends Number> Sum<E> from(String col) { return new Sum<>(ColRef.of(col)); }
+    public static <E extends Number> Sum<E> from(int col) { return new Sum<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;
@@ -18,8 +18,8 @@ public final class Sum<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -29,19 +29,19 @@ public final class Sum<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.colRef);
+        final Col col = table.getColByRef(this.colRef);
         final List<T> values = table.getVals(this.colRef);
 
-        if (column instanceof DblColumn){
+        if (col instanceof DblCol){
             return (T)sumDouble(values);
-        } else if (column instanceof IntColumn){
+        } else if (col instanceof IntCol){
             return (T)sumInteger(values);
-        } else if (column instanceof LngColumn){
+        } else if (col instanceof LngCol){
             return (T)sumLong(values);
         } else {
-            throw new UnsupportedOperationException(String.format("%s does not support column type %s.",
+            throw new UnsupportedOperationException(String.format("%s does not support col type %s.",
                     this.getClass().getSimpleName(),
-                    column.getClass().getSimpleName()));
+                    col.getClass().getSimpleName()));
         }
 
     }

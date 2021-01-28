@@ -2,9 +2,8 @@ package kind.table.funcs;
 
 import kind.table.Row;
 import kind.table.Table;
+import kind.table.cols.Col;
 import kind.table.cols.ColRef;
-import kind.table.cols.Column;
-import kind.table.cols.NumberColumn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class Split implements Func<List<Table>> {
 
-    public static Split of(int col) { return new Split(ColRef.of(col)); }
-    public static Split of(String col) { return new Split(ColRef.of(col)); }
-    public static Split of(ColRef colRef) { return new Split(colRef); }
+    public static Split from(int col) { return new Split(ColRef.of(col)); }
+    public static Split from(String col) { return new Split(ColRef.of(col)); }
+    public static Split from(ColRef colRef) { return new Split(colRef); }
     /**/
     private final ColRef colRef;
     public Split(ColRef colRef) {
@@ -23,12 +22,12 @@ public class Split implements Func<List<Table>> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) { return true; }
+    public boolean acceptCol(Col col) { return true; }
 
     @Override
     public List<Table> eval(Table table) {
         final List<Table> results = new ArrayList<>();
-        final Column splitCol = table.getColByRef(this.colRef);
+        final Col splitCol = table.getColByRef(this.colRef);
         final Map<Object, List<Row>> splits = table.
                 getRows().
                 stream().
@@ -36,7 +35,7 @@ public class Split implements Func<List<Table>> {
 
         splits.forEach( (i, rows) -> {
             final Table split = new Table(table.getSettings());
-            table.getCols().forEach( (c) -> split.addCol((Column) c.copy()));
+            table.getCols().forEach( (c) -> split.addCol((Col) c.copy()));
             rows.forEach( (r) -> split.addRow(r) );
             results.add(split);
         });

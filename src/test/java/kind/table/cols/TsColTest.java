@@ -4,12 +4,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class BoolColumnTest {
+public class TsColTest {
 
     @Test
     public void test_copy(){
-        final Column a = new BoolColumn("col", 1);
-        final Column b = (Column) a.copy();
+        final Col a = new TsCol("col", 1);
+        final Col b = (Col) a.copy();
 
         assertEquals(a.getName(), b.getName());
         assertEquals(b.getIndex(), b.getIndex());

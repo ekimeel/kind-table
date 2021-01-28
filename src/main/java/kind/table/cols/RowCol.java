@@ -5,24 +5,24 @@ import kind.table.Row;
 import java.io.Serializable;
 import java.util.List;
 
-public final class RowColumn extends Column<List<Row>> implements Serializable {
+public final class RowCol extends Col<List<Row>> implements Serializable {
 
     /**
-     * returns a new [[ListColumn]] with the provided name
+     * returns a new [[ListCol]] with the provided name
      *
      * @param name a valid name
      * @return a new [[ListColumn]] with the provided name
      */
-    public static RowColumn of(String name) {
-        return new RowColumn(name);
+    public static RowCol of(String name) {
+        return new RowCol(name);
     }
 
-    public RowColumn(String name) {
+    public RowCol(String name) {
         super(name);
     }
 
     @Override
-    public Column copy() {
+    public Col copy() {
         return null;
     }
 

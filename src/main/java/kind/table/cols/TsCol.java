@@ -2,23 +2,22 @@ package kind.table.cols;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Date;
 
-public final class InstantColumn extends Column<Instant> implements Serializable {
+public final class TsCol extends Col<Instant> implements Serializable {
     /**
-     * returns a new [[InstantColumn]] with the provided name
+     * returns a new [[TsCol]] with the provided name
      *
      * @param name a valid name
-     * @return a new [[InstantColumn]] with the provided name
+     * @return a new [[TsCol]] with the provided name
      */
-    public static InstantColumn of(String name) {
-        return new InstantColumn(name);
+    public static TsCol of(String name) {
+        return new TsCol(name);
     }
 
-    public InstantColumn(String name) {
+    public TsCol(String name) {
         super(name);
     }
-    public InstantColumn(String name, int index) {
+    public TsCol(String name, int index) {
         super(name, index);
     }
 
@@ -52,7 +51,7 @@ public final class InstantColumn extends Column<Instant> implements Serializable
     }
 
     @Override
-    public Column copy () {
-        return new InstantColumn(getName(), getIndex());
+    public Col copy () {
+        return new TsCol(getName(), getIndex());
     }
 }

@@ -2,22 +2,22 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
-public final class DblColumn extends NumberColumn<Double> implements Serializable {
+public final class DblCol extends NumCol<Double> implements Serializable {
 
     /**
-     * returns a new [[DblColumn]] with the provided name
+     * returns a new [[DblCol]] with the provided name
      *
      * @param name a valid name
-     * @return a new [[DblColumn]] with the provided name
+     * @return a new [[DblCol]] with the provided name
      */
-    public static DblColumn of(String name) {
-        return new DblColumn(name);
+    public static DblCol of(String name) {
+        return new DblCol(name);
     }
 
-    public DblColumn(String name) {
+    public DblCol(String name) {
         super(name);
     }
-    public DblColumn(String name, int index) {
+    public DblCol(String name, int index) {
         super(name, index);
     }
 
@@ -33,7 +33,7 @@ public final class DblColumn extends NumberColumn<Double> implements Serializabl
     }
 
     @Override
-    public Column copy() {
-        return new DblColumn(getName(), getIndex());
+    public Col copy() {
+        return new DblCol(getName(), getIndex());
     }
 }

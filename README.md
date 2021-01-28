@@ -3,7 +3,7 @@
 ![Publish Status](https://github.com/ekimeel/kind-table/workflows/Publish/badge.svg?branch=main)
 
 # About
-The kind-table project is designed to be an in-memory table data structure (rows and columns) with robust functionality.  
+The kind-table project is designed to be an in-memory table data structure (rows and cols) with robust functionality.  
 
 ## Quick Start
 
@@ -11,10 +11,10 @@ The kind-table project is designed to be an in-memory table data structure (rows
 Documentation is a work in progress!
 
 ### Basic Table: 
-The below example creates a simple three column table with three rows:
+The below example creates a simple three col table with three rows:
 ```java
     final Table table = new Table();
-    table.addCol( IntColumn.of("Odd") );
+    table.addCol( IntCol.of("Odd") );
     table.addCol( DblColumn.of("Even") );
     table.addCol( StrColumn.of("Name") );
 
@@ -29,11 +29,11 @@ The below example creates a simple three column table with three rows:
 ### Table Functions
 
 ### Column Functions
-Column functions are used to add a column to an existing table and append a new value to each row. When the column is added the function performs an 
+Column functions are used to add a col to an existing table and append a new value to each row. When the col is added the function performs an 
 evaluation to arrive at a new value insert into each row. 
 
 For example, if you have an existing table with a DateColumn and IntColumn and you want to add quickly add a 
-day-of-the-week (Monday-Sunday) column to the table. You could write your own function or you could use a built-in
+day-of-the-week (Monday-Sunday) col to the table. You could write your own function or you could use a built-in
 Weekday ColumnFunc:
 
 ```java
@@ -53,7 +53,7 @@ Weekday ColumnFunc:
         tableA.addRow(sdf.parse("01/24/2021"), 700); // sunday
 
         assertEquals(2, tableA.getColumnCount());
-        tableA.addCol(Weekday.from("Date")); // Weekday column function
+        tableA.addCol(Weekday.from("Date")); // Weekday col function
         assertEquals(3, tableA.getColumnCount()); 
 
         assertEquals("Monday", tableA.get(0, 2));
@@ -100,42 +100,44 @@ Below is a current list of Column Functions. You may also extend the ColFunc cla
  ```
 
 #### Column Types
-| Class         | Data Type  | Examples|   |   |
-|---------------|---|---|---|---|
-| IntColumn |java.lang.Integer| 1, 10, 1000 |   |   |
-| DblColumn  |java.lang.Double| 1.1, 10.01, 1000.0001 |   |   |
-| LngColumn    |java.lang.Long| 290902910101091 |   |   |
-| StrColumn  |java.lang.String| "Hello", "World"|   |   |
-| BoolColumn |java.lang.Boolean| true, false|   |   |
-| RowColumn     |java.util.List| ```List<kind.table.Row>``` |
+| Class         | Data Type  | Examples|
+|---------------|---|---|
+| DateCol   | java.util.Date        | new Date()                    |
+| IntCol    | java.lang.Integer     | 1, 10, 1000                   |
+| DblCol    | java.lang.Double      | 1.1, 10.01, 1000.0001         |
+| LngCol    | java.lang.Long        | 290902910101091               |
+| StrCol    | java.lang.String      | "Hello", "World"              |
+| BoolCol   | java.lang.Boolean     | true, false                   |
+| RowCol    | java.util.List        | ```List<kind.table.Row>```    |
+| TsCol     | java.time.Instant     | Instant.now()                 |
 
 #### Table Functions
 Table functions accept a table and produce an output. 
 
 Examples:
 ```java
-// returns the average of column 0
+// returns the average of col 0
 final Double max = table.eval(new Mean(0));
 
-// returns a new table grouped by column 2
+// returns a new table grouped by col 2
 final Table group = table.eval(new GroupBy(2));
 ```
 
 | Function            | Output | Description               |   
 |---------------------|--------|---------------------------|
 | **Copy**                | Table        | Creates a copy of a table|
-| **First**               | Any          | Returns the first value in a column |   |
+| **First**               | Any          | Returns the first value in a col |   |
 | **GroupBy**             | Table        | |
-| **Join**                | Table        | Inner joins two tables on one key column
+| **Join**                | Table        | Inner joins two tables on one key col
 | **KeepCols**            | Table        |   | 
 | **Last**                | Any          |   |
 | **LinearInterpolation** | Table        |   |
 | **Smear**               | Table        | Last non-null value carried forward over nulls (smear)| 
-| **Split**               | List<Table>  | Splits a table into 1 or many tables based on a provide column to key and group on |
-| **Max**                 | Number       | Returns the max value in a column |
-| **Mean**                | Double       | Returns the mean (average) value in a column |
-| **Min**                 | Number       | Returns the min value in a column |
+| **Split**               | List<Table>  | Splits a table into 1 or many tables based on a provide col to key and group on |
+| **Max**                 | Number       | Returns the max value in a col |
+| **Mean**                | Double       | Returns the mean (average) value in a col |
+| **Min**                 | Number       | Returns the min value in a col |
 | **StandardDeviation**   | Double       | Returns the entire population's standard deviation |
-| **Sum**                 | Number       | Returns the sum (total) value in a column |
+| **Sum**                 | Number       | Returns the sum (total) value in a col |
 
 ### Advanced

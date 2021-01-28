@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-public final class Weekday implements ColumnFunc {
+public final class Weekday implements ColFunc {
 
     private static final String DEFAULT_NAME = "Weekday";
     public static Weekday from(String name, int col) { return new Weekday(name, ColRef.of(col)); }
@@ -28,27 +28,27 @@ public final class Weekday implements ColumnFunc {
         this.colRef = colRef;
     }
 
-    private boolean acceptColumn(Column column) {
-        if (column instanceof InstantColumn) { return true; }
-        else if (column instanceof DateColumn) { return true; }
+    private boolean acceptCol(Col col) {
+        if (col instanceof TsCol) { return true; }
+        else if (col instanceof DateCol) { return true; }
         else { return false; }
     }
 
     private void beforeRun(Table table) {
         if (table.hasCol(colName)) {
-            throw new IllegalArgumentException(String.format("Column [%s] already exists.", colName));
+            throw new IllegalArgumentException(String.format("Col [%s] already exists.", colName));
         }
 
-        final Column column = table.getColByRef(this.colRef);
-        if (!acceptColumn(column)) {
-            throw new IllegalArgumentException(String.format("Column type [%] is not supported by this Column Function",
-                    column.getClass().getSimpleName()));
+        final Col col = table.getColByRef(this.colRef);
+        if (!acceptCol(col)) {
+            throw new IllegalArgumentException(String.format("Col type [%] is not supported by this Col Function",
+                    col.getClass().getSimpleName()));
         }
     }
 
 
     /**
-     * Adds a [[StrColumn]] with the weekday (Monday-Sunday) to the table.
+     * Adds a [[StrCol]] with the weekday (Monday-Sunday) to the table.
      *
      * @throws IllegalArgumentException If column with name already exists
      * @throws IllegalArgumentException If column type is not supported
@@ -58,21 +58,21 @@ public final class Weekday implements ColumnFunc {
     public void eval(Table table) {
 
         if (table.hasCol(colName)) {
-            throw new IllegalArgumentException(String.format("Column [%s] already exists.", colName));
+            throw new IllegalArgumentException(String.format("Col [%s] already exists.", colName));
         }
 
-        final Column column = table.getColByRef(this.colRef);
-        if (!acceptColumn(column)) {
-            throw new IllegalArgumentException(String.format("Column type [%] is not supported by this Column Function",
-                    column.getClass().getSimpleName()));
+        final Col col = table.getColByRef(this.colRef);
+        if (!acceptCol(col)) {
+            throw new IllegalArgumentException(String.format("Col type [%] is not supported by this Col Function",
+                    col.getClass().getSimpleName()));
         }
 
 
 
-        if (column instanceof DateColumn) {
-            evalWithDate(table, column);
-        } else if (column instanceof InstantColumn) {
-            evalWithInstant(table, column);
+        if (col instanceof DateCol) {
+            evalWithDate(table, col);
+        } else if (col instanceof TsCol) {
+            evalWithInstant(table, col);
         } else {
             //todo: append null;
         }
@@ -80,18 +80,18 @@ public final class Weekday implements ColumnFunc {
 
     }
 
-    private void evalWithDate(Table table, Column source) {
+    private void evalWithDate(Table table, Col source) {
         final DateFormat format = new SimpleDateFormat("EEEE");
 
-        table.addCol(new StrColumn(this.colName), row -> {
+        table.addCol(new StrCol(this.colName), row -> {
             final java.util.Date date = row.get(source.getIndex());
             final String weekday = format.format(date);
             return row.append(weekday);
         });
     }
 
-    private void evalWithInstant(Table table, Column source) {
-        table.addCol(new StrColumn(this.colName), row -> {
+    private void evalWithInstant(Table table, Col source) {
+        table.addCol(new StrCol(this.colName), row -> {
             final Instant instant = row.get(source.getIndex());
 
             final String weekday = instant.atZone(ZoneId.of("UTC"))

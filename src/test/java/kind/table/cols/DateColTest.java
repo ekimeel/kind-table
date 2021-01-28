@@ -7,18 +7,18 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class DateColumnTest {
+public class DateColTest {
 
     @Test
     public void test_cast_withNull(){
-        final DateColumn column = new DateColumn("undefined");
+        final DateCol column = new DateCol("undefined");
 
         assertNull(column.cast(null));
     }
 
     @Test
     public void test_cast_withLong(){
-        final DateColumn column = new DateColumn("undefined");
+        final DateCol column = new DateCol("undefined");
 
         final long nowLong = Instant.now().toEpochMilli();
         final Date nowDate = column.cast(nowLong);
@@ -28,7 +28,7 @@ public class DateColumnTest {
 
     @Test
     public void test_cast_withSqlDate(){
-        final DateColumn column = new DateColumn("undefined");
+        final DateCol column = new DateCol("undefined");
 
         final java.sql.Date nowSql = new java.sql.Date(Instant.now().toEpochMilli());
         final Date nowDate = column.cast(nowSql);
@@ -38,8 +38,8 @@ public class DateColumnTest {
 
     @Test
     public void test_copy(){
-        final Column a = new DateColumn("col", 1);
-        final Column b = (Column) a.copy();
+        final Col a = new DateCol("col", 1);
+        final Col b = (Col) a.copy();
 
         assertEquals(a.getName(), b.getName());
         assertEquals(b.getIndex(), b.getIndex());

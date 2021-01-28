@@ -1,18 +1,18 @@
 package kind.table;
 
-import kind.table.cols.Column;
+import kind.table.cols.Col;
 
 import java.io.Serializable;
 import java.util.*;
 
-public final class Columns implements Serializable {
+public final class Cols implements Serializable {
 
-    private TreeMap<Integer, Column> values = new TreeMap();
+    private TreeMap<Integer, Col> values = new TreeMap();
 
-    public Columns() {
+    public Cols() {
     }
 
-    public Columns(Collection<Column> cols) {
+    public Cols(Collection<Col> cols) {
         super();
         cols.forEach( (i) -> this.values.put(size(), i));
         indexCols();
@@ -22,24 +22,24 @@ public final class Columns implements Serializable {
         return this.values.size();
     }
 
-    public boolean add(Column col) {
+    public boolean add(Col col) {
         col.setIndex(size());
         this.values.put(size(), col);
         indexCols();
         return true;
     }
 
-    public void addAll(Collection<Column> cols) {
+    public void addAll(Collection<Col> cols) {
         if (cols == null) return;
         cols.forEach( i -> add(i));
     }
 
-    public void remove(Column col){
+    public void remove(Col col){
         this.values.remove(col.getIndex());
         indexCols();
     }
 
-    public Collection<Column> values() {
+    public Collection<Col> values() {
         return this.values.values();
     }
 
@@ -47,7 +47,7 @@ public final class Columns implements Serializable {
         this.values.clear();
     }
 
-    public Column get(int index) {
+    public Col get(int index) {
         return this.values.get(index);
     }
 
@@ -57,7 +57,7 @@ public final class Columns implements Serializable {
 
     protected synchronized void indexCols() {
         //todo: shift around instead of collect, clear, add
-        final Collection<Column> cols = new ArrayList<>(size());
+        final Collection<Col> cols = new ArrayList<>(size());
         this.values.forEach( (k, v) -> cols.add(v));
         this.values.clear();
         cols.forEach( (i) -> {

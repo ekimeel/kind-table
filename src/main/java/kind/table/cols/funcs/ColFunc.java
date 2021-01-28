@@ -2,7 +2,7 @@ package kind.table.cols.funcs;
 
 import kind.table.Table;
 
-public interface ColumnFunc {
+public interface ColFunc {
 
     void eval(Table table);
 }

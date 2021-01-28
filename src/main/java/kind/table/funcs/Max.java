@@ -6,8 +6,8 @@ import java.util.OptionalInt;
 
 public final class Max<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.of(col)); }
-    public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> from(String col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> from(int col) { return new Max<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;
@@ -17,8 +17,8 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -28,18 +28,18 @@ public final class Max<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.colRef);
+        final Col col = table.getColByRef(this.colRef);
 
-        if (column instanceof DblColumn){
+        if (col instanceof DblCol){
             return (T) maxDouble();
-        } else if (column instanceof IntColumn){
+        } else if (col instanceof IntCol){
             return (T) maxInteger();
-        } else if (column instanceof LngColumn){
+        } else if (col instanceof LngCol){
             return (T) maxLong();
         } else {
-            throw new UnsupportedOperationException(String.format("%s does not support column type %.",
+            throw new UnsupportedOperationException(String.format("%s does not support col type %.",
                     this.getClass().getSimpleName(),
-                    column.getClass().getSimpleName()));
+                    col.getClass().getSimpleName()));
         }
 
     }

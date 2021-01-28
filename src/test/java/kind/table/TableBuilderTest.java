@@ -24,7 +24,7 @@ public class TableBuilderTest {
         table.addRow("team-b", "player #19", 1);
 
         final Table result = table.
-                eval(GroupBy.of(0,"total score", Sum.of(2))).
+                eval(GroupBy.from(0,"total score", Sum.from(2))).
                 sortr("total score");
 
         result.print(System.out); // prints the table to the console

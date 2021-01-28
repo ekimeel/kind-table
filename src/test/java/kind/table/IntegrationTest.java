@@ -1,8 +1,8 @@
 package kind.table;
 
-import kind.table.cols.GroupColumn;
-import kind.table.cols.IntColumn;
-import kind.table.cols.StrColumn;
+import kind.table.cols.GroupCol;
+import kind.table.cols.IntCol;
+import kind.table.cols.StrCol;
 import kind.table.funcs.GroupBy;
 import kind.table.funcs.KeepCols;
 import kind.table.funcs.Sum;
@@ -14,9 +14,9 @@ public class IntegrationTest {
     public void test(){
         final Table table = new Table();
 
-        table.addCol(StrColumn.of("team"));
-        table.addCol(StrColumn.of("player"));
-        table.addCol(IntColumn.of("points"));
+        table.addCol(StrCol.of("team"));
+        table.addCol(StrCol.of("player"));
+        table.addCol(IntCol.of("points"));
 
         table.addRow(new Row("a-team", "player-1", 1));
         table.addRow(new Row("a-team", "player-1", 2));
@@ -35,9 +35,9 @@ public class IntegrationTest {
 
 
         Table result = table.
-                eval(KeepCols.of(0, 2)).
+                eval(KeepCols.from(0, 2)).
                 eval(new GroupBy(0,
-                        GroupColumn.of("Total", Sum.of(1))));
+                        GroupCol.of("Total", Sum.from(1))));
 
         //result.print(System.out);
 

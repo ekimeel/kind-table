@@ -2,8 +2,8 @@ package kind.table.funcs;
 
 import kind.table.Row;
 import kind.table.Table;
+import kind.table.cols.Col;
 import kind.table.cols.ColRef;
-import kind.table.cols.Column;
 import kind.table.util.TableUtils;
 
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public final class Join implements Func<Table> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
+    public boolean acceptCol(Col col) {
         return true;
     }
 
@@ -34,7 +34,7 @@ public final class Join implements Func<Table> {
 
         //todo: this join logic is a full scan each join, find a better impl
         final Table a = table.copy();
-        final Column joinCol = a.getColByRef(colRef);
+        final Col joinCol = a.getColByRef(colRef);
         final ColRef joinColRef = joinCol.toColRef();
 
         final Map<Integer, Integer> fromToColIndexMap = mapJoinCols(a, b, joinCol);
@@ -62,12 +62,12 @@ public final class Join implements Func<Table> {
 
     }
 
-    private Map<Integer, Integer> mapJoinCols(Table a, Table b, Column joinCol) {
+    private Map<Integer, Integer> mapJoinCols(Table a, Table b, Col joinCol) {
 
         final Map<Integer, Integer> fromToColIndexMap = new HashMap<>(b.getColCount());
         b.getCols().forEach( (i) -> {
             if (!i.getName().equals(joinCol.getName())) {
-                final Column c = (Column) i.copy();
+                final Col c = (Col) i.copy();
                 final int fromIndex = c.getIndex();
                 c.setName(TableUtils.enumerateColName(a, c.getName()));
                 fromToColIndexMap.put(fromIndex, a.addCol(c));

@@ -1,9 +1,9 @@
 package kind.table.funcs;
 
 import kind.table.*;
-import kind.table.cols.DblColumn;
-import kind.table.cols.IntColumn;
-import kind.table.cols.LngColumn;
+import kind.table.cols.DblCol;
+import kind.table.cols.IntCol;
+import kind.table.cols.LngCol;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,47 +11,47 @@ import static org.junit.Assert.*;
 public class LastTest {
 
     @Test
-    public void test_eval_withIntegerColumn(){
+    public void test_eval_withIntegerCol(){
         final Table table = new Table();
 
-        table.addCol(new IntColumn("Odd"));
-        table.addCol(new IntColumn("Even"));
+        table.addCol(new IntCol("Odd"));
+        table.addCol(new IntCol("Even"));
 
         table.addRow(new Row(1, 2));
         table.addRow(new Row(0, 0));
         table.addRow(new Row(5, 6));
 
-        final Integer value = table.eval(Last.of(0));
+        final Integer value = table.eval(Last.from(0));
         assertEquals((Integer)5, value);
     }
 
     @Test
-    public void test_eval_withDoubleColumn(){
+    public void test_eval_withDoubleCol(){
         final Table table = new Table();
 
-        table.addCol(new DblColumn(("Odd")));
-        table.addCol(new DblColumn("Even"));
+        table.addCol(new DblCol(("Odd")));
+        table.addCol(new DblCol("Even"));
 
         table.addRow(new Row(3.3, 2.2));
         table.addRow(new Row(5.5, 4.4));
         table.addRow(new Row(1.1, 6.6));
 
-        final Double value = table.eval(Last.of("Even"));
+        final Double value = table.eval(Last.from("Even"));
         assertEquals((Double)6.6, value);
     }
 
     @Test
-    public void test_eval_withLongColumn(){
+    public void test_eval_withLongCol(){
         final Table table = new Table();
 
-        table.addCol(new LngColumn(("Odd")));
-        table.addCol(new LngColumn("Even"));
+        table.addCol(new LngCol(("Odd")));
+        table.addCol(new LngCol("Even"));
 
         table.addRow(new Row(10L, 20L));
         table.addRow(new Row(30L, 40L));
         table.addRow(new Row(50L, 60L));
 
-        final Long value = table.eval(Last.of(1));
+        final Long value = table.eval(Last.from(1));
         assertEquals((Long)60L, value);
     }
 

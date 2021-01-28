@@ -1,7 +1,7 @@
 package kind.table.funcs;
 
 import kind.table.Table;
-import kind.table.cols.Column;
+import kind.table.cols.Col;
 
 import java.util.*;
 
@@ -9,13 +9,13 @@ public final class KeepCols implements Func<Table> {
 
     private final List<Integer> cols = new ArrayList();
 
-    public static KeepCols of(int... cols) { return new KeepCols(cols); }
+    public static KeepCols from(int... cols) { return new KeepCols(cols); }
     public KeepCols(int... cols) {
         Arrays.stream(cols).forEach( (i) -> this.cols.add(i));
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
+    public boolean acceptCol(Col col) {
         return true;
     }
 
@@ -23,15 +23,15 @@ public final class KeepCols implements Func<Table> {
     @Override
     public Table eval(Table table) {
         final Table result = table.copy();
-        final List<Column> removable = new ArrayList(cols.size());
+        final List<Col> removable = new ArrayList(cols.size());
 
-        for(Column col : result.getCols()) {
+        for(Col col : result.getCols()) {
             if (!this.cols.contains(col.getIndex())) {
                 removable.add(col);
             }
         }
 
-        for(Column col : removable) {
+        for(Col col : removable) {
             result.removeCol(col);
         }
 

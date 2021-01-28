@@ -2,17 +2,17 @@ package kind.table;
 
 import java.util.Comparator;
 
-public class ColumnComparator implements Comparator<Row> {
+public class ColComparator implements Comparator<Row> {
 
     private final int col;
     private final boolean reverse;
 
-    public ColumnComparator(int col, boolean reverse){
+    public ColComparator(int col, boolean reverse){
         this.col = col;
         this.reverse = reverse;
     }
 
-    public ColumnComparator(int col){
+    public ColComparator(int col){
         this.col = col;
         this.reverse = false;
     }

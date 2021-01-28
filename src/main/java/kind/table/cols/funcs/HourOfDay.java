@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public final class HourOfDay implements ColumnFunc {
+public final class HourOfDay implements ColFunc {
 
     private static final String DEFAULT_NAME = "HourOfDay";
     public static HourOfDay from(String name, int col) { return new HourOfDay(name, ColRef.of(col)); }
@@ -26,15 +26,15 @@ public final class HourOfDay implements ColumnFunc {
         this.colRef = colRef;
     }
 
-    private boolean acceptColumn(Column column) {
-        if (column instanceof InstantColumn) { return true; }
-        else if (column instanceof DateColumn) { return true; }
+    private boolean acceptCol(Col col) {
+        if (col instanceof TsCol) { return true; }
+        else if (col instanceof DateCol) { return true; }
         else { return false; }
     }
 
 
     /**
-     * Adds a [[IntColumn]] with the hour-of-day (0-23) to the table.
+     * Adds a [[IntCol]] with the hour-of-day (0-23) to the table.
      *
      * @throws IllegalArgumentException If column with name already exists
      * @throws IllegalArgumentException If column type is not supported
@@ -43,30 +43,30 @@ public final class HourOfDay implements ColumnFunc {
     @Override
     public void eval(Table table) {
         if (table.hasCol(colName)) {
-            throw new IllegalArgumentException(String.format("Column [%s] already exists.", colName));
+            throw new IllegalArgumentException(String.format("Col [%s] already exists.", colName));
         }
 
-        final Column column = table.getColByRef(this.colRef);
-        if (!acceptColumn(column)) {
-            throw new IllegalArgumentException(String.format("Column type [%] is not supported by this Column Function",
-                    column.getClass().getSimpleName()));
+        final Col col = table.getColByRef(this.colRef);
+        if (!acceptCol(col)) {
+            throw new IllegalArgumentException(String.format("Col type [%] is not supported by this Col Function",
+                    col.getClass().getSimpleName()));
         }
 
-        if (column instanceof DateColumn) {
-            evalWithDate(table, column);
-        } else if (column instanceof InstantColumn) {
-            evalWithInstant(table, column);
+        if (col instanceof DateCol) {
+            evalWithDate(table, col);
+        } else if (col instanceof TsCol) {
+            evalWithInstant(table, col);
         } else {
             //todo: append null
         }
 
     }
 
-    private void evalWithDate(Table table, Column source) {
+    private void evalWithDate(Table table, Col source) {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone(table.getSettings().getTimeZone()));
 
-        table.addCol(new StrColumn(this.colName), row -> {
+        table.addCol(new StrCol(this.colName), row -> {
             final java.util.Date date = row.get(source.getIndex());
             calendar.setTime(date);
             int hours = calendar.get(Calendar.HOUR_OF_DAY);
@@ -74,8 +74,8 @@ public final class HourOfDay implements ColumnFunc {
         });
     }
 
-    private void evalWithInstant(Table table, Column source) {
-        table.addCol(new StrColumn(this.colName), row -> {
+    private void evalWithInstant(Table table, Col source) {
+        table.addCol(new StrCol(this.colName), row -> {
             final Instant instant = row.get(source.getIndex());
             final String timeZone = table.getSettings().getTimeZone();
 

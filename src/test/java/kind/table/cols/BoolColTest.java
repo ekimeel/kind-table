@@ -4,14 +4,15 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class IntColumnTest {
+public class BoolColTest {
 
     @Test
     public void test_copy(){
-        final Column a = new IntColumn("col", 1);
-        final Column b = (Column) a.copy();
+        final Col a = new BoolCol("col", 1);
+        final Col b = (Col) a.copy();
 
         assertEquals(a.getName(), b.getName());
         assertEquals(b.getIndex(), b.getIndex());
     }
+
 }

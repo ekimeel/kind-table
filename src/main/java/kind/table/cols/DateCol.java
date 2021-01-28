@@ -3,23 +3,23 @@ package kind.table.cols;
 import java.io.Serializable;
 import java.util.Date;
 
-public final class DateColumn extends Column<Date> implements Serializable {
+public final class DateCol extends Col<Date> implements Serializable {
 
     /**
-     * returns a new [[DateColumn]] with the provided name
+     * returns a new [[DateCol]] with the provided name
      *
      * @param name a valid name
-     * @return a new [[DateColumn]] with the provided name
+     * @return a new [[DateCol]] with the provided name
      */
-    public static DateColumn of(String name) {
-        return new DateColumn(name);
+    public static DateCol of(String name) {
+        return new DateCol(name);
     }
 
-    public DateColumn(String name) {
+    public DateCol(String name) {
         super(name);
     }
 
-    public DateColumn(String name, int index) {
+    public DateCol(String name, int index) {
         super(name, index);
     }
 
@@ -48,8 +48,8 @@ public final class DateColumn extends Column<Date> implements Serializable {
     }
 
     @Override
-    public Column copy() {
-        return new DateColumn(getName(), getIndex());
+    public Col copy() {
+        return new DateCol(getName(), getIndex());
     }
 
 }
