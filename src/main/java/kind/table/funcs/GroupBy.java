@@ -13,19 +13,19 @@ public final class GroupBy implements Func<Table> {
 
     private static final String COLUMN_POSTFIX = " Group";
     private final ColRef colRef;
-    private final List<GroupCol> aggs;
+    private final List<SummaryCol> aggs;
 
-    public static GroupBy from(int col, String col1, Func func1) { return new GroupBy(ColRef.of(col), GroupCol.of(col1,func1)); }
-    public static GroupBy from(int col, GroupCol... groupCols) { return new GroupBy(ColRef.of(col), groupCols); }
-    public static GroupBy from(String col, String col1, Func func1) { return new GroupBy(ColRef.of(col), GroupCol.of(col1,func1)); }
-    public static GroupBy from(String col, GroupCol... groupCols) { return new GroupBy(ColRef.of(col), groupCols); }
+    public static GroupBy from(int col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+    public static GroupBy from(int col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
+    public static GroupBy from(String col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+    public static GroupBy from(String col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
 
-    public GroupBy(ColRef colRef) {
+    private GroupBy(ColRef colRef) {
         this.colRef = colRef;
         this.aggs = new ArrayList<>();
     }
 
-    public GroupBy(ColRef colRef, GroupCol... agg) {
+    public GroupBy(ColRef colRef, SummaryCol... agg) {
         this.colRef = colRef;
         this.aggs = Arrays.asList(agg);
     }
@@ -39,8 +39,7 @@ public final class GroupBy implements Func<Table> {
     @Override
     public Table eval(Table table) {
 
-        final Col keyCol = table.getCol(this.colRef);
-
+        final Col keyCol = table.getColByRef(this.colRef);
         final Map<Object, List<Row>> grouping = table.
                 getRows().
                 stream().
@@ -64,12 +63,14 @@ public final class GroupBy implements Func<Table> {
 
     private void doAg(Table table, RowCol rowCol, Collection<Col> cols) {
 
-        for(GroupCol agg : aggs) {
+
+        final List<List<Row>> groups = table.getVals(rowCol);
+        for(SummaryCol agg : aggs) {
             final Func aggFunc = agg.getFunc();
             final String aggName = agg.getName();
 
-            final List<List<Row>> groups = table.getVals(rowCol);
             for (int rowIndex = 0; rowIndex < groups.size(); rowIndex++) {
+
                 final List<Row> group = groups.get(rowIndex);
                 final Table subject = new Table(cols, table.getSettings());
                 subject.addRows(group);

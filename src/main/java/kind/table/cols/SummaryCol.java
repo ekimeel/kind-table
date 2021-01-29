@@ -5,19 +5,19 @@ import kind.table.funcs.UnsupportedColException;
 
 import java.io.Serializable;
 
-public final class GroupCol extends Col implements Serializable {
+public final class SummaryCol extends Col implements Serializable {
 
     /**
-     * returns a new [[GroupCol]] with the provided name
+     * returns a new [[SummaryCol]] with the provided name
      *
      * @param name a valid name
-     * @return a new [[GroupCol]] with the provided name
+     * @return a new [[SummaryCol]] with the provided name
      */
-    public static GroupCol of(String name, Func func) {
-        return new GroupCol(name, func);
+    public static SummaryCol of(String name, Func func) {
+        return new SummaryCol(name, func);
     }
 
-    public GroupCol(String name, Func func) {
+    public SummaryCol(String name, Func func) {
         super(name);
         this.func = func;
     }

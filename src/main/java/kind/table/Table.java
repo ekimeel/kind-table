@@ -125,6 +125,8 @@ public class Table implements Copyable<Table>{
     public Col getCol(Object any) {
         if (any instanceof Integer) {
             return getColByIndex((Integer) any);
+        } else if (any instanceof ColRef ) {
+            return getColByRef((ColRef)any);
         } else {
             return getColByName((String)any);
         }

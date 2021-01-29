@@ -1,18 +1,12 @@
 package kind.table;
 
-import kind.table.cols.GroupCol;
+import kind.table.cols.SummaryCol;
 import kind.table.cols.IntCol;
 import kind.table.cols.StrCol;
-import kind.table.funcs.GroupBy;
-import kind.table.funcs.KeepCols;
-import kind.table.funcs.Mean;
-import kind.table.funcs.Sum;
+import kind.table.funcs.*;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.concurrent.TimeUnit;
 
 import static java.util.stream.IntStream.range;
 
@@ -44,15 +38,15 @@ public class IntegrationTest {
 
         Table result = table.
                 eval(KeepCols.from(0, 2)).
-                eval(new GroupBy(0,
-                        GroupCol.of("Total", Sum.from(1))));
+                eval(GroupBy.from(0,
+                        SummaryCol.of("Total", Sum.from(1))));
 
         //result.print(System.out);
 
     }
 
     @Test
-    public void testParalle() {
+    public void testParallel() {
 
         final TableSettings parallel50000 = new TableSettingsBuilder()
                 .withAllowParallelProcessingAfterRow(5000)
@@ -75,24 +69,26 @@ public class IntegrationTest {
             singleTable.addRow(i);
         });
 
-        final Table results = new TableBuilder().withStrCol("table").withLngCol("time").build();
+        final Table times = new TableBuilder().withStrCol("table").withLngCol("time").build();
         range(0, 100).forEach( i -> {
             long start = Instant.now().toEpochMilli();
             parallelTable.eval(Sum.from(0));
-            results.addRow("parallel", (Instant.now().toEpochMilli() - start));
+            times.addRow("parallel", (Instant.now().toEpochMilli() - start));
         });
 
         range(0, 100).forEach( i -> {
             long start = Instant.now().toEpochMilli();
             parallelTable.eval(Sum.from(0));
-            results.addRow("single", (Instant.now().toEpochMilli() - start));
+            times.addRow("single", (Instant.now().toEpochMilli() - start));
         });
 
-        results.eval(GroupBy.from(0,
-                GroupCol.of("avg_time", Mean.from("time")) ));
+        final Table results = times.eval(GroupBy.from("table",
+                SummaryCol.of("avg_time", Mean.from("time")),
+                SummaryCol.of("count", Count.from("time"))
+                ));
 
+        results.print(System.out);
 
-        System.out.println(String.format("Parallel time = %s ms", results.eval(Mean.from("time"))));
 
 
     }
