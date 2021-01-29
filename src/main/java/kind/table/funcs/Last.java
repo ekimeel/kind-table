@@ -1,14 +1,14 @@
 package kind.table.funcs;
 
+import kind.table.cols.Col;
 import kind.table.cols.ColRef;
-import kind.table.cols.Column;
 import kind.table.Table;
 
 
 public final class Last<T> implements Func<T> {
 
-    public static <E> Last<E> of(int col) { return new Last(ColRef.of(col)); }
-    public static <E> Last<E> of(String col) { return new Last(ColRef.of(col)); }
+    public static <E> Last<E> from(int col) { return new Last(ColRef.of(col)); }
+    public static <E> Last<E> from(String col) { return new Last(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
@@ -17,7 +17,7 @@ public final class Last<T> implements Func<T> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
+    public boolean acceptCol(Col col) {
         return true;
     }
 
@@ -27,8 +27,8 @@ public final class Last<T> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.colRef);
-        return table.get(table.getRowCount()-1, column.getIndex());
+        final Col col = table.getColByRef(this.colRef);
+        return table.get(table.getRowCount()-1, col.getIndex());
     }
 
 }

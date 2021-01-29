@@ -3,11 +3,12 @@ package kind.table.funcs;
 import kind.table.*;
 import kind.table.cols.*;
 import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 public final class Max<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.of(col)); }
-    public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> from(String col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> from(int col) { return new Max<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;
@@ -17,8 +18,8 @@ public final class Max<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -28,42 +29,40 @@ public final class Max<T extends Number> implements Func<T> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.colRef);
+        final Col col = table.getColByRef(this.colRef);
+        final Stream<Object> stream = (table.allowParallelProcessing())?
+                table.getVals(this.colRef).parallelStream() :
+                table.getVals(this.colRef).stream();
 
-        if (column instanceof DblColumn){
-            return (T) maxDouble();
-        } else if (column instanceof IntColumn){
-            return (T) maxInteger();
-        } else if (column instanceof LngColumn){
-            return (T) maxLong();
+        if (col instanceof DblCol){
+            return (T) maxDouble(stream);
+        } else if (col instanceof IntCol){
+            return (T) maxInteger(stream);
+        } else if (col instanceof LngCol){
+            return (T) maxLong(stream);
         } else {
-            throw new UnsupportedOperationException(String.format("%s does not support column type %.",
+            throw new UnsupportedOperationException(String.format("%s does not support col type %.",
                     this.getClass().getSimpleName(),
-                    column.getClass().getSimpleName()));
+                    col.getClass().getSimpleName()));
         }
 
     }
 
-    private Double maxDouble() {
-        return table.getVals(colRef)
-                .stream()
+    private Double maxDouble(Stream<Object> stream) {
+        return stream
                 .mapToDouble(x -> ((Number)x).doubleValue())
                 .max().getAsDouble();
     }
 
-    private Integer maxInteger() {
-        OptionalInt v = table.getVals(colRef)
-                .stream()
+    private Integer maxInteger(Stream<Object> stream) {
+        return stream
                 .mapToInt( x -> ((Number)x).intValue())
-                .max();
-
-
-        return v.getAsInt();
+                .max()
+                .getAsInt();
     }
 
-    private Long maxLong() {
-        return table.getVals(colRef)
-                .stream()
+    private Long maxLong(Stream<Object> stream) {
+        return stream
                 .mapToLong(x -> ((Number)x).longValue())
                 .max().getAsLong();
     }

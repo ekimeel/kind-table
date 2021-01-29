@@ -1,9 +1,8 @@
 package kind.table;
 
-import kind.table.cols.DblColumn;
-import kind.table.cols.IntColumn;
-import kind.table.cols.LngColumn;
-import kind.table.cols.StrColumn;
+import kind.table.cols.*;
+import kind.table.cols.DblCol;
+import kind.table.cols.IntCol;
 import kind.table.funcs.Max;
 import kind.table.funcs.Mean;
 import kind.table.funcs.Min;
@@ -20,15 +19,15 @@ public class BigTableTest {
 
         final Table table = new Table();
 
-        table.addCol(new IntColumn("ColA"));
-        table.addCol(new IntColumn("ColB"));
+        table.addCol(new IntCol("ColA"));
+        table.addCol(new IntCol("ColB"));
 
         for (int i = 0; i < 100000; i++) {
             table.addRow(new Row(i, i + 1));
         }
 
-        assertEquals((Integer)704982704, table.eval(Sum.of(0)));
-        assertEquals((Integer)705082704, table.eval(Sum.of(1)));
+        assertEquals((Integer)704982704, table.eval(Sum.from(0)));
+        assertEquals((Integer)705082704, table.eval(Sum.from(1)));
     }
 
     @Test
@@ -36,23 +35,23 @@ public class BigTableTest {
 
         final Table table = new Table();
 
-        table.addCol(new IntColumn("ColA"));
+        table.addCol(new IntCol("ColA"));
         for (int i = 0; i < 1000000; i++) {
             table.addRow(new Row(i));
         }
 
-        assertEquals((Integer)999999, table.eval(Max.of(0)));
-        assertEquals((Integer)0, table.eval(Min.of(0)));
-        assertEquals(499999.5, table.eval(Mean.of("ColA")), 0.0001);
+        assertEquals((Integer)999999, table.eval(Max.from(0)));
+        assertEquals((Integer)0, table.eval(Min.from(0)));
+        assertEquals(499999.5, table.eval(Mean.from("ColA")), 0.0001);
     }
 
     @Test
     public void test_1M_copy(){
         final Table tableA = new Table();
 
-        tableA.addCol(new IntColumn("ColA"));
-        tableA.addCol(new DblColumn("ColB"));
-        tableA.addCol(new StrColumn("ColC"));
+        tableA.addCol(new IntCol("ColA"));
+        tableA.addCol(new DblCol("ColB"));
+        tableA.addCol(new StrCol("ColC"));
 
         for (int i = 0; i < 1000000; i++) {
             tableA.addRow(new Row(i, i * 0.1, "val_" + i ));
@@ -64,8 +63,8 @@ public class BigTableTest {
         assertEquals(tableA.getColCount(), tableB.getColCount());
         assertEquals(tableA.getRowCount(), tableB.getRowCount());
 
-        final Integer sumColA_TableA = tableA.eval(Sum.of("ColA"));
-        final Integer sumColA_TableB = tableB.eval(Sum.of("ColA"));
+        final Integer sumColA_TableA = tableA.eval(Sum.from("ColA"));
+        final Integer sumColA_TableB = tableB.eval(Sum.from("ColA"));
         assertEquals(sumColA_TableA, sumColA_TableB);
 
         final Row lastRow_TableA = tableA.getLastRow();
@@ -81,12 +80,12 @@ public class BigTableTest {
 
 
     @Test
-    public void test_1M_addColumn() {
+    public void test_1M_addCol() {
         final Table tableA = new Table();
 
-        tableA.addCol(new IntColumn("ColA"));
-        tableA.addCol(new DblColumn("ColB"));
-        tableA.addCol(new StrColumn("ColC"));
+        tableA.addCol(new IntCol("ColA"));
+        tableA.addCol(new DblCol("ColB"));
+        tableA.addCol(new StrCol("ColC"));
 
         for (int i = 0; i < 1000000; i++) {
             tableA.addRow(new Row(i, i * 0.1, "val_" + i));
@@ -94,7 +93,7 @@ public class BigTableTest {
 
         assertEquals(3, tableA.getColCount());
 
-        tableA.addCol(new LngColumn("ColD"));
+        tableA.addCol(new LngCol("ColD"));
 
         assertEquals(4, tableA.getColCount());
         assertNull(tableA.getFirstRow().get(3));

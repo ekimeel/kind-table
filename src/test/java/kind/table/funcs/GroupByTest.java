@@ -2,9 +2,9 @@ package kind.table.funcs;
 
 import kind.table.Row;
 import kind.table.Table;
-import kind.table.cols.IntColumn;
-import kind.table.cols.RowColumn;
-import kind.table.cols.StrColumn;
+import kind.table.cols.IntCol;
+import kind.table.cols.RowCol;
+import kind.table.cols.StrCol;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,9 +16,9 @@ public class GroupByTest {
     public void test_eval(){
         final Table table = new Table();
 
-        table.addCol(StrColumn.of("team"));
-        table.addCol(StrColumn.of("player"));
-        table.addCol(IntColumn.of("points"));
+        table.addCol(StrCol.of("team"));
+        table.addCol(StrCol.of("player"));
+        table.addCol(IntCol.of("points"));
 
         table.addRow(new Row("a-team", "player-1", 1));
         table.addRow(new Row("a-team", "player-1", 2));
@@ -39,8 +39,8 @@ public class GroupByTest {
 
         assertEquals(3, result.getRowCount());
         assertEquals(2, result.getColCount());
-        assertTrue(result.getColByIndex(0) instanceof StrColumn);
-        assertTrue(result.getColByIndex(1) instanceof RowColumn);
+        assertTrue(result.getColByIndex(0) instanceof StrCol);
+        assertTrue(result.getColByIndex(1) instanceof RowCol);
 
     }
 

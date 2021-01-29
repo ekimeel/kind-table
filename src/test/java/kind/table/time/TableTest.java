@@ -2,16 +2,12 @@ package kind.table.time;
 
 import kind.table.Row;
 import kind.table.Table;
-import kind.table.cols.InstantColumn;
-import kind.table.cols.IntColumn;
-import kind.table.cols.StrColumn;
+import kind.table.cols.IntCol;
+import kind.table.cols.TsCol;
 import kind.table.cols.funcs.Weekday;
 import org.junit.Test;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 public class TableTest {
 
@@ -20,8 +16,8 @@ public class TableTest {
 
         final Table tableA = new Table();
 
-        tableA.addCol(new InstantColumn("timestamp"));
-        tableA.addCol(new IntColumn("value"));
+        tableA.addCol(new TsCol("timestamp"));
+        tableA.addCol(new IntCol("value"));
 
         Instant now = Instant.now();
 

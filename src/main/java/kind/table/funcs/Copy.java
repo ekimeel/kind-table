@@ -1,7 +1,7 @@
 package kind.table.funcs;
 
 import kind.table.Table;
-import kind.table.cols.Column;
+import kind.table.cols.Col;
 
 public class Copy implements Func<Table> {
 
@@ -9,7 +9,7 @@ public class Copy implements Func<Table> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
+    public boolean acceptCol(Col col) {
         return true;
     }
 

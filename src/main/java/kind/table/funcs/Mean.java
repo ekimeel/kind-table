@@ -1,18 +1,16 @@
 package kind.table.funcs;
 
-import com.google.common.math.Stats;
 import kind.table.*;
-import kind.table.cols.ColRef;
-import kind.table.cols.Column;
-import kind.table.cols.DblColumn;
-import kind.table.cols.NumberColumn;
+import kind.table.cols.*;
+import kind.table.cols.Col;
+import kind.table.cols.NumCol;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public final class Mean implements Func<Double> {
 
-    public static Mean of(String col) { return new Mean(ColRef.of(col)); }
-    public static Mean of(int col) { return new Mean(ColRef.of(col)); }
+    public static Mean from(String col) { return new Mean(ColRef.of(col)); }
+    public static Mean from(int col) { return new Mean(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
@@ -21,8 +19,8 @@ public final class Mean implements Func<Double> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -31,14 +29,14 @@ public final class Mean implements Func<Double> {
             return null;
         }
 
-        final Column column = table.getColByRef(this.colRef);
+        final Stream stream = (table.allowParallelProcessing())?
+                table.getVals(this.colRef).parallelStream() :
+                table.getVals(this.colRef).stream();
 
-        if (column instanceof DblColumn) {
-            return Stats.of(table.getVals(colRef)).mean();
-        } else {
-            final List<Double> values = table.valuesToDoubles(column.getIndex());
-            return Stats.of(values).mean();
-        }
+        return stream
+                .mapToDouble( x -> ((Number)x).doubleValue())
+                .average()
+                .getAsDouble();
     }
 
 

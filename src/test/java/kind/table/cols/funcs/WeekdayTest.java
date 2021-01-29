@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class WeekdayTest {
 
     @Test
-    public void test_eval_withDateColumn() throws ParseException {
+    public void test_eval_withDateCol() throws ParseException {
 
         final Table tableA = new TableBuilder()
                 .withDateCol("Date")

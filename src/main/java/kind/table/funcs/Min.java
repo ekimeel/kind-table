@@ -3,10 +3,12 @@ package kind.table.funcs;
 import kind.table.*;
 import kind.table.cols.*;
 
+import java.util.stream.Stream;
+
 public final class Min<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.of(col)); }
-    public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> from(String col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> from(int col) { return new Min(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
     private Table table;
@@ -16,8 +18,8 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
@@ -26,39 +28,39 @@ public final class Min<T extends Number> implements Func<T> {
             return null;
         }
         this.table = table;
-        final Column column = table.getColByRef(this.colRef);
+        final Col col = table.getColByRef(this.colRef);
+        final Stream<Object> stream = (table.allowParallelProcessing())?
+                table.getVals(this.colRef).parallelStream() :
+                table.getVals(this.colRef).stream();
 
-        if (column instanceof DblColumn){
-            return (T) minDouble();
-        } else if (column instanceof IntColumn){
-            return (T) minInteger();
-        } else if (column instanceof LngColumn){
-            return (T)minLong();
+        if (col instanceof DblCol){
+            return (T) minDouble(stream);
+        } else if (col instanceof IntCol){
+            return (T) minInteger(stream);
+        } else if (col instanceof LngCol){
+            return (T)minLong(stream);
         } else {
-            throw new UnsupportedOperationException(String.format("%s does not support column type %.",
+            throw new UnsupportedOperationException(String.format("%s does not support col type %.",
                     this.getClass().getSimpleName(),
-                    column.getClass().getSimpleName()));
+                    col.getClass().getSimpleName()));
         }
 
     }
 
-    private Double minDouble() {
-        return table.getVals(colRef)
-                .stream()
+    private Double minDouble(Stream<Object> stream) {
+        return stream
                 .mapToDouble(x -> ((Number)x).doubleValue())
                 .min().getAsDouble();
     }
 
-    private Integer minInteger() {
-        return table.getVals(colRef)
-                .stream()
+    private Integer minInteger(Stream<Object> stream) {
+        return stream
                 .mapToInt(x -> ((Number)x).intValue())
                 .min().getAsInt();
     }
 
-    private Long minLong() {
-        return table.getVals(colRef)
-                .stream()
+    private Long minLong(Stream<Object> stream) {
+        return stream
                 .mapToLong(x -> ((Number)x).longValue())
                 .min().getAsLong();
     }

@@ -1,8 +1,8 @@
 package kind.table.funcs;
 
-import kind.table.cols.Column;
+import kind.table.cols.Col;
 import kind.table.Table;
-import kind.table.cols.NumberColumn;
+import kind.table.cols.NumCol;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -32,16 +32,16 @@ public class LinearInterpolation implements Func<Table> {
     }
 
     @Override
-    public boolean acceptColumn(Column column) {
-        return (column instanceof NumberColumn);
+    public boolean acceptCol(Col col) {
+        return (col instanceof NumCol);
     }
 
     @Override
     public Table eval(Table table) {
         final Table copy = table.copy();
-        final Column column = copy.getColByIndex(this.col);
-        if (!acceptColumn(column)) {
-            throw new UnsupportedColumnException(column);
+        final Col col = copy.getColByIndex(this.col);
+        if (!acceptCol(col)) {
+            throw new UnsupportedColException(col);
         }
 
         Number priorInstance = null;
@@ -69,7 +69,7 @@ public class LinearInterpolation implements Func<Table> {
                         final Double val = new BigDecimal(start + (dist * mult))
                                 .setScale(this.decimalPrecision, this.roundingMode).doubleValue();
 
-                        copy.set(e.intValue(), this.col, column.cast(val));
+                        copy.set(e.intValue(), this.col, col.cast(val));
                         mult++;
                     }
                     unitOfWork.clear();

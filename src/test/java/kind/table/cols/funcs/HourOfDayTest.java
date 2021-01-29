@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class HourOfDayTest {
 
     @Test
-    public void test_eval_withDateColumn() throws ParseException {
+    public void test_eval_withDateCol() throws ParseException {
 
         final Table tableA = new TableBuilder()
                 .withDateCol("DateTime")
