@@ -4,20 +4,22 @@ import kind.table.Table;
 import kind.table.cols.Col;
 import kind.table.cols.ColRef;
 
-import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public final class Count implements Func<Integer> {
+public final class CountIf implements Func<Integer> {
 
-    public static Count from(String col) { return new Count(ColRef.of(col)); }
-    public static Count from(int col) { return new Count(ColRef.of(col)); }
+    public static CountIf from(String col, Predicate predicate) { return new CountIf(ColRef.of(col), predicate); }
+    public static CountIf from(int col, Predicate predicate) { return new CountIf(ColRef.of(col), predicate); }
 
     /**/
     private final ColRef colRef;
+    private final Predicate predicate;
 
 
-    public Count(ColRef colRef) {
+    public CountIf(ColRef colRef, Predicate predicate) {
         this.colRef = colRef;
+        this.predicate = predicate;
     }
 
     @Override
@@ -35,7 +37,7 @@ public final class Count implements Func<Integer> {
                 table.getVals(this.colRef).parallelStream() :
                 table.getVals(this.colRef).stream();
 
-        return (int) stream.filter(Objects::nonNull).count();
+        return (int) stream.filter(predicate).count();
 
     }
 

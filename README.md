@@ -127,6 +127,7 @@ final Table group = table.eval(new GroupBy(2));
 |---------------------|--------|---------------------------|
 | **Copy**                | Table        | Creates a copy of a table|
 | **Count**               | Integer      | Counts the number of non-null values in a col|
+| **CountIf**             | Integer      | Counts the number of values meeting a condition a col|
 | **First**               | Any          | Returns the first value in a col |   |
 | **GroupBy**             | Table        | |
 | **Join**                | Table        | Inner joins two tables on one key col

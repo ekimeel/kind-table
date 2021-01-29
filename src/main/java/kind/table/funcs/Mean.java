@@ -37,7 +37,6 @@ public final class Mean implements Func<Double> {
                 .mapToDouble( x -> ((Number)x).doubleValue())
                 .average()
                 .getAsDouble();
-
     }
 
 
