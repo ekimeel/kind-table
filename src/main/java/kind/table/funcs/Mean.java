@@ -1,12 +1,11 @@
 package kind.table.funcs;
 
-import com.google.common.math.Stats;
 import kind.table.*;
 import kind.table.cols.*;
 import kind.table.cols.Col;
 import kind.table.cols.NumCol;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 public final class Mean implements Func<Double> {
 
@@ -30,14 +29,15 @@ public final class Mean implements Func<Double> {
             return null;
         }
 
-        final Col col = table.getColByRef(this.colRef);
+        final Stream stream = (table.allowParallelProcessing())?
+                table.getVals(this.colRef).parallelStream() :
+                table.getVals(this.colRef).stream();
 
-        if (col instanceof DblCol) {
-            return Stats.of(table.getVals(colRef)).mean();
-        } else {
-            final List<Double> values = table.valuesToDoubles(col.getIndex());
-            return Stats.of(values).mean();
-        }
+        return stream
+                .mapToDouble( x -> ((Number)x).doubleValue())
+                .average()
+                .getAsDouble();
+
     }
 
 

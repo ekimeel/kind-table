@@ -3,6 +3,7 @@ package kind.table.funcs;
 import kind.table.*;
 import kind.table.cols.*;
 import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 public final class Max<T extends Number> implements Func<T> {
 
@@ -29,13 +30,16 @@ public final class Max<T extends Number> implements Func<T> {
         }
 
         final Col col = table.getColByRef(this.colRef);
+        final Stream<Object> stream = (table.allowParallelProcessing())?
+                table.getVals(this.colRef).parallelStream() :
+                table.getVals(this.colRef).stream();
 
         if (col instanceof DblCol){
-            return (T) maxDouble();
+            return (T) maxDouble(stream);
         } else if (col instanceof IntCol){
-            return (T) maxInteger();
+            return (T) maxInteger(stream);
         } else if (col instanceof LngCol){
-            return (T) maxLong();
+            return (T) maxLong(stream);
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support col type %.",
                     this.getClass().getSimpleName(),
@@ -44,26 +48,21 @@ public final class Max<T extends Number> implements Func<T> {
 
     }
 
-    private Double maxDouble() {
-        return table.getVals(colRef)
-                .stream()
+    private Double maxDouble(Stream<Object> stream) {
+        return stream
                 .mapToDouble(x -> ((Number)x).doubleValue())
                 .max().getAsDouble();
     }
 
-    private Integer maxInteger() {
-        OptionalInt v = table.getVals(colRef)
-                .stream()
+    private Integer maxInteger(Stream<Object> stream) {
+        return stream
                 .mapToInt( x -> ((Number)x).intValue())
-                .max();
-
-
-        return v.getAsInt();
+                .max()
+                .getAsInt();
     }
 
-    private Long maxLong() {
-        return table.getVals(colRef)
-                .stream()
+    private Long maxLong(Stream<Object> stream) {
+        return stream
                 .mapToLong(x -> ((Number)x).longValue())
                 .max().getAsLong();
     }

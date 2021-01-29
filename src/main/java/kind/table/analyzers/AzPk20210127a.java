@@ -35,12 +35,17 @@ public final class AzPk20210127a extends AbstractAnalyzer {
                .withStrCol("column")
                .withDbCol("value")
                .withTsCol("ts")
+               .withIntCol("occurs")
                .build();
-
 
        for(Col c : numericCols) {
            final String name  = c.getName();
            final Number number = table.eval(Max.from(c.getIndex()));
+
+
+
+
+
 
 
 
