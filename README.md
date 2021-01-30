@@ -99,6 +99,7 @@ Below is a current list of Column Functions. You may also extend the ColFunc cla
         
  ```
 
+
 #### Column Types
 | Class         | Data Type  | Examples|
 |---------------|---|---|

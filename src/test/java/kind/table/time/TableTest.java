@@ -27,7 +27,6 @@ public class TableTest {
         }
 
         tableA.addCol(Weekday.from("weekday", "timestamp"));
-        tableA.print(System.out);
 
     }
 }

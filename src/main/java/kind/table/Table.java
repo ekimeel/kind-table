@@ -640,26 +640,4 @@ public class Table implements Copyable<Table>{
     public void writeTo(TableWriter writer) {
         writer.write(this);
     }
-    public void writeTo(PrintStream ps) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String col : getColNames()) {
-            sb.append(col).append("\t");
-        }
-        ps.println(sb.toString());
-
-        final Iterator<Row> iterator = rowIterator();
-        while (iterator.hasNext()) {
-
-            sb = new StringBuilder();
-            final Row row = iterator.next();
-
-            for (Object data : row.values()) {
-                sb.append(data).append("\t");
-            }
-            ps.println(sb.toString());
-
-        }
-
-    }
 }

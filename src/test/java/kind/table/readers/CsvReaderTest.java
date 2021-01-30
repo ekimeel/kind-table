@@ -12,14 +12,17 @@ public class CsvReaderTest {
 
 
     @Test
-    public void test_() {
-        CsvReader reader = new CsvReader(Path.of("./test-data/pub/", "hw_25000.csv"));
+    public void test_read() {
+        final CsvReader reader = new CsvReader(Path.of("./test-data/pub/", "hw_25000.csv"));
 
-        Table table = new TableBuilder()
+        final Table table = new TableBuilder()
                 .withTableReader(reader)
                 .build();
 
-        table.print(System.out);
+        assertNotNull(table);
+        assertTrue(table.getColCount() > 1);
+        assertTrue(table.getRowCount() > 1);
+
 
     }
 

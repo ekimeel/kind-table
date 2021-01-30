@@ -34,7 +34,6 @@ public class HourOfDayTest {
         tableA.addCol(HourOfDay.from("DateTime")); // Weekday column function
         assertEquals(3, tableA.getColCount());
 
-        tableA.print(System.out);
         assertEquals((Integer)6, tableA.get(0, 2));
         assertEquals((Integer)6, tableA.get(1, 2));
         assertEquals((Integer)7, tableA.get(2, 2));
