@@ -3,7 +3,6 @@ package kind.table.funcs;
 import kind.table.*;
 import kind.table.cols.*;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public final class Sum<T extends Number> implements Func<T> {
@@ -50,10 +49,10 @@ public final class Sum<T extends Number> implements Func<T> {
     }
 
 
-    private Double sumDouble(Stream<T> stream) {
+    private Double sumDouble(Stream<Number> stream) {
         return stream
-                .mapToDouble( x -> x.doubleValue())
-                .sum();
+                .reduce(0, NaiveMath::sumDbl)
+                .doubleValue();
     }
 
     private Integer sumInteger(Stream<T> stream) {

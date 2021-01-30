@@ -361,7 +361,7 @@ public class Table implements Copyable<Table>{
 
         return stream
                 .filter( (r) -> r.get(index).equals(eq) )
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
     }
 
 
@@ -396,7 +396,7 @@ public class Table implements Copyable<Table>{
 
         final List results = this.rows.stream()
                 .map(i -> i.get(col))
-                .collect(Collectors.toCollection(ArrayList::new));
+                .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
 
         return results;
     }
@@ -432,7 +432,7 @@ public class Table implements Copyable<Table>{
                 .stream()
                 .mapToDouble(x -> ((Number)x).doubleValue())
                 .boxed()
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
     }
 
     /**
@@ -446,7 +446,7 @@ public class Table implements Copyable<Table>{
                 .stream()
                 .mapToInt(x -> ((Number)x).intValue())
                 .boxed()
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
     }
 
     /**
@@ -460,7 +460,7 @@ public class Table implements Copyable<Table>{
                 .stream()
                 .mapToLong(x -> ((Number)x).longValue())
                 .boxed()
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
     }
 
     public Iterator<Row> rowIterator() {
