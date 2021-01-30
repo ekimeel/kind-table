@@ -57,34 +57,43 @@ public class IntegrationTest {
                 .withIntCol("val").build();
 
         TableSettings single50000 = new TableSettingsBuilder()
-                .withAllowParallelProcessingAfterRow(5000)
+                .withAllowParallelProcessingAfterRow(-1)
                 .build();
 
         final Table singleTable = new TableBuilder()
                 .withSettings(single50000)
                 .withIntCol("val").build();
 
-        range(0, 50000).forEach( i -> {
+        range(0, 500000).forEach( i -> {
             parallelTable.addRow(i);
             singleTable.addRow(i);
         });
 
-        final Table times = new TableBuilder().withStrCol("table").withLngCol("time").build();
-        range(0, 100).forEach( i -> {
+        final Table times = new TableBuilder()
+                .withStrCol("table")
+                .withLngCol("time")
+                .withIntCol("rows").build();
+
+        range(0, 1000).forEach( i -> {
             long start = Instant.now().toEpochMilli();
             parallelTable.eval(Sum.from(0));
-            times.addRow("parallel", (Instant.now().toEpochMilli() - start));
+            times.addRow("parallel",
+                    (Instant.now().toEpochMilli() - start),
+                    parallelTable.getRowCount());
         });
 
-        range(0, 100).forEach( i -> {
+        range(0, 1000).forEach( i -> {
             long start = Instant.now().toEpochMilli();
-            parallelTable.eval(Sum.from(0));
-            times.addRow("single", (Instant.now().toEpochMilli() - start));
+            singleTable.eval(Sum.from(0));
+            times.addRow("single",
+                    (Instant.now().toEpochMilli() - start),
+                    singleTable.getRowCount());
         });
 
         final Table results = times.eval(GroupBy.from("table",
                 SummaryCol.of("avg_time", Mean.from("time")),
-                SummaryCol.of("count", Count.from("time"))
+                SummaryCol.of("count", Count.from("time")),
+                SummaryCol.of("rows", Max.from("rows"))
                 ));
 
         results.print(System.out);
