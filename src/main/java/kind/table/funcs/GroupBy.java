@@ -12,21 +12,21 @@ import java.util.stream.Collectors;
 public final class GroupBy implements Func<Table> {
 
     private static final String COLUMN_POSTFIX = " Group";
-    private final int col;
-    private final List<GroupCol> aggs;
+    private final ColRef colRef;
+    private final List<SummaryCol> aggs;
 
-    public static GroupBy from(int col, String col1, Func func1) {
-        return new GroupBy(col, GroupCol.of(col1,func1));
-    }
-    public static GroupBy from(int col, GroupCol... groupCols) { return new GroupBy(col, groupCols); }
+    public static GroupBy from(int col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+    public static GroupBy from(int col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
+    public static GroupBy from(String col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+    public static GroupBy from(String col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
 
-    public GroupBy(int col) {
-        this.col = col;
+    private GroupBy(ColRef colRef) {
+        this.colRef = colRef;
         this.aggs = new ArrayList<>();
     }
 
-    public GroupBy(int col, GroupCol... agg) {
-        this.col = col;
+    public GroupBy(ColRef colRef, SummaryCol... agg) {
+        this.colRef = colRef;
         this.aggs = Arrays.asList(agg);
     }
 
@@ -39,17 +39,16 @@ public final class GroupBy implements Func<Table> {
     @Override
     public Table eval(Table table) {
 
-        final Col col = table.getCol(this.col);
-
+        final Col keyCol = table.getColByRef(this.colRef);
         final Map<Object, List<Row>> grouping = table.
                 getRows().
                 stream().
-                collect(Collectors.groupingBy((r) -> r.get(col.getIndex())));
+                collect(Collectors.groupingBy((r) -> r.get(keyCol.getIndex())));
 
         final Table result = new Table(table.getSettings());
-        result.addCol((Col) col.copy());
+        result.addCol((Col) keyCol.copy());
 
-        final RowCol rowCol = new RowCol(col.getName() + COLUMN_POSTFIX);
+        final RowCol rowCol = new RowCol(keyCol.getName() + COLUMN_POSTFIX);
         result.addCol(rowCol);
 
         for(Map.Entry<Object, List<Row>> entry : grouping.entrySet()) {
@@ -64,16 +63,14 @@ public final class GroupBy implements Func<Table> {
 
     private void doAg(Table table, RowCol rowCol, Collection<Col> cols) {
 
-        final List<Col> columns = table.getCols().
-                stream().filter( (i) -> i.getIndex() != this.col).
-                collect(Collectors.toList());
 
-        for(GroupCol agg : aggs) {
+        final List<List<Row>> groups = table.getVals(rowCol);
+        for(SummaryCol agg : aggs) {
             final Func aggFunc = agg.getFunc();
             final String aggName = agg.getName();
 
-            final List<List<Row>> groups = table.getVals(rowCol);
             for (int rowIndex = 0; rowIndex < groups.size(); rowIndex++) {
+
                 final List<Row> group = groups.get(rowIndex);
                 final Table subject = new Table(cols, table.getSettings());
                 subject.addRows(group);

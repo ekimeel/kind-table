@@ -125,6 +125,8 @@ public class Table implements Copyable<Table>{
     public Col getCol(Object any) {
         if (any instanceof Integer) {
             return getColByIndex((Integer) any);
+        } else if (any instanceof ColRef ) {
+            return getColByRef((ColRef)any);
         } else {
             return getColByName((String)any);
         }
@@ -247,7 +249,8 @@ public class Table implements Copyable<Table>{
      * @return Returns true if the current table has enough rows to allow parallel processing, otherwise false.
      */
     public boolean allowParallelProcessing() {
-        return getRowCount() > settings.getAllowParallelProcessingAfterRow();
+        return (settings.getAllowParallelProcessingAfterRow() < 0)? false :
+                getRowCount() > settings.getAllowParallelProcessingAfterRow();
     }
 
     /**

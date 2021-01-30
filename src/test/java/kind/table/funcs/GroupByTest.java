@@ -35,7 +35,7 @@ public class GroupByTest {
         table.addRow(new Row("c-team", "player-2", 15));
         table.addRow(new Row("c-team", "player-2", 12));
 
-        final Table result = table.eval(new GroupBy(0));
+        final Table result = table.eval(GroupBy.from(0));
 
         assertEquals(3, result.getRowCount());
         assertEquals(2, result.getColCount());

@@ -1,12 +1,14 @@
 package kind.table;
 
-import kind.table.cols.GroupCol;
+import kind.table.cols.SummaryCol;
 import kind.table.cols.IntCol;
 import kind.table.cols.StrCol;
-import kind.table.funcs.GroupBy;
-import kind.table.funcs.KeepCols;
-import kind.table.funcs.Sum;
+import kind.table.funcs.*;
 import org.junit.Test;
+
+import java.time.Instant;
+
+import static java.util.stream.IntStream.range;
 
 public class IntegrationTest {
 
@@ -36,10 +38,65 @@ public class IntegrationTest {
 
         Table result = table.
                 eval(KeepCols.from(0, 2)).
-                eval(new GroupBy(0,
-                        GroupCol.of("Total", Sum.from(1))));
+                eval(GroupBy.from(0,
+                        SummaryCol.of("Total", Sum.from(1))));
 
         //result.print(System.out);
+
+    }
+
+    @Test
+    public void testParallel() {
+
+        final TableSettings parallel50000 = new TableSettingsBuilder()
+                .withAllowParallelProcessingAfterRow(5000)
+                .build();
+
+        final Table parallelTable = new TableBuilder()
+                .withSettings(parallel50000)
+                .withIntCol("val").build();
+
+        TableSettings single50000 = new TableSettingsBuilder()
+                .withAllowParallelProcessingAfterRow(-1)
+                .build();
+
+        final Table singleTable = new TableBuilder()
+                .withSettings(single50000)
+                .withIntCol("val").build();
+
+        range(0, 500000).forEach( i -> {
+            parallelTable.addRow(i);
+            singleTable.addRow(i);
+        });
+
+        final Table times = new TableBuilder()
+                .withStrCol("table")
+                .withLngCol("time")
+                .withIntCol("rows").build();
+
+        range(0, 1000).forEach( i -> {
+            long start = Instant.now().toEpochMilli();
+            parallelTable.eval(Sum.from(0));
+            times.addRow("parallel",
+                    (Instant.now().toEpochMilli() - start),
+                    parallelTable.getRowCount());
+        });
+
+        range(0, 1000).forEach( i -> {
+            long start = Instant.now().toEpochMilli();
+            singleTable.eval(Sum.from(0));
+            times.addRow("single",
+                    (Instant.now().toEpochMilli() - start),
+                    singleTable.getRowCount());
+        });
+
+        final Table results = times.eval(GroupBy.from("table",
+                SummaryCol.of("avg_time", Mean.from("time")),
+                SummaryCol.of("count", Count.from("time")),
+                SummaryCol.of("rows", Max.from("rows"))
+                ));
+
+        results.print(System.out);
 
 
 
