@@ -4,6 +4,7 @@ import kind.table.cols.Col;
 import kind.table.cols.ColRef;
 import kind.table.cols.funcs.ColFunc;
 import kind.table.funcs.Func;
+import kind.table.funcs.writers.TableWriter;
 
 import java.io.PrintStream;
 import java.util.*;
@@ -636,7 +637,10 @@ public class Table implements Copyable<Table>{
 
     }
 
-    public void print(PrintStream ps) {
+    public void writeTo(TableWriter writer) {
+        writer.write(this);
+    }
+    public void writeTo(PrintStream ps) {
         StringBuilder sb = new StringBuilder();
 
         for (String col : getColNames()) {
