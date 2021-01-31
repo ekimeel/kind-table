@@ -76,11 +76,11 @@ public class TableBuilder {
     }
 
     public TableBuilder addRow(Object[] row) {
-        return this.addRow(new Row(Arrays.asList((Object[]) row)));
+        return this.addRow(Row.from((ArrayList) Arrays.asList(row)));
     }
 
     public TableBuilder addRow(Collection row) {
-        return this.addRow(new Row((List)row));
+        return this.addRow(Row.from(row));
     }
 
     public TableBuilder addRow(Row row) {

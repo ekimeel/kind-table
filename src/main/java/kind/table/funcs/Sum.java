@@ -15,7 +15,6 @@ public final class Sum<T extends Number> implements Func<T> {
     public static <E extends Number> Sum<E> from(int col) { return new Sum<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
-    private Table table;
 
     public Sum(ColRef colRef) {
         this.colRef = colRef;
@@ -28,10 +27,7 @@ public final class Sum<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        this.table = table;
-        if (table == null) {
-            return null;
-        }
+        if (table.isEmpty()) return null;
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
@@ -57,7 +53,7 @@ public final class Sum<T extends Number> implements Func<T> {
         final AtomicDouble sum = new AtomicDouble(0.0);
 
         rowSpliterator.forEachRemaining( (i) -> {
-            sum.set(sum.get() + (Integer)i.get(index));
+            sum.set(sum.get() + (Double)i.get(index));
         });
         return sum.get();
     }
@@ -76,7 +72,7 @@ public final class Sum<T extends Number> implements Func<T> {
         final AtomicLong sum = new AtomicLong(0L);
 
         rowSpliterator.forEachRemaining( (i) -> {
-            sum.set(sum.get() + (Integer)i.get(index));
+            sum.set(sum.get() + (Long)i.get(index));
         });
         return sum.get();
     }

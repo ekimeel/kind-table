@@ -52,7 +52,7 @@ public final class GroupBy implements Func<Table> {
         result.addCol(rowCol);
 
         for(Map.Entry<Object, List<Row>> entry : grouping.entrySet()) {
-            result.addRow(new Row(entry.getKey(), entry.getValue()));
+            result.addRow(Row.of(entry.getKey(), entry.getValue()));
         }
 
         doAg(result, rowCol, table.getCols());

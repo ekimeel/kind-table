@@ -287,7 +287,7 @@ public class Table implements Copyable<Table>{
      * @return
      */
     public boolean addRow(Object... vals) {
-        return addRow(new Row(vals));
+        return addRow(Row.of(vals));
     }
 
     /**

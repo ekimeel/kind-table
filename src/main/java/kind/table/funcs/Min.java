@@ -27,9 +27,8 @@ public final class Min<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        if (table == null) {
-            return null;
-        }
+        if (table.isEmpty()) return null;
+
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
         final Spliterator<Row> spliterator = (table.allowParallelProcessing())?
@@ -51,9 +50,9 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     private Double minDouble(Spliterator<Row> rowSpliterator, int index) {
-        final AtomicDouble max = new AtomicDouble(Double.MIN_VALUE);
+        final AtomicDouble max = new AtomicDouble(Double.MAX_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.max(max.get(), i.get(index)));
+            max.set(Math.min(max.get(), i.get(index)));
         });
         return max.get();
     }
@@ -61,7 +60,7 @@ public final class Min<T extends Number> implements Func<T> {
     private Integer minInteger(Spliterator<Row> rowSpliterator, int index) {
         final AtomicInteger max = new AtomicInteger(Integer.MAX_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.max(max.get(), i.get(index)));
+            max.set(Math.min(max.get(), i.get(index)));
         });
         return max.get();
     }
@@ -70,7 +69,7 @@ public final class Min<T extends Number> implements Func<T> {
         final AtomicLong max = new AtomicLong(Long.MAX_VALUE);
 
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.max(max.get(), i.get(index)));
+            max.set(Math.min(max.get(), i.get(index)));
         });
         return max.get();
     }

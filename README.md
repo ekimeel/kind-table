@@ -26,9 +26,9 @@ The below example creates a simple three col table with three rows:
     table.addCol( DblColumn.of("Even") );
     table.addCol( StrColumn.of("Name") );
 
-    table.addRow(new Row(1, 2.0, "Foo"));
-    table.addRow(new Row(3, 4.0, "Bar"));
-    table.addRow(new Row(5, 6.0, "Foo Bar"));
+    table.addRow(Row.of(1, 2.0, "Foo"));
+    table.addRow(Row.of(3, 4.0, "Bar"));
+    table.addRow(Row.of(5, 6.0, "Foo Bar"));
 
     assertEquals(1, table.get(0,0));
     assertEquals(4.0, table.get(1,1), 0.0);

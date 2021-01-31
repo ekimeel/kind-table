@@ -27,9 +27,7 @@ public final class Max<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        if (table == null) {
-            return null;
-        }
+        if (table.isEmpty()) return null;
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
