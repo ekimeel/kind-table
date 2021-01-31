@@ -34,7 +34,7 @@ public class BigTableTest {
     public void test_1M(){
 
         final Table table = new Table();
-
+        table.ensureRowCapacity(1000000);
         table.addCol(new IntCol("ColA"));
         for (int i = 0; i < 1000000; i++) {
             table.addRow(new Row(i));

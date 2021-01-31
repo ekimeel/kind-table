@@ -21,6 +21,10 @@ public class Row implements Copyable<Row> {
         this.values = new ArrayList();
     }
 
+    public Row(int capacity){
+        this.values = new ArrayList(capacity);
+    }
+
     public List values(){
         return this.values;
     }
@@ -132,14 +136,12 @@ public class Row implements Copyable<Row> {
     @Override
     public Row copy()  {
 
-        final Row copy = new Row();
+        final Row copy = new Row(size());
 
         for(Object value : values){
-
             if (value == null) {
                 copy.values.add(null);
             } else {
-
                 if (!(value instanceof Serializable)) {
                     throw new IllegalStateException(String.format("Value [%s] of type [%s] does not implement Serializable.", value, value.getClass()));
                 }
@@ -155,6 +157,7 @@ public class Row implements Copyable<Row> {
 
         return copy;
     }
+
     public String toCsv() {
         return Joiner.on(',')
                 .useForNull("null")

@@ -6,12 +6,15 @@ public final class TableSettings implements Copyable<TableSettings> {
     public static final int DEFAULT_MAX_ALLOWABLE_ROWS = Integer.MAX_VALUE;
     public static final int DEFAULT_MAX_ALLOWABLE_THREADS = 4;
     public static final int DEFAULT_EVAL_TIMEOUT = 300;
+    public static final int DEFAULT_ROW_CAPACITY = 20;
     public static final int DEFAULT_ALLOW_PARALLEL_PROCESSING_AFTER_ROW = 99999;
+
     public static final String DEFAULT_TIMEZONE = "UTC";
     public static final TableSettings DEFAULT_SETTINGS;
 
     static{
         DEFAULT_SETTINGS = new TableSettings(
+                DEFAULT_ROW_CAPACITY,
                 DEFAULT_MAX_ALLOWABLE_ROWS,
                 DEFAULT_MAX_ALLOWABLE_COLUMNS,
                 DEFAULT_MAX_ALLOWABLE_THREADS,
@@ -21,6 +24,7 @@ public final class TableSettings implements Copyable<TableSettings> {
     }
 
 
+    private final int defaultRowCapacity;
     private final int maxAllowableRows;
     private final int maxAllowableColumns;
     private final int maxAllowableThreads;
@@ -29,8 +33,9 @@ public final class TableSettings implements Copyable<TableSettings> {
     private final String timeZone;
 
 
-    TableSettings(int maxAllowableRows, int maxAllowableColumns, int maxAllowableThreads, int evalTimeout,
+    TableSettings(int defaultRowCapacity, int maxAllowableRows, int maxAllowableColumns, int maxAllowableThreads, int evalTimeout,
                          int allowThreadsAfterRowCount, String timeZone) {
+        this.defaultRowCapacity = defaultRowCapacity;
         this.maxAllowableRows = maxAllowableRows;
         this.maxAllowableColumns = maxAllowableColumns;
         this.maxAllowableThreads = maxAllowableThreads;
@@ -81,6 +86,16 @@ public final class TableSettings implements Copyable<TableSettings> {
     }
 
     /**
+     * Returns the default row capacity for the table. If you're expecting to have a large table estimate the size for
+     * better performance.
+     *
+     * @return
+     */
+    public int getDefaultRowCapacity() {
+        return defaultRowCapacity;
+    }
+
+    /**
      * Returns the time zone
      *
      * @return
@@ -91,7 +106,9 @@ public final class TableSettings implements Copyable<TableSettings> {
 
     @Override
     public TableSettings copy() {
-        final TableSettings copy = new TableSettings(this.getMaxAllowableRows(),
+        final TableSettings copy = new TableSettings(
+                this.getDefaultRowCapacity(),
+                this.getMaxAllowableRows(),
                 getMaxAllowableColumns(),
                 getMaxAllowableThreads(),
                 getEvalTimeout(),

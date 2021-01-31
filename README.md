@@ -5,6 +5,14 @@
 # About
 The kind-table project is designed to be an in-memory table data structure (rows and cols) with robust functionality.  
 
+## Performance
+The kind-table project is no slouch when it comes to performance! The table can adjust its performance based on the number rows
+or specific settings you provide. Performance is on-par or better than naked data structures and similar projects. Below are some 
+simple metrics to help understand the current baselines:
+
+ - Parallel stream processing based on row count (see Table Settings)
+ - Collection capacity planning
+
 ## Quick Start
 
 :warning:

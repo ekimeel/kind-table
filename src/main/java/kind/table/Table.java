@@ -6,7 +6,6 @@ import kind.table.cols.funcs.ColFunc;
 import kind.table.funcs.Func;
 import kind.table.funcs.writers.TableWriter;
 
-import java.io.PrintStream;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -15,13 +14,14 @@ import java.util.stream.Stream;
 public class Table implements Copyable<Table>{
 
     private final Cols columns;
-    private List<Row> rows;
+    private ArrayList<Row> rows;
     private final TableSettings settings;
 
     public Table() {
         this.columns = new Cols();
-        this.rows = new ArrayList<>();
         this.settings = TableSettings.DEFAULT_SETTINGS;
+        this.rows = new ArrayList<>(TableSettings.DEFAULT_ROW_CAPACITY);
+
     }
 
     /**
@@ -34,29 +34,29 @@ public class Table implements Copyable<Table>{
         if (settings == null) throw new NullPointerException("Table Settings cannot be null.");
 
         this.columns = new Cols();
-        this.rows = new ArrayList<>();
+        this.rows = new ArrayList<>(settings.getDefaultRowCapacity());
         this.settings = settings;
     }
 
     public Table(Collection<Col> cols) {
         this.columns = new Cols(cols);
-        this.rows = new ArrayList<>();
+        this.rows = new ArrayList<>(TableSettings.DEFAULT_ROW_CAPACITY);
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
     public Table(Collection<Col> cols, TableSettings settings) {
         this.columns = new Cols(cols);
-        this.rows = new ArrayList<>();
+        this.rows = new ArrayList<>(settings.getDefaultRowCapacity());
         this.settings = settings;
     }
 
-    public Table(Collection<Col> cols, List<Row> rows) {
+    public Table(Collection<Col> cols, ArrayList<Row> rows) {
         this.columns = new Cols(cols);
         this.rows = rows;
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
-    public Table(Collection<Col> cols, List<Row> rows, TableSettings settings) {
+    public Table(Collection<Col> cols, ArrayList<Row> rows, TableSettings settings) {
         this.columns = new Cols(cols);
         this.rows = rows;
         this.settings = settings;
@@ -237,7 +237,7 @@ public class Table implements Copyable<Table>{
                 this.rows.parallelStream() :
                 this.rows.stream();
 
-        this.rows = stream.map(map).collect(Collectors.toList());
+        this.rows = (ArrayList)stream.map(map).collect(Collectors.toList());
 
         if (allowParallelProcessing()) {
             indexRows();
@@ -639,5 +639,13 @@ public class Table implements Copyable<Table>{
 
     public void writeTo(TableWriter writer) {
         writer.write(this);
+    }
+
+    /**
+     * Increases the capacity of the rows
+     * @param minCapacity
+     */
+    public void ensureRowCapacity(int minCapacity) {
+        this.rows.ensureCapacity(minCapacity);
     }
 }

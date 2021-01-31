@@ -31,6 +31,9 @@ public class PerformanceTest {
                 .withIntCol("val").build();
 
         System.out.println("1");
+
+        parallelTable.ensureRowCapacity(500000);
+        singleTable.ensureRowCapacity(500000);
         range(0, 500000).forEach( i -> {
             parallelTable.addRow(i);
             singleTable.addRow(i);
