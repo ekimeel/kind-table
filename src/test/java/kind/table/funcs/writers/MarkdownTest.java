@@ -16,22 +16,10 @@ import static org.junit.Assert.*;
 
 public class MarkdownTest {
 
-    String tz;
-
-    @Before
-    public void before(){
-        //todo: move to gradle test jvm args
-        this.tz = System.getProperty("user.timezone");
-        System.setProperty("user.timezone", "UTC");
-    }
-    @After
-    public void after() {
-        System.setProperty("user.timezone", tz);
-    }
-
 
     @Test
     public void test_write() throws UnsupportedEncodingException {
+        System.setProperty("user.timezone", "UTC");
 
         final String expected =
                 "| str_col| int_col| date_col| bool_col|" + System.lineSeparator() +
