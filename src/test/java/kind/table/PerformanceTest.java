@@ -1,5 +1,6 @@
 package kind.table;
 
+import kind.table.cols.IntCol;
 import kind.table.cols.SummaryCol;
 import kind.table.funcs.*;
 import kind.table.funcs.writers.Markdown;
@@ -8,9 +9,54 @@ import org.junit.Test;
 import java.time.Instant;
 
 import static java.util.stream.IntStream.range;
+import static org.junit.Assert.assertEquals;
 
 public class PerformanceTest {
 
+    @Test
+    public void test_1m_rows() {
+        final Table table = new TableBuilder()
+                .withStrCol("colA").withIntCol("colB").withIntCol("colC")
+                .withIntCol("colD").withIntCol("colE").withIntCol("colF")
+                .withIntCol("colG").withIntCol("colH").withIntCol("colI")
+                .withIntCol("J")
+                .build();
+        table.ensureRowCapacity(1000000);
+
+        final long start = Instant.now().toEpochMilli();
+        for (int i = 0; i < 1000000; i++) {
+            table.addRow(i, (i+1), (i+2), (i+3), (i+4), (i+5), (i+6), (i+7), (i+8), (i+9));
+        }
+        System.out.println(String.format("Time to add %s to %s column table: %s ms",
+                table.getRowCount(),
+                table.getColCount(), (Instant.now().toEpochMilli() - start)));
+
+        assertEquals(1000000, table.getRowCount());
+        assertEquals(10, table.getColCount());
+    }
+    @Test
+    public void test_1m_rows_copy() {
+        final Table table = new TableBuilder()
+                .withStrCol("colA").withIntCol("colB").withIntCol("colC")
+                .withIntCol("colD").withIntCol("colE").withIntCol("colF")
+                .withIntCol("colG").withIntCol("colH").withIntCol("colI")
+                .withIntCol("J")
+                .build();
+        //table.ensureRowCapacity(1000000);
+
+        for (int i = 0; i < 1000000; i++) {
+            table.addRow(i, (i+1), (i+2), (i+3), (i+4), (i+5), (i+6), (i+7), (i+8), (i+9));
+        }
+
+        final long start = Instant.now().toEpochMilli();
+        Table copy = table.copy();
+        System.out.println(String.format("Time to copy %s to %s column table: %s ms",
+                table.getRowCount(),
+                table.getColCount(), (Instant.now().toEpochMilli() - start)));
+
+        assertEquals(1000000, table.getRowCount());
+        assertEquals(10, table.getColCount());
+    }
     @Test
     public void testParallel() {
 
@@ -29,8 +75,6 @@ public class PerformanceTest {
         final Table singleTable = new TableBuilder()
                 .withSettings(single50000)
                 .withIntCol("val").build();
-
-        System.out.println("1");
 
         parallelTable.ensureRowCapacity(500000);
         singleTable.ensureRowCapacity(500000);
