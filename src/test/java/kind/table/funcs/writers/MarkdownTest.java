@@ -19,26 +19,21 @@ public class MarkdownTest {
 
     @Test
     public void test_write() throws UnsupportedEncodingException {
-        System.setProperty("user.timezone", "UTC");
 
         final String expected =
-                "| str_col| int_col| date_col| bool_col|" + System.lineSeparator() +
-                "| ---| ---| ---| ---|" + System.lineSeparator() +
-                "| hello| 100| Sat Jan 30 11:44:30 UTC 2021| true|" + System.lineSeparator() +
-                "| world| 200| Sat Jan 30 11:44:40 UTC 2021| false|" + System.lineSeparator();
+                "| str_col| int_col| bool_col|" + System.lineSeparator() +
+                "| ---| ---| ---|" + System.lineSeparator() +
+                "| hello| 100| true|" + System.lineSeparator() +
+                "| world| 200| false|" + System.lineSeparator();
 
         final Table table = new TableBuilder()
                 .withStrCol("str_col")
                 .withIntCol("int_col")
-                .withDateCol("date_col")
                 .withBoolCol("bool_col")
                 .build();
 
-        final Date date1 = new Date(1612007070000L);
-        final Date date2 = new Date(1612007080000L);
-
-        table.addRow("hello", 100, date1, true);
-        table.addRow("world", 200, date2, false);
+        table.addRow("hello", 100, true);
+        table.addRow("world", 200, false);
 
 
 
