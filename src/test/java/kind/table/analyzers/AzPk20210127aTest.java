@@ -25,7 +25,7 @@ public class AzPk20210127aTest {
 
         AnalyzerResponse response = analyzer.exec(request);
 
-        response.getTable().writeTo(new Markdown(System.out));
+//        response.getTable().writeTo(new Markdown(System.out));
 
 
 
