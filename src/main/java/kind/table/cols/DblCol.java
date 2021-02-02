@@ -27,6 +27,8 @@ public final class DblCol extends NumCol<Double> implements Serializable {
             return null;
         } else if (value instanceof Number) {
             return ((Number)value).doubleValue();
+        } else if (value instanceof String) {
+            return Double.parseDouble((String)value);
         }
 
         return (Double) value;

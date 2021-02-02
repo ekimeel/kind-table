@@ -45,4 +45,16 @@ public final class ColFactory {
         else if (val instanceof java.time.Instant) { return TsCol.of(name); }
         else { return null; }
     }
+
+    public static Col from(String name, Class<? extends Col> type) {
+        if (type == null) { return null; }
+        else if (DblCol.class.equals(type)) { return DblCol.of(name); }
+        else if (IntCol.class.equals(type)) { return IntCol.of(name); }
+        else if (LngCol.class.equals(type)) { return LngCol.of(name); }
+        else if (BoolCol.class.equals(type)) { return BoolCol.of(name); }
+        else if (StrCol.class.equals(type)) { return StrCol.of(name); }
+        else if (DateCol.class.equals(type)) { return DateCol.of(name); }
+        else if (TsCol.class.equals(type)) { return TsCol.of(name); }
+        else { return null; }
+    }
 }

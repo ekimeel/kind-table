@@ -237,11 +237,11 @@ public class Table implements Copyable<Table>{
                 this.rows.parallelStream() :
                 this.rows.stream();
 
-        this.rows = (ArrayList)stream.map(map).collect(Collectors.toList());
+        this.rows = stream.map(map)
+                .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
 
-        if (allowParallelProcessing()) {
-            indexRows();
-        }
+        indexRows();
+
     }
 
     /**
@@ -623,13 +623,13 @@ public class Table implements Copyable<Table>{
 
         final Col column = getColByName(col);
 
+        final Spliterator<Row> spliterator = (allowParallelProcessing()) ?
+                this.rows.parallelStream().spliterator() :
+                this.rows.stream().spliterator();
 
-        //todo: evaluate if parallel processing for removal is worth it (allowParallelProcessing)
-        final Iterator<Row> iterator = rowIterator();
-        while (iterator.hasNext()) {
-            final Row row = iterator.next();
-            row.values().remove(column.getIndex());
-        }
+        spliterator.forEachRemaining( r -> {
+            r.values().remove(column.getIndex());
+        });
 
         this.columns.remove(column);
 
