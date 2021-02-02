@@ -1,9 +1,12 @@
 package kind.table.funcs;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import kind.table.*;
 import kind.table.cols.*;
 
-import java.util.List;
+import java.util.Spliterator;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 public final class Sum<T extends Number> implements Func<T> {
@@ -12,7 +15,6 @@ public final class Sum<T extends Number> implements Func<T> {
     public static <E extends Number> Sum<E> from(int col) { return new Sum<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
-    private Table table;
 
     public Sum(ColRef colRef) {
         this.colRef = colRef;
@@ -25,22 +27,20 @@ public final class Sum<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        this.table = table;
-        if (table == null) {
-            return null;
-        }
+        if (table.isEmpty()) return null;
 
         final Col col = table.getColByRef(this.colRef);
-        final Stream stream = (table.allowParallelProcessing())?
-                table.getVals(this.colRef).parallelStream() :
-                table.getVals(this.colRef).stream();
+        final int index = col.getIndex();
+        final Spliterator<Row> stream = (table.allowParallelProcessing())?
+                table.getRows().parallelStream().spliterator() :
+                table.getRows().stream().spliterator();
 
         if (col instanceof DblCol){
-            return (T)sumDouble(stream);
+            return (T)sumDouble(stream, index);
         } else if (col instanceof IntCol){
-            return (T)sumInteger(stream);
+            return (T)sumInteger(stream, index);
         } else if (col instanceof LngCol){
-            return (T)sumLong(stream);
+            return (T)sumLong(stream, index);
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support col type %s.",
                     this.getClass().getSimpleName(),
@@ -49,22 +49,31 @@ public final class Sum<T extends Number> implements Func<T> {
 
     }
 
+    private Double sumDouble(Spliterator<Row> rowSpliterator, int index) {
+        final AtomicDouble sum = new AtomicDouble(0.0);
 
-    private Double sumDouble(Stream<T> stream) {
-        return stream
-                .mapToDouble( x -> x.doubleValue())
-                .sum();
+        rowSpliterator.forEachRemaining( (i) -> {
+            sum.set(sum.get() + (Double)i.get(index));
+        });
+        return sum.get();
     }
 
-    private Integer sumInteger(Stream<T> stream) {
-        return stream
-                .mapToInt( x -> x.intValue())
-                .sum();
+    private Integer sumInteger(Spliterator<Row> rowSpliterator, int index) {
+        final AtomicInteger sum = new AtomicInteger(0);
+
+        rowSpliterator.forEachRemaining( (i) -> {
+            sum.set(sum.get() + (Integer)i.get(index));
+        });
+        return sum.get();
+
     }
 
-    private Long sumLong(Stream<T> stream) {
-        return stream
-                .mapToLong( x -> x.longValue())
-                .sum();
+    private Long sumLong(Spliterator<Row> rowSpliterator, int index) {
+        final AtomicLong sum = new AtomicLong(0L);
+
+        rowSpliterator.forEachRemaining( (i) -> {
+            sum.set(sum.get() + (Long)i.get(index));
+        });
+        return sum.get();
     }
 }

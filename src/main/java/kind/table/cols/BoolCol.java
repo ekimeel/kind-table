@@ -23,9 +23,17 @@ public final class BoolCol extends Col<Boolean> implements Serializable {
 
     @Override
     public Boolean cast(Object value) {
-        if (value == null) return null;
+        if (value == null) {
+            return null;
+        } else if (value instanceof String) {
+           return Boolean.parseBoolean((String) value);
+        } else if (value instanceof Number) {
+           int val =  ((Number)value).intValue();
+           return (val > 0)? true : (val < 1);
+        } else {
+            return (Boolean)value;
+        }
 
-        return (Boolean)value;
     }
 
     @Override

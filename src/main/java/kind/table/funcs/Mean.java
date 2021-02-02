@@ -5,8 +5,6 @@ import kind.table.cols.*;
 import kind.table.cols.Col;
 import kind.table.cols.NumCol;
 
-import java.util.stream.Stream;
-
 public final class Mean implements Func<Double> {
 
     public static Mean from(String col) { return new Mean(ColRef.of(col)); }
@@ -25,18 +23,9 @@ public final class Mean implements Func<Double> {
 
     @Override
     public Double eval(Table table) {
-        if (table == null) {
-            return null;
-        }
-
-        final Stream stream = (table.allowParallelProcessing())?
-                table.getVals(this.colRef).parallelStream() :
-                table.getVals(this.colRef).stream();
-
-        return stream
-                .mapToDouble( x -> ((Number)x).doubleValue())
-                .average()
-                .getAsDouble();
+        final Col col = table.getColByRef(this.colRef);
+        final Number sum = table.eval(Sum.from(col.getIndex()));
+        return sum.doubleValue() / table.getRowCount();
     }
 
 

@@ -2,6 +2,7 @@ package kind.table;
 
 public final class TableSettingsBuilder {
 
+    private int defaultRowCapacity;
     private int maxAllowableRows;
     private int maxAllowableColumns;
     private int maxAllowableThreads;
@@ -42,8 +43,14 @@ public final class TableSettingsBuilder {
         return this;
     }
 
+    public TableSettingsBuilder withRowCapacity(int minCapacity) {
+        this.defaultRowCapacity = defaultRowCapacity;
+        return this;
+    }
+
     public TableSettings build() {
-        return new TableSettings(this.maxAllowableRows, this.maxAllowableColumns, this.maxAllowableThreads,
+        return new TableSettings(this.defaultRowCapacity,
+        this.maxAllowableRows, this.maxAllowableColumns, this.maxAllowableThreads,
                 this.evalTimeout, this.allowParallelProcessingAfterRow, this.timeZone);
     }
 

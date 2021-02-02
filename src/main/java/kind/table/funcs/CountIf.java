@@ -1,11 +1,13 @@
 package kind.table.funcs;
 
+import kind.table.Row;
 import kind.table.Table;
 import kind.table.cols.Col;
 import kind.table.cols.ColRef;
 
+import java.util.Spliterator;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 public final class CountIf implements Func<Integer> {
 
@@ -15,7 +17,6 @@ public final class CountIf implements Func<Integer> {
     /**/
     private final ColRef colRef;
     private final Predicate predicate;
-
 
     public CountIf(ColRef colRef, Predicate predicate) {
         this.colRef = colRef;
@@ -29,15 +30,19 @@ public final class CountIf implements Func<Integer> {
 
     @Override
     public Integer eval(Table table) {
-        if (table == null) {
-            return null;
-        }
 
-        final Stream<Object> stream = (table.allowParallelProcessing())?
-                table.getVals(this.colRef).parallelStream() :
-                table.getVals(this.colRef).stream();
+        final Col col = table.getColByRef(this.colRef);
+        final int index = col.getIndex();
+        final Spliterator<Row> spliterator = (table.allowParallelProcessing())?
+                table.getRows().parallelStream().spliterator() :
+                table.getRows().stream().spliterator();
 
-        return (int) stream.filter(predicate).count();
+        final AtomicInteger count = new AtomicInteger(0);
+        spliterator.forEachRemaining( (i) -> {
+            if (predicate.test(i.get(index))) { count.set(count.get() + 1); }
+        });
+
+        return count.get();
 
     }
 

@@ -22,12 +22,11 @@ public class TableTest {
         Instant now = Instant.now();
 
         for (int i = 0; i < 10; i++) {
-            tableA.addRow(new Row(now, i));
+            tableA.addRow(Row.of(now, i));
             now = now.plus(Duration.ofMinutes(1));
         }
 
         tableA.addCol(Weekday.from("weekday", "timestamp"));
-        tableA.print(System.out);
 
     }
 }

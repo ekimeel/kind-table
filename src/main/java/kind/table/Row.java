@@ -6,19 +6,43 @@ import java.util.*;
 
 public class Row implements Copyable<Row> {
 
-    private int index;
-    private List values;
 
-    public Row(List values) {
-        this.values = values;
+    public static Row empty() {
+        return new Row();
     }
 
-    public Row(Object... values){
+    public static Row withCapacity(int capacity) {
+        final Row row = new Row();
+        row.values.ensureCapacity(capacity);
+        return row;
+    }
+
+    public static Row of(Object... values) {
+        return new Row(values);
+    }
+
+    public static Row from(Collection items) {
+        final Row row = new Row();
+        row.values = new ArrayList(items);
+        return row;
+    }
+
+
+    /**/
+    private int index;
+    private ArrayList values;
+
+
+    private Row(Object... values){
         this.values = new ArrayList(Arrays.asList(values));
     }
 
-    public Row(){
+    private Row(){
         this.values = new ArrayList();
+    }
+
+    private Row(int capacity){
+        this.values = new ArrayList(capacity);
     }
 
     public List values(){
@@ -132,14 +156,12 @@ public class Row implements Copyable<Row> {
     @Override
     public Row copy()  {
 
-        final Row copy = new Row();
+        final Row copy = new Row(size());
 
         for(Object value : values){
-
             if (value == null) {
                 copy.values.add(null);
             } else {
-
                 if (!(value instanceof Serializable)) {
                     throw new IllegalStateException(String.format("Value [%s] of type [%s] does not implement Serializable.", value, value.getClass()));
                 }
@@ -155,6 +177,7 @@ public class Row implements Copyable<Row> {
 
         return copy;
     }
+
     public String toCsv() {
         return Joiner.on(',')
                 .useForNull("null")

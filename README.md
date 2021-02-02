@@ -5,6 +5,15 @@
 # About
 The kind-table project is designed to be an in-memory table data structure (rows and cols) with robust functionality.  
 
+## Functional & Performant
+The kind-table project focuses on a nice API but, its no slouch when it comes to performance! The table takes advantage 
+of concurrency, parallel processing and capacity planning for fast and reliable use. 
+
+ - Time to insert 1,000,000 rows into a ten column table: ~390 milliseconds
+ - Time to copy a table with 1,000,000 and 10 columns: ~390 milliseconds
+ - Parallel stream processing based on row count (see Table Settings)
+ - Collection capacity planning
+
 ## Quick Start
 
 :warning:
@@ -18,9 +27,9 @@ The below example creates a simple three col table with three rows:
     table.addCol( DblColumn.of("Even") );
     table.addCol( StrColumn.of("Name") );
 
-    table.addRow(new Row(1, 2.0, "Foo"));
-    table.addRow(new Row(3, 4.0, "Bar"));
-    table.addRow(new Row(5, 6.0, "Foo Bar"));
+    table.addRow(Row.of(1, 2.0, "Foo"));
+    table.addRow(Row.of(3, 4.0, "Bar"));
+    table.addRow(Row.of(5, 6.0, "Foo Bar"));
 
     assertEquals(1, table.get(0,0));
     assertEquals(4.0, table.get(1,1), 0.0);
@@ -99,6 +108,7 @@ Below is a current list of Column Functions. You may also extend the ColFunc cla
         
  ```
 
+
 #### Column Types
 | Class         | Data Type  | Examples|
 |---------------|---|---|
@@ -125,6 +135,7 @@ final Table group = table.eval(new GroupBy(2));
 
 | Function            | Output | Description               |   
 |---------------------|--------|---------------------------|
+| **CastCol**             | Table        | Casts a col type to another type |
 | **Copy**                | Table        | Creates a copy of a table|
 | **Count**               | Integer      | Counts the number of non-null values in a col|
 | **CountIf**             | Integer      | Counts the number of values meeting a condition a col|

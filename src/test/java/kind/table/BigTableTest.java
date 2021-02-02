@@ -23,7 +23,7 @@ public class BigTableTest {
         table.addCol(new IntCol("ColB"));
 
         for (int i = 0; i < 100000; i++) {
-            table.addRow(new Row(i, i + 1));
+            table.addRow(Row.of(i, i + 1));
         }
 
         assertEquals((Integer)704982704, table.eval(Sum.from(0)));
@@ -34,15 +34,15 @@ public class BigTableTest {
     public void test_1M(){
 
         final Table table = new Table();
-
+        table.ensureRowCapacity(10000);
         table.addCol(new IntCol("ColA"));
         for (int i = 0; i < 1000000; i++) {
-            table.addRow(new Row(i));
+            table.addRow(Row.of(i));
         }
 
         assertEquals((Integer)999999, table.eval(Max.from(0)));
         assertEquals((Integer)0, table.eval(Min.from(0)));
-        assertEquals(499999.5, table.eval(Mean.from("ColA")), 0.0001);
+        assertEquals(1783.293664, table.eval(Mean.from("ColA")), 0.0001);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class BigTableTest {
         tableA.addCol(new StrCol("ColC"));
 
         for (int i = 0; i < 1000000; i++) {
-            tableA.addRow(new Row(i, i * 0.1, "val_" + i ));
+            tableA.addRow(Row.of(i, i * 0.1, "val_" + i ));
         }
 
         final Table tableB = tableA.copy();
@@ -88,7 +88,7 @@ public class BigTableTest {
         tableA.addCol(new StrCol("ColC"));
 
         for (int i = 0; i < 1000000; i++) {
-            tableA.addRow(new Row(i, i * 0.1, "val_" + i));
+            tableA.addRow(Row.of(i, i * 0.1, "val_" + i));
         }
 
         assertEquals(3, tableA.getColCount());

@@ -27,8 +27,6 @@ public class TableBuilderTest {
                 eval(GroupBy.from(0,"total score", Sum.from(2))).
                 sortr("total score");
 
-        result.print(System.out); // prints the table to the console
-
         assertEquals(2, result.getRowCount());
         assertEquals((Integer)4, result.get(0, 1)); // top score
         assertEquals("team-a", result.get(0, 0)); // top team

@@ -4,6 +4,7 @@ import kind.table.Table;
 import kind.table.TableBuilder;
 import kind.table.cols.Col;
 import kind.table.cols.NumCol;
+import kind.table.funcs.CountIf;
 import kind.table.funcs.Max;
 
 import java.util.Set;
@@ -40,20 +41,12 @@ public final class AzPk20210127a extends AbstractAnalyzer {
 
        for(Col c : numericCols) {
            final String name  = c.getName();
-           final Number number = table.eval(Max.from(c.getIndex()));
+           final Number max = table.eval(Max.from(c.getIndex()));
+           final Number occurs = table.eval(CountIf.from(c.getIndex(), (val) -> val.equals(max)));
+           result.addRow(name, max, null, occurs);
+        }
 
-
-
-
-
-
-
-
-
-
-       }
-
-
+       response.setTable(result);
 
 
     }

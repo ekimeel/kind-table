@@ -13,13 +13,13 @@ class RowCopier {
 
     void copyRows(Table from, Table to){
         final TableSettings settings = from.getSettings();
+        to.ensureRowCapacity(from.getRowCount());
 
         if (settings != null && from.getRowCount() > THREAD_MODE) {
             final List<List<Row>> partitions = Lists.partition(from.getRows(),
                     from.getRowCount() / settings.getMaxAllowableThreads());
 
             final ExecutorService executor = Executors.newFixedThreadPool(settings.getMaxAllowableThreads());
-
             for(List<Row> partition : partitions) {
                 final Runnable task = () -> {
                     for(Row row : partition) {

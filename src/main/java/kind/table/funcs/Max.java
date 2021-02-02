@@ -1,8 +1,12 @@
 package kind.table.funcs;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import kind.table.*;
 import kind.table.cols.*;
 import java.util.OptionalInt;
+import java.util.Spliterator;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
 public final class Max<T extends Number> implements Func<T> {
@@ -11,7 +15,6 @@ public final class Max<T extends Number> implements Func<T> {
     public static <E extends Number> Max<E> from(int col) { return new Max<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
-    private Table table;
 
     public Max(ColRef colRef) {
         this.colRef = colRef;
@@ -24,22 +27,20 @@ public final class Max<T extends Number> implements Func<T> {
 
     @Override
     public T eval(Table table) {
-        this.table = table;
-        if (table == null) {
-            return null;
-        }
+        if (table.isEmpty()) return null;
 
         final Col col = table.getColByRef(this.colRef);
-        final Stream<Object> stream = (table.allowParallelProcessing())?
-                table.getVals(this.colRef).parallelStream() :
-                table.getVals(this.colRef).stream();
+        final int index = col.getIndex();
+        final Spliterator<Row> spliterator = (table.allowParallelProcessing())?
+                table.getRows().parallelStream().spliterator() :
+                table.getRows().stream().spliterator();
 
         if (col instanceof DblCol){
-            return (T) maxDouble(stream);
+            return (T) maxDouble(spliterator, index);
         } else if (col instanceof IntCol){
-            return (T) maxInteger(stream);
+            return (T) maxInteger(spliterator, index);
         } else if (col instanceof LngCol){
-            return (T) maxLong(stream);
+            return (T) maxLong(spliterator, index);
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support col type %.",
                     this.getClass().getSimpleName(),
@@ -48,22 +49,27 @@ public final class Max<T extends Number> implements Func<T> {
 
     }
 
-    private Double maxDouble(Stream<Object> stream) {
-        return stream
-                .mapToDouble(x -> ((Number)x).doubleValue())
-                .max().getAsDouble();
+    private Double maxDouble(Spliterator<Row> rowSpliterator, int index) {
+        final AtomicDouble max = new AtomicDouble(Double.MIN_VALUE);
+        rowSpliterator.forEachRemaining((i) -> {
+            max.set(Math.max(max.get(), i.get(index)));
+        });
+        return max.get();
     }
 
-    private Integer maxInteger(Stream<Object> stream) {
-        return stream
-                .mapToInt( x -> ((Number)x).intValue())
-                .max()
-                .getAsInt();
+    private Integer maxInteger(Spliterator<Row> rowSpliterator, int index) {
+        final AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
+        rowSpliterator.forEachRemaining((i) -> {
+            max.set(Math.max(max.get(), i.get(index)));
+        });
+        return max.get();
     }
 
-    private Long maxLong(Stream<Object> stream) {
-        return stream
-                .mapToLong(x -> ((Number)x).longValue())
-                .max().getAsLong();
+    private Long maxLong(Spliterator<Row> rowSpliterator, int index) {
+        final AtomicLong max = new AtomicLong(Long.MIN_VALUE);
+        rowSpliterator.forEachRemaining((i) -> {
+            max.set(Math.max(max.get(), i.get(index)));
+        });
+        return max.get();
     }
 }
