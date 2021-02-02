@@ -1,6 +1,5 @@
 package kind.table.funcs;
 
-import kind.support.collections.Arrays;
 import kind.table.*;
 import kind.table.cols.DblCol;
 import kind.table.cols.IntCol;

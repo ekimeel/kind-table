@@ -27,7 +27,6 @@ repositories {
 
 dependencies {
     /* kind */
-    compile 'ekimeel:kind-support:v0.2-beta'
 
     compile group: 'com.google.guava', name: 'guava', version: '30.1-jre'
     testCompile group: 'junit', name: 'junit', version: '4.12'

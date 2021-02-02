@@ -7,7 +7,7 @@ import kind.table.readers.TableReader;
 import java.nio.file.Path;
 import java.util.*;
 
-import static kind.support.Coalesce.coalesce;
+import static kind.table.util.Coalesce.coalesce;
 
 public class TableBuilder {
 
