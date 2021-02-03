@@ -53,4 +53,10 @@ public final class ColRef {
     public int hashCode() {
         return Objects.hash(strRef, intRef);
     }
+
+    @Override
+    public String toString() {
+        return String.format("ColRef name=%s (or) index=%s", strRef, intRef);
+
+    }
 }

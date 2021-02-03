@@ -1,6 +1,7 @@
 package kind.table.readers;
 
 import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import kind.table.Table;
 import kind.table.TableBuilder;
 import kind.table.TableSettings;
@@ -11,6 +12,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public final class CsvReader implements TableReader {
 
@@ -65,13 +68,20 @@ public final class CsvReader implements TableReader {
         tableBuilder.withSettings(this.tableSettings);
 
         final int startReadingAtLine = hasColumnHeaders() ? 1 : 0;
+        //todo: use a better CSV Parser
 
         int i = 0;
         try (BufferedReader br = new BufferedReader((new FileReader(path.toFile())))) {
             String line;
             while ((line = br.readLine()) != null) {
                 final Splitter splitter = Splitter.on(SPLIT_PATTERN);
-                final List cells = splitter.splitToList(line);
+                List<String> cells = splitter.splitToList(line);
+                final int size = cells .size();
+
+                cells = cells.stream().map( c -> c.trim().replace("\"", ""))
+                        .collect(Collectors.toCollection(() -> new ArrayList<>(size)));
+
+
 
                 if (hasColumnHeaders() && i < startReadingAtLine) {
                     tableBuilder.withCols(cells);

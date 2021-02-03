@@ -9,7 +9,7 @@ public final class AnalyzerResponse {
     private Object err;
 
     public Table getTable() {
-        return null;
+        return table;
     }
 
     void setTable(Table table) {

@@ -135,7 +135,7 @@ final Table group = table.eval(new GroupBy(2));
 
 | Function            | Output | Description               |   
 |---------------------|--------|---------------------------|
-| **CastCol**             | Table        | Casts a col type to another type |
+| **Convert**             | Table        | Converts a col type to another type |
 | **Copy**                | Table        | Creates a copy of a table|
 | **Count**               | Integer      | Counts the number of non-null values in a col|
 | **CountIf**             | Integer      | Counts the number of values meeting a condition a col|

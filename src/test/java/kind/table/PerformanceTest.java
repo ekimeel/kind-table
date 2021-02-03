@@ -83,7 +83,6 @@ public class PerformanceTest {
             singleTable.addRow(i);
         });
 
-
         final Table times = new TableBuilder()
                 .withStrCol("table")
                 .withLngCol("time")

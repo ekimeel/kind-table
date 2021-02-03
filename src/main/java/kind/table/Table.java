@@ -309,7 +309,8 @@ public class Table implements Copyable<Table>{
      */
     private boolean acceptRow(Row row){
         if (row.size() != getColCount()) {
-            return false;
+            throw new IllegalArgumentException(String.format("col mismatch error, expected [%s] values but was [%s].",
+                    getColCount(), row.size()));
         }
         return true;
     }

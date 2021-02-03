@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CastColTest {
+public class ConvertTest {
 
     @Test
     public void test_eval_StrColToIntCol() {
@@ -20,7 +20,7 @@ public class CastColTest {
         table.addRow("2");
         table.addRow("3");
 
-        final Table result = table.eval(CastCol.from("str_col", IntCol.class));
+        final Table result = table.eval(Convert.from("str_col", IntCol.class));
         assertEquals((Integer)6, result.eval(Sum.from("str_col")));
 
 

@@ -46,7 +46,7 @@ public class TableBuilder {
         return withCol(IntCol.of(name));
     }
 
-    public TableBuilder withDbCol(String name) {
+    public TableBuilder withDblCol(String name) {
         return withCol(DblCol.of(name));
     }
 
