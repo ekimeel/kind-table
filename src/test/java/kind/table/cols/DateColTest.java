@@ -13,7 +13,7 @@ public class DateColTest {
     public void test_cast_withNull(){
         final DateCol column = new DateCol("undefined");
 
-        assertNull(column.cast(null));
+        assertNull(column.convert(null));
     }
 
     @Test
@@ -21,7 +21,7 @@ public class DateColTest {
         final DateCol column = new DateCol("undefined");
 
         final long nowLong = Instant.now().toEpochMilli();
-        final Date nowDate = column.cast(nowLong);
+        final Date nowDate = column.convert(nowLong);
 
         assertEquals(nowLong, nowDate.getTime());
     }
@@ -31,7 +31,7 @@ public class DateColTest {
         final DateCol column = new DateCol("undefined");
 
         final java.sql.Date nowSql = new java.sql.Date(Instant.now().toEpochMilli());
-        final Date nowDate = column.cast(nowSql);
+        final Date nowDate = column.convert(nowSql);
 
         assertEquals(nowSql.getTime(), nowDate.getTime());
     }

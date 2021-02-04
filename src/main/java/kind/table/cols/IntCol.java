@@ -22,7 +22,7 @@ public final class IntCol extends NumCol<Integer> implements Serializable {
     }
 
     @Override
-    public Integer cast(Object value) {
+    public Integer convert(Object value, String format) {
         if (value == null) {
             return null;
         } else if (value instanceof Number) {

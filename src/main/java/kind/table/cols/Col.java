@@ -36,13 +36,13 @@ public abstract class Col<T> implements Copyable<Col>, Serializable {
     }
 
     /**
-     * Attempts to cast the provided value to the column's type
+     * Attempts to convert the provided value to the column's type
      *
      * @throws ClassCastException
      * @param value The value to try to cast
      * @return The casted value
      */
-    public abstract T cast(Object value);
+    public abstract T convert(Object value, String format);
 
     @Override
     public boolean equals(Object o) {

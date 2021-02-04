@@ -34,7 +34,7 @@ public final class TsCol extends Col<Instant> implements Serializable {
      * @return
      */
     @Override
-    public Instant cast (Object value) {
+    public Instant convert(Object value, String format) {
         if (value == null) {
             return null;
         } else if (value instanceof Instant) {

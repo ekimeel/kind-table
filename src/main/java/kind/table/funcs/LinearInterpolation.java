@@ -68,7 +68,7 @@ public class LinearInterpolation implements Func<Table> {
                         final Double val = new BigDecimal(start + (dist * mult))
                                 .setScale(this.decimalPrecision, this.roundingMode).doubleValue();
 
-                        copy.set(e.intValue(), this.col, col.cast(val));
+                        copy.set(e.intValue(), this.col, col.convert(val));
                         mult++;
                     }
                     unitOfWork.clear();

@@ -22,7 +22,7 @@ public final class DblCol extends NumCol<Double> implements Serializable {
     }
 
     @Override
-    public Double cast(Object value) {
+    public Double convert(Object value, String format) {
         if (value == null) {
             return null;
         } else if (value instanceof Number) {

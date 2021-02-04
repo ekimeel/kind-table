@@ -22,7 +22,7 @@ public final class BoolCol extends Col<Boolean> implements Serializable {
     }
 
     @Override
-    public Boolean cast(Object value) {
+    public Boolean convert(Object value, String format) {
         if (value == null) {
             return null;
         } else if (value instanceof String) {
@@ -37,7 +37,7 @@ public final class BoolCol extends Col<Boolean> implements Serializable {
     }
 
     @Override
-    public BoolCol copy() {
+    public Col copy() {
         return new BoolCol(getName(), getIndex());
     }
 }

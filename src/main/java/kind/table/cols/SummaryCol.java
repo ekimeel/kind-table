@@ -29,7 +29,7 @@ public final class SummaryCol extends Col implements Serializable {
     }
 
     @Override
-    public String cast(Object value) {
+    public String convert(Object value, String format) {
         throw new UnsupportedColException("cannot cast");
     }
 

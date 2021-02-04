@@ -22,7 +22,7 @@ public final class LngCol extends NumCol<Long> implements Serializable {
     }
 
     @Override
-    public Long cast(Object value) {
+    public Long convert(Object value, String format) {
         if (value == null) {
             return null;
         } else if (value instanceof Number) {

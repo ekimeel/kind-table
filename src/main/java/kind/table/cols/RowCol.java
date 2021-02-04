@@ -27,7 +27,7 @@ public final class RowCol extends Col<List<Row>> implements Serializable {
     }
 
     @Override
-    public List cast(Object value) {
+    public List convert(Object value, String format) {
         return null;
     }
 }

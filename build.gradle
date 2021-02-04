@@ -10,7 +10,7 @@ if (propertiesFile.exists()) {
     properties.load(propertiesFile.newDataInputStream())
 }
 
-group 'ekimeel'
+group 'com.github.ekimeel'
 version gitVersion()
 
 sourceCompatibility = 1.8

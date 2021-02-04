@@ -5,7 +5,8 @@ import kind.table.cols.*;
 import java.util.UUID;
 
 public final class Convert extends AbstractFunc<Table> {
-
+    public static Convert toDateCol(String col, String format) { return new Convert(ColRef.of(col), DateCol.class, format); }
+    public static Convert toDateCol(int col, String format) { return new Convert(ColRef.of(col), DateCol.class, format); }
     public static Convert toIntCol(String col) { return new Convert(ColRef.of(col), IntCol.class); }
     public static Convert toIntCol(int col) { return new Convert(ColRef.of(col), IntCol.class); }
     public static Convert toDblCol(String col) { return new Convert(ColRef.of(col), DblCol.class); }
@@ -20,11 +21,19 @@ public final class Convert extends AbstractFunc<Table> {
     /**/
     private final ColRef colRef;
     private final Class<? extends Col> type;
+    private final String format;
 
 
-    public Convert(ColRef colRef, Class<? extends Col> type) {
+    private Convert(ColRef colRef, Class<? extends Col> type) {
         this.colRef = colRef;
         this.type = type;
+        this.format = null;
+    }
+
+    private Convert(ColRef colRef, Class<? extends Col> type, String format) {
+        this.colRef = colRef;
+        this.type = type;
+        this.format = format;
     }
 
     @Override
@@ -46,7 +55,7 @@ public final class Convert extends AbstractFunc<Table> {
         final Col newCol = ColFactory.from(oldCol.getName(), this.type);
         oldCol.setName(UUID.randomUUID().toString());
 
-        copy.addCol(newCol, (i) -> i.append( newCol.cast(i.get(oldCol.getIndex()))) );
+        copy.addCol(newCol, (i) -> i.append( newCol.convert(i.get(oldCol.getIndex()), format)) );
 
         copy.removeCol(oldCol);
 

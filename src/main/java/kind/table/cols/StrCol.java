@@ -22,7 +22,7 @@ public final class StrCol extends Col<String> implements Serializable {
     }
 
     @Override
-    public String cast(Object value) {
+    public String convert(Object value, String format) {
         if (value == null) {
             return null;
         }

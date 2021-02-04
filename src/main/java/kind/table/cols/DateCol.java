@@ -1,6 +1,9 @@
 package kind.table.cols;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public final class DateCol extends Col<Date> implements Serializable {
@@ -35,15 +38,25 @@ public final class DateCol extends Col<Date> implements Serializable {
      * @return
      */
     @Override
-    public Date cast(Object value) {
+    public Date convert(Object value, String format) {
         if (value == null) {
             return null;
         } else if (value instanceof Number) {
             return new Date(((Number)value).longValue());
         } else if (value instanceof java.sql.Date) {
             return new Date(((java.sql.Date)value).getTime());
+        } else if (value instanceof String) {
+            try {
+                return (format != null)?
+                        new SimpleDateFormat(format).parse((String)value) :
+                        SimpleDateFormat.getDateTimeInstance().parse((String)value);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(String.format("failed to convert [%s] to a date using format [%s]", value, format));
+            }
+
         }
 
+        //try a direct cast, good luck :)
         return (Date) value;
     }
 
