@@ -6,6 +6,8 @@ import kind.table.cols.StrCol;
 import kind.table.funcs.*;
 import org.junit.Test;
 
+import java.nio.file.Paths;
+
 public class IntegrationTest {
 
     @Test
@@ -38,6 +40,24 @@ public class IntegrationTest {
                         SummaryCol.of("Total", Sum.of(1))));
 
         //result.print(System.out);
+
+    }
+
+    @Test
+    public void test_occupancy_data(){
+        Table table = new TableBuilder()
+                .withCsvFile(Paths.get("./test-data/pub/", "occupancy_data.csv"))
+                .build()
+                .removeCol("in")
+                .eval(Convert.toDblCol("Temperature"))
+                .eval(Convert.toDblCol("Humidity"))
+                .eval(Convert.toDblCol("Light"))
+                .eval(Convert.toDblCol("CO2"))
+                .eval(Convert.toDblCol("HumidityRatio"))
+                .eval(Convert.toDblCol("Occupancy"));
+
+
+
 
     }
 

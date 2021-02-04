@@ -151,6 +151,8 @@ final Table group = table.eval(new GroupBy(2));
 | **Max**                 | Number       | Returns the max value in a col |
 | **Mean**                | Double       | Returns the mean (average) value in a col |
 | **Min**                 | Number       | Returns the min value in a col |
+| **Range**               | Number       | Returns the range of values (max - min) |
+| **Remove**              | Table        | Removes a col from the table and returns a new table |
 | **StandardDeviation**   | Double       | Returns the entire population's standard deviation |
 | **Sum**                 | Number       | Returns the sum (total) value in a col |
 
