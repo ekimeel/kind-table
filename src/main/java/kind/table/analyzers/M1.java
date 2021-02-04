@@ -53,6 +53,7 @@ public final class M1 extends AbstractAnalyzer {
            final Number min_occurs = table.eval(CountIf.of(c.getIndex(), (val) -> val.equals(min)));
            result.addRow(name, max, min, mean, range, count, max_occurs, min_occurs);
        }
+
        response.setTable(result);
 
 
