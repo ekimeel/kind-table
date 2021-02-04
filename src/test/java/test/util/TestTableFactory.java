@@ -15,7 +15,7 @@ public class TestTableFactory {
 
     public static Table hw_25000() {
         return new TableBuilder()
-                .withCsvFile(Path.of("./test-data/pub/hw_25000.csv"))
+                .withCsvFile(Path.of("./test-data/pub/","hw_25000.csv"))
                 .build()
                 .eval(Convert.toDblCol("Height(Inches)"))
                 .eval(Convert.toDblCol("Weight(Pounds)"));

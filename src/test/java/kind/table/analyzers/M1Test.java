@@ -1,15 +1,9 @@
 package kind.table.analyzers;
 
 import kind.table.Table;
-import kind.table.TableBuilder;
-import kind.table.funcs.Convert;
 import kind.table.funcs.writers.Markdown;
 import org.junit.Test;
 import test.util.TestTableFactory;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import java.nio.file.Path;
 
 public class M1Test {
 

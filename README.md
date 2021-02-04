@@ -141,6 +141,7 @@ final Table group = table.eval(new GroupBy(2));
 | **CountIf**             | Integer      | Counts the number of values meeting a condition a col|
 | **First**               | Any          | Returns the first value in a col |   |
 | **GroupBy**             | Table        | |
+| **Histogram**           | Table        | Returns a histogram of values |
 | **Join**                | Table        | Inner joins two tables on one key col
 | **KeepCols**            | Table        |   | 
 | **Last**                | Any          |   |

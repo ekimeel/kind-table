@@ -55,6 +55,11 @@ public final class M1 extends AbstractAnalyzer {
        }
        response.setTable(result);
 
+
+
+
+
+
        //"The maximum $column is $max.";
        //"The minimum "
        //"The maximum $column is $max and occured $occurs time(s).";
