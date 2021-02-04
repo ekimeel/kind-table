@@ -7,8 +7,8 @@ import kind.table.cols.NumCol;
 
 public final class Mean implements Func<Double> {
 
-    public static Mean from(String col) { return new Mean(ColRef.of(col)); }
-    public static Mean from(int col) { return new Mean(ColRef.of(col)); }
+    public static Mean of(String col) { return new Mean(ColRef.of(col)); }
+    public static Mean of(int col) { return new Mean(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
@@ -24,7 +24,7 @@ public final class Mean implements Func<Double> {
     @Override
     public Double eval(Table table) {
         final Col col = table.getColByRef(this.colRef);
-        final Number sum = table.eval(Sum.from(col.getIndex()));
+        final Number sum = table.eval(Sum.of(col.getIndex()));
         return sum.doubleValue() / table.getRowCount();
     }
 

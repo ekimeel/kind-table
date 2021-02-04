@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 
 public final class Max<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Max<E> from(String col) { return new Max<>(ColRef.of(col)); }
-    public static <E extends Number> Max<E> from(int col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.of(col)); }
+    public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 

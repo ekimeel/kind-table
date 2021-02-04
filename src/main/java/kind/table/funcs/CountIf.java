@@ -11,8 +11,8 @@ import java.util.function.Predicate;
 
 public final class CountIf implements Func<Integer> {
 
-    public static CountIf from(String col, Predicate predicate) { return new CountIf(ColRef.of(col), predicate); }
-    public static CountIf from(int col, Predicate predicate) { return new CountIf(ColRef.of(col), predicate); }
+    public static CountIf of(String col, Predicate predicate) { return new CountIf(ColRef.of(col), predicate); }
+    public static CountIf of(int col, Predicate predicate) { return new CountIf(ColRef.of(col), predicate); }
 
     /**/
     private final ColRef colRef;

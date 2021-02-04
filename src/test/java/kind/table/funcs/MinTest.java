@@ -20,7 +20,7 @@ public class MinTest {
         table.addRow(Row.of(0, 0));
         table.addRow(Row.of(5, 6));
 
-        final Integer min = (Integer) table.eval(Min.from(0));
+        final Integer min = (Integer) table.eval(Min.of(0));
         assertEquals((Integer)0, min);
     }
 
@@ -35,7 +35,7 @@ public class MinTest {
         table.addRow(Row.of(5.5, 4.4));
         table.addRow(Row.of(1.1, 6.6));
 
-        final Double sum = table.eval(Min.from(0));
+        final Double sum = table.eval(Min.of(0));
         assertEquals((Double) 1.1, sum);
     }
 
@@ -50,7 +50,7 @@ public class MinTest {
         table.addRow(Row.of(30L, 40L));
         table.addRow(Row.of(50L, 60L));
 
-        final Long min = table.eval(Min.from("Odd"));
+        final Long min = table.eval(Min.of("Odd"));
         assertEquals((Long) 10L, min);
     }
 }

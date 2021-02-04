@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class Split implements Func<List<Table>> {
 
-    public static Split from(int col) { return new Split(ColRef.of(col)); }
-    public static Split from(String col) { return new Split(ColRef.of(col)); }
-    public static Split from(ColRef colRef) { return new Split(colRef); }
+    public static Split of(int col) { return new Split(ColRef.of(col)); }
+    public static Split of(String col) { return new Split(ColRef.of(col)); }
+    public static Split of(ColRef colRef) { return new Split(colRef); }
     /**/
     private final ColRef colRef;
     public Split(ColRef colRef) {

@@ -21,7 +21,7 @@ public class CountTest {
         });
 
         assertEquals(100, table.getRowCount());
-        assertEquals((Integer) 95, table.eval(Count.from("val"))); // don't count nulls
+        assertEquals((Integer) 95, table.eval(Count.of("val"))); // don't count nulls
 
     }
 }

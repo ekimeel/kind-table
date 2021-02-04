@@ -21,7 +21,7 @@ public class ConvertTest {
         table.addRow("3");
 
         final Table result = table.eval(Convert.from("str_col", IntCol.class));
-        assertEquals((Integer)6, result.eval(Sum.from("str_col")));
+        assertEquals((Integer)6, result.eval(Sum.of("str_col")));
 
 
     }

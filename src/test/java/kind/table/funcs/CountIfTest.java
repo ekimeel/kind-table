@@ -21,7 +21,7 @@ public class CountIfTest {
         });
 
         assertEquals(100, table.getRowCount());
-        assertEquals((Integer) 49, table.eval(CountIf.from("val", i -> ((Integer)i > 50) ))); // don't count nulls
+        assertEquals((Integer) 49, table.eval(CountIf.of("val", i -> ((Integer)i > 50) ))); // don't count nulls
 
     }
 }

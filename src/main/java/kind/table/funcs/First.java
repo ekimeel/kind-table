@@ -11,8 +11,8 @@ import kind.table.cols.ColRef;
  */
 public final class First<T> implements Func<T> {
 
-    public static <E> First<E> from(int col) { return new First<>(ColRef.of(col)); }
-    public static <E> First<E> from(String col) { return new First<>(ColRef.of(col)); }
+    public static <E> First<E> of(int col) { return new First<>(ColRef.of(col)); }
+    public static <E> First<E> of(String col) { return new First<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 

@@ -9,7 +9,7 @@ public final class KeepCols implements Func<Table> {
 
     private final List<Integer> cols = new ArrayList();
 
-    public static KeepCols from(int... cols) { return new KeepCols(cols); }
+    public static KeepCols of(int... cols) { return new KeepCols(cols); }
     public KeepCols(int... cols) {
         Arrays.stream(cols).forEach( (i) -> this.cols.add(i));
     }

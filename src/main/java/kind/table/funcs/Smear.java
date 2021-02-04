@@ -13,8 +13,8 @@ import java.util.List;
  */
 public final class Smear implements Func<Table> {
 
-    public static Smear from(String col) { return new Smear(ColRef.of(col)); }
-    public static Smear from(int col) { return new Smear(ColRef.of(col)); }
+    public static Smear of(String col) { return new Smear(ColRef.of(col)); }
+    public static Smear of(int col) { return new Smear(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 

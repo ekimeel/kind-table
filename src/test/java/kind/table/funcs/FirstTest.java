@@ -21,7 +21,7 @@ public class FirstTest {
         table.addRow(Row.of(0, 0));
         table.addRow(Row.of(5, 6));
 
-        final Integer value = table.eval(First.from("Odd"));
+        final Integer value = table.eval(First.of("Odd"));
         assertEquals((Integer)1, value);
     }
 
@@ -36,7 +36,7 @@ public class FirstTest {
         table.addRow(Row.of(5.5, 4.4));
         table.addRow(Row.of(1.1, 6.6));
 
-        final Double value = table.eval(First.from("Even"));
+        final Double value = table.eval(First.of("Even"));
         assertEquals((Double) 2.2, value);
     }
 
@@ -51,7 +51,7 @@ public class FirstTest {
         table.addRow(Row.of(30L, 40L));
         table.addRow(Row.of(50L, 60L));
 
-        final Long value = table.eval(First.from(1));
+        final Long value = table.eval(First.of(1));
         assertEquals((Long)20L, value);
     }
 

@@ -11,8 +11,8 @@ public class Histogram extends AbstractFunc<Table> {
     public static final String COL_BIN_END = "bin_end";
     public static final String COL_BIN_SIZE = "bin_size";
 
-    public static Histogram from(String col, int bins) { return new Histogram(ColRef.of(col), bins); }
-    public static Histogram from(int col, int bins) { return new Histogram(ColRef.of(col), bins); }
+    public static Histogram of(String col, int bins) { return new Histogram(ColRef.of(col), bins); }
+    public static Histogram of(int col, int bins) { return new Histogram(ColRef.of(col), bins); }
 
     /**/
     private final ColRef colRef;
@@ -49,8 +49,8 @@ public class Histogram extends AbstractFunc<Table> {
                 .build();
 
         final Col col = table.getColByRef(this.colRef);
-        final Double exactMin = table.eval(Min.from(col.getIndex())).doubleValue();
-        final Double exactMax = table.eval(Max.from(col.getIndex())).doubleValue();
+        final Double exactMin = table.eval(Min.of(col.getIndex())).doubleValue();
+        final Double exactMax = table.eval(Max.of(col.getIndex())).doubleValue();
 
         final Double min = exactMin - (exactMin * 0.01);
         final Double max = exactMax + (exactMax * 0.01);

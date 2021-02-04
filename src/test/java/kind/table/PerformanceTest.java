@@ -1,6 +1,5 @@
 package kind.table;
 
-import kind.table.cols.IntCol;
 import kind.table.cols.SummaryCol;
 import kind.table.funcs.*;
 import kind.table.funcs.writers.Markdown;
@@ -90,7 +89,7 @@ public class PerformanceTest {
 
         range(0, 1000).forEach( i -> {
             long start = Instant.now().toEpochMilli();
-            parallelTable.eval(Sum.from(0));
+            parallelTable.eval(Sum.of(0));
             times.addRow("parallel",
                     (Instant.now().toEpochMilli() - start),
                     parallelTable.getRowCount());
@@ -98,16 +97,16 @@ public class PerformanceTest {
 
         range(0, 1000).forEach( i -> {
             long start = Instant.now().toEpochMilli();
-            singleTable.eval(Sum.from(0));
+            singleTable.eval(Sum.of(0));
             times.addRow("single",
                     (Instant.now().toEpochMilli() - start),
                     singleTable.getRowCount());
         });
 
-        final Table results = times.eval(GroupBy.from("table",
-                SummaryCol.of("avg_time", Mean.from("time")),
-                SummaryCol.of("count", Count.from("time")),
-                SummaryCol.of("rows", Max.from("rows"))
+        final Table results = times.eval(GroupBy.of("table",
+                SummaryCol.of("avg_time", Mean.of("time")),
+                SummaryCol.of("count", Count.of("time")),
+                SummaryCol.of("rows", Max.of("rows"))
         ));
 
         results.writeTo(new Markdown(System.out));

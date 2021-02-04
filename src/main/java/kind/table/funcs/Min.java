@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 
 public final class Min<T extends Number> implements Func<T> {
 
-    public static <E extends Number> Min<E> from(String col) { return new Min(ColRef.of(col)); }
-    public static <E extends Number> Min<E> from(int col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.of(col)); }
+    public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 

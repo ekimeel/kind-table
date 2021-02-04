@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 
 public final class Count implements Func<Integer> {
 
-    public static Count from(String col) { return new Count(ColRef.of(col)); }
-    public static Count from(int col) { return new Count(ColRef.of(col)); }
+    public static Count of(String col) { return new Count(ColRef.of(col)); }
+    public static Count of(int col) { return new Count(ColRef.of(col)); }
 
     /**/
     private final ColRef colRef;

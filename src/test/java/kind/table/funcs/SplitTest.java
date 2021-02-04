@@ -34,7 +34,7 @@ public class SplitTest {
         table.addRow(Row.of("c-team", "player-2", 15));
         table.addRow(Row.of("c-team", "player-2", 12));
 
-        final List<Table> result = table.eval(Split.from("team"));
+        final List<Table> result = table.eval(Split.of("team"));
 
         assertNotNull(result);
         assertEquals(3, result.size());

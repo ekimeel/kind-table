@@ -12,9 +12,9 @@ import java.util.Map;
 
 public final class Join implements Func<Table> {
 
-    public static Join from(int col, Table table) { return new Join(ColRef.of(col), table); }
-    public static Join from(String col, Table table) { return new Join(ColRef.of(col), table); }
-    public static Join from(ColRef colRef, Table table) { return new Join(colRef, table); }
+    public static Join of(int col, Table table) { return new Join(ColRef.of(col), table); }
+    public static Join of(String col, Table table) { return new Join(ColRef.of(col), table); }
+    public static Join of(ColRef colRef, Table table) { return new Join(colRef, table); }
     /**/
     private final ColRef colRef;
     private final Table b;

@@ -15,7 +15,6 @@ public class LinearInterpolation implements Func<Table> {
     private static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
 
     private final Integer col;
-    private Table table;
     private short decimalPrecision;
     private RoundingMode roundingMode;
 

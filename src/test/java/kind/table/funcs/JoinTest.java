@@ -30,7 +30,7 @@ public class JoinTest {
         b.addRow("c", "3-b");
         b.addRow("d", "4-b"); // no join
 
-        final Table result = a.eval(Join.from("key", b));
+        final Table result = a.eval(Join.of("key", b));
 
         assertEquals(4, result.getRowCount());
         assertEquals(3, result.getColCount());

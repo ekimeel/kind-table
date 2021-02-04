@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 public final class GroupBy implements Func<Table> {
 
     private static final String COLUMN_POSTFIX = " Group";
-    public static GroupBy from(int col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
-    public static GroupBy from(int col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
-    public static GroupBy from(String col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
-    public static GroupBy from(String col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
+    public static GroupBy of(int col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+    public static GroupBy of(int col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
+    public static GroupBy of(String col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+    public static GroupBy of(String col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
     /**/
     private final ColRef colRef;
     private final List<SummaryCol> aggs;

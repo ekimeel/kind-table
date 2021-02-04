@@ -4,12 +4,7 @@ import kind.table.cols.SummaryCol;
 import kind.table.cols.IntCol;
 import kind.table.cols.StrCol;
 import kind.table.funcs.*;
-import kind.table.funcs.writers.Markdown;
 import org.junit.Test;
-
-import java.time.Instant;
-
-import static java.util.stream.IntStream.range;
 
 public class IntegrationTest {
 
@@ -38,9 +33,9 @@ public class IntegrationTest {
 
 
         Table result = table.
-                eval(KeepCols.from(0, 2)).
-                eval(GroupBy.from(0,
-                        SummaryCol.of("Total", Sum.from(1))));
+                eval(KeepCols.of(0, 2)).
+                eval(GroupBy.of(0,
+                        SummaryCol.of("Total", Sum.of(1))));
 
         //result.print(System.out);
 

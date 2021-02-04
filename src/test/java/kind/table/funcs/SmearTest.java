@@ -26,7 +26,7 @@ public class SmearTest {
         table.addRow(Row.of(15, 16));
         table.addRow(Row.of(17, 18));
 
-        final Table result = table.eval(Smear.from(1));
+        final Table result = table.eval(Smear.of(1));
 
         assertEquals( (Integer) 6, result.get(2, 1)); //
         assertEquals( (Integer) 6, result.get(3, 1)); // was null
