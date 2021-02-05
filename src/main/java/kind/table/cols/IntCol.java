@@ -28,7 +28,8 @@ public final class IntCol extends NumCol<Integer> implements Serializable {
         } else if (value instanceof Number) {
             return ((Number)value).intValue();
         } else if (value instanceof String) {
-            return Integer.parseInt((String)value);
+            final String str = (String)value;
+            return (str.equals(NULL_STRING))? null : Integer.parseInt(str);
         }
 
         return (Integer) value;

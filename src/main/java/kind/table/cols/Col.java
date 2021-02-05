@@ -11,7 +11,7 @@ import java.util.Objects;
  * @param <T> The expected datatype stored in the column
  */
 public abstract class Col<T extends Serializable> implements Copyable<Col>, Serializable {
-
+    protected static String NULL_STRING = "null";
     private int index;
     private String name;
 

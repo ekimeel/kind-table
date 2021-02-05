@@ -6,6 +6,7 @@ import java.io.PrintStream;
 
 public final class Markdown implements TableWriter {
 
+
     private PrintStream stream;
 
     public Markdown(PrintStream stream) {

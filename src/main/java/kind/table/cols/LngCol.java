@@ -28,7 +28,8 @@ public final class LngCol extends NumCol<Long> implements Serializable {
         } else if (value instanceof Number) {
             return ((Number)value).longValue();
         } else if (value instanceof String) {
-            return Long.parseLong((String)value);
+            final String str = (String)value;
+            return (str.equals(NULL_STRING))? null : Long.parseLong(str);
         }
 
         return (Long)value;
