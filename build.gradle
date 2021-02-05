@@ -16,14 +16,10 @@ ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 sourceCompatibility = 1.8
 
 
-java{
-    withJavadocJar()
-    withSourcesJar()
-}
-
 signing {
     sign publishing.publications.mavenJava
 }
+
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
 }
@@ -62,10 +58,10 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             pom {
-                groupId = 'com.example'
-                name = 'example project'
-                description = 'Example Project to learn how to deploy to OSSRH'
-                url = 'https://example.com/'
+                groupId = 'com.github.ekimeel'
+                name = 'kind-table'
+                description = ''
+                url = 'https://github.com/ekimeel/kind-table'
                 from components.java
                 licenses {
                     license {
@@ -74,9 +70,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git@github.com:example.com/example.git'
-                    developerConnection = 'scm:git:git@github.com:example.com/example.git'
-                    url = 'https://github.com/example.com/example/'
+                    connection = 'scm:git:git@github.com:ekimeel/kind-table.git'
+                    developerConnection = 'scm:git:git@github.com:ekimeel/kind-table.git'
+                    url = 'https://github.com/ekimeel/kind-table'
                 }
             }
         }
