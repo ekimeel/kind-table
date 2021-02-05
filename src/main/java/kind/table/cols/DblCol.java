@@ -7,7 +7,6 @@ import java.io.Serializable;
  */
 public final class DblCol extends NumCol<Double> implements Serializable {
 
-
     /**
      * Of dbl col.
      *

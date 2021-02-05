@@ -53,7 +53,8 @@ public final class Sum<T extends Number> implements Func<T> {
         final AtomicDouble sum = new AtomicDouble(0.0);
 
         rowSpliterator.forEachRemaining( (i) -> {
-            sum.set(sum.get() + (Double)i.get(index));
+            final Double v = i.get(index);
+            if (v != null) {  sum.set(sum.get() + v); }
         });
         return sum.get();
     }
@@ -62,7 +63,8 @@ public final class Sum<T extends Number> implements Func<T> {
         final AtomicInteger sum = new AtomicInteger(0);
 
         rowSpliterator.forEachRemaining( (i) -> {
-            sum.set(sum.get() + (Integer)i.get(index));
+            final Integer v = i.get(index);
+            if (v != null) {  sum.set(sum.get() + v); }
         });
         return sum.get();
 
@@ -72,7 +74,8 @@ public final class Sum<T extends Number> implements Func<T> {
         final AtomicLong sum = new AtomicLong(0L);
 
         rowSpliterator.forEachRemaining( (i) -> {
-            sum.set(sum.get() + (Long)i.get(index));
+            final Long v = i.get(index);
+            if (v != null) {  sum.set(sum.get() + v); }
         });
         return sum.get();
     }
