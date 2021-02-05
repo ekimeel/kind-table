@@ -32,7 +32,7 @@ public class DogeCoinIntegrationTest {
 
         table = table.eval(GroupBy.of("Weekday", SummaryCol.of("AverageVolume", Mean.of("Volume"))));
 
-        table.writeTo(new Markdown(System.out));
+        //table.writeTo(new Markdown(System.out));
 
 
 
