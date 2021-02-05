@@ -52,7 +52,8 @@ public final class Max<T extends Number> implements Func<T> {
     private Double maxDouble(Spliterator<Row> rowSpliterator, int index) {
         final AtomicDouble max = new AtomicDouble(Double.MIN_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.max(max.get(), i.get(index)));
+            final Double v = i.get(index);
+            if (v != null) { max.set(Math.max(max.get(), v)); }
         });
         return max.get();
     }
@@ -60,7 +61,8 @@ public final class Max<T extends Number> implements Func<T> {
     private Integer maxInteger(Spliterator<Row> rowSpliterator, int index) {
         final AtomicInteger max = new AtomicInteger(Integer.MIN_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.max(max.get(), i.get(index)));
+            final Integer v = i.get(index);
+            if (v != null) { max.set(Math.max(max.get(), v)); }
         });
         return max.get();
     }
@@ -68,7 +70,8 @@ public final class Max<T extends Number> implements Func<T> {
     private Long maxLong(Spliterator<Row> rowSpliterator, int index) {
         final AtomicLong max = new AtomicLong(Long.MIN_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.max(max.get(), i.get(index)));
+            final Long v = i.get(index);
+            if (v != null) { max.set(Math.max(max.get(), v)); }
         });
         return max.get();
     }

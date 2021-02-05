@@ -50,27 +50,30 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     private Double minDouble(Spliterator<Row> rowSpliterator, int index) {
-        final AtomicDouble max = new AtomicDouble(Double.MAX_VALUE);
+        final AtomicDouble x = new AtomicDouble(Double.MAX_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.min(max.get(), i.get(index)));
+            final Double v = i.get(index);
+            if (v != null) { x.set(Math.min(x.get(), v)); }
         });
-        return max.get();
+        return x.get();
     }
 
     private Integer minInteger(Spliterator<Row> rowSpliterator, int index) {
-        final AtomicInteger max = new AtomicInteger(Integer.MAX_VALUE);
+        final AtomicInteger x = new AtomicInteger(Integer.MAX_VALUE);
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.min(max.get(), i.get(index)));
+            final Integer v = i.get(index);
+            if (v != null) { x.set(Math.min(x.get(), v)); }
         });
-        return max.get();
+        return x.get();
     }
 
     private Long minLong(Spliterator<Row> rowSpliterator, int index) {
-        final AtomicLong max = new AtomicLong(Long.MAX_VALUE);
+        final AtomicLong x = new AtomicLong(Long.MAX_VALUE);
 
         rowSpliterator.forEachRemaining((i) -> {
-            max.set(Math.min(max.get(), i.get(index)));
+            final Long v = i.get(index);
+            if (v != null) { x.set(Math.min(x.get(), v)); }
         });
-        return max.get();
+        return x.get();
     }
 }
