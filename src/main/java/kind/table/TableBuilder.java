@@ -28,7 +28,6 @@ public class TableBuilder {
     /**
      * Adds the column names in order as StCol
      * @param names names of columns
-     * @see this.withStrCol
      * @return
      */
     public TableBuilder withCols(Collection<String> names) {

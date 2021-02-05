@@ -3,9 +3,9 @@ package kind.table.cols;
 public final class ColFactory {
 
     /**
-     * Attempts to return a matching column type for the provided value
      *
-     * <table>
+     *<table>
+     *     <caption>Attempts to return a matching column type for the provided valu</caption>
      *     <thead>
      *         <tr>
      *             <td>Given</td>
@@ -28,6 +28,14 @@ public final class ColFactory {
      *         <tr>
      *             <td>java.lang.Long</td>
      *             <td>kind.table.cols.LngCol</td>
+     *         </tr>
+     *         <tr>
+     *             <td>java.lang.String</td>
+     *             <td>kind.table.cols.StrCol</td>
+     *         </tr>
+     *         <tr>
+     *             <td>java.time.Instant</td>
+     *             <td>kind.table.cols.TsCol</td>
      *         </tr>
      *     </tbody>
      * </table>

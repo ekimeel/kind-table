@@ -5,7 +5,12 @@ import kind.table.Copyable;
 import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Col<T> implements Copyable<Col>, Serializable {
+/**
+ * An abstract Column for {@link kind.table.Table}
+ *
+ * @param <T> The expected datatype stored in the column
+ */
+public abstract class Col<T extends Serializable> implements Copyable<Col>, Serializable {
 
     private int index;
     private String name;

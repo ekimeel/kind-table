@@ -3,15 +3,19 @@ package kind.table.cols;
 import kind.table.Row;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
-public final class RowCol extends Col<List<Row>> implements Serializable {
+/**
+ * A column containing inner rows
+ *
+ */
+public final class RowCol extends Col<ArrayList<Row>> implements Serializable {
 
     /**
-     * returns a new [[ListCol]] with the provided name
+     * returns a new RowCol with the provided name
      *
      * @param name a valid name
-     * @return a new [[ListColumn]] with the provided name
+     * @return a new RowCol with the provided name
      */
     public static RowCol of(String name) {
         return new RowCol(name);
@@ -27,7 +31,7 @@ public final class RowCol extends Col<List<Row>> implements Serializable {
     }
 
     @Override
-    public List convert(Object value, String format) {
+    public ArrayList convert(Object value, String format) {
         return null;
     }
 }

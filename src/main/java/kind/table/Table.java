@@ -257,7 +257,6 @@ public class Table implements Copyable<Table>{
     /**
      * Clears all existing cols and adds the provided cols to the table.
      * @param cols A list of cols
-     * @return Returns true if cols are added, otherwise false.
      */
     public void setCols(Collection<Col> cols){
         this.columns.clear();

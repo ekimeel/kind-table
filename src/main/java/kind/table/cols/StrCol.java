@@ -2,6 +2,10 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
+/**
+ * A column containing {@link java.lang.String}
+ *
+ */
 public final class StrCol extends Col<String> implements Serializable {
 
     /**

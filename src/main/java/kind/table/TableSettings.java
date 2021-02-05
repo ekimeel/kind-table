@@ -1,5 +1,8 @@
 package kind.table;
 
+/**
+ * Provides settings for a {@link kind.table.Table}
+ */
 public final class TableSettings implements Copyable<TableSettings> {
 
     public static final int DEFAULT_MAX_ALLOWABLE_COLUMNS = 1024;

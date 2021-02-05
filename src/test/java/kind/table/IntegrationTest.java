@@ -45,7 +45,7 @@ public class IntegrationTest {
 
     @Test
     public void test_occupancy_data(){
-        Table table = new TableBuilder()
+        final Table table = new TableBuilder()
                 .withCsvFile(Paths.get("./test-data/pub/", "occupancy_data.csv"))
                 .build()
                 .eval(Remove.from("Index"))
@@ -56,6 +56,8 @@ public class IntegrationTest {
                 .eval(Convert.toDblCol("CO2"))
                 .eval(Convert.toDblCol("HumidityRatio"))
                 .eval(Convert.toDblCol("Occupancy"));
+
+
 
 
 

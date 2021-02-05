@@ -4,7 +4,11 @@ import com.google.common.base.Joiner;
 import java.io.Serializable;
 import java.util.*;
 
-public class Row implements Copyable<Row> {
+/**
+ * A row within a {@link kind.table.Table} containing a collection of values
+ *
+ */
+public class Row implements Serializable, Copyable<Row> {
 
 
     public static Row empty() {
