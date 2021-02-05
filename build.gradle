@@ -2,6 +2,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'signing'
     id "com.palantir.git-version" version "0.12.3"
 }
 Properties properties = new Properties()
@@ -16,9 +17,7 @@ ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 sourceCompatibility = 1.8
 
 
-signing {
-    sign publishing.publications.mavenJava
-}
+
 
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
