@@ -78,10 +78,10 @@ public final class CsvReader implements TableReader {
                 List<String> cells = splitter.splitToList(line);
                 final int size = cells .size();
 
-                cells = cells.stream().map( c -> c.trim().replace("\"", ""))
+                cells = cells.stream()
+                        .map( c -> c.trim().replace("\"", ""))
+                        .map( c -> c.equalsIgnoreCase("null")? null : c )
                         .collect(Collectors.toCollection(() -> new ArrayList<>(size)));
-
-
 
                 if (hasColumnHeaders() && i < startReadingAtLine) {
                     tableBuilder.withCols(cells);
