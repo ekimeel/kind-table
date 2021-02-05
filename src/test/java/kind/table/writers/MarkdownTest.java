@@ -1,16 +1,12 @@
-package kind.table.funcs.writers;
+package kind.table.writers;
 
 import kind.table.Table;
 import kind.table.TableBuilder;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-
-import java.util.Date;
 
 import static org.junit.Assert.*;
 

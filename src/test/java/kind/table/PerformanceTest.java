@@ -2,7 +2,7 @@ package kind.table;
 
 import kind.table.cols.SummaryCol;
 import kind.table.funcs.*;
-import kind.table.funcs.writers.Markdown;
+import kind.table.writers.Markdown;
 import org.junit.Test;
 
 import java.time.Instant;

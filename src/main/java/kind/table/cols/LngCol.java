@@ -2,21 +2,36 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
+/**
+ * The type Lng col.
+ */
 public final class LngCol extends NumCol<Long> implements Serializable {
 
     /**
-     * returns a new [[LngCol]] with the provided name
+     * Of lng col.
      *
-     * @param name a valid name
-     * @return a new [[LngCol]] with the provided name
+     * @param name the name
+     * @return the lng col
      */
     public static LngCol of(String name) {
         return new LngCol(name);
     }
 
+    /**
+     * Instantiates a new Lng col.
+     *
+     * @param name the name
+     */
     public LngCol(String name) {
         super(name);
     }
+
+    /**
+     * Instantiates a new Lng col.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     public LngCol(String name, int index) {
         super(name, index);
     }

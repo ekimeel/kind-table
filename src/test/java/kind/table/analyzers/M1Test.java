@@ -1,7 +1,7 @@
 package kind.table.analyzers;
 
 import kind.table.Table;
-import kind.table.funcs.writers.Markdown;
+import kind.table.writers.Markdown;
 import org.junit.Test;
 import test.util.TestTableFactory;
 

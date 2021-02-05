@@ -4,7 +4,7 @@ import kind.table.cols.Col;
 import kind.table.cols.ColRef;
 import kind.table.cols.funcs.ColFunc;
 import kind.table.funcs.Func;
-import kind.table.funcs.writers.TableWriter;
+import kind.table.writers.TableWriter;
 
 import java.util.*;
 import java.util.function.Function;

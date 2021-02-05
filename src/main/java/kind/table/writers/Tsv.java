@@ -1,4 +1,4 @@
-package kind.table.funcs.writers;
+package kind.table.writers;
 
 import kind.table.Row;
 import kind.table.Table;
