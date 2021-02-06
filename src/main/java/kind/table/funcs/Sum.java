@@ -31,16 +31,16 @@ public final class Sum<T extends Number> implements Func<T> {
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
-        final Spliterator<Row> stream = (table.allowParallelProcessing())?
-                table.getRows().parallelStream().spliterator() :
-                table.getRows().stream().spliterator();
+        final Spliterator<Row> spliterator = (table.allowParallelProcessing())?
+                table.getRows().parallelStream().filter( x -> (x.get(index) != null) ).spliterator() :
+                table.getRows().stream().filter( x -> (x.get(index) != null) ).spliterator();
 
         if (col instanceof DblCol){
-            return (T)sumDouble(stream, index);
+            return (T)sumDouble(spliterator, index);
         } else if (col instanceof IntCol){
-            return (T)sumInteger(stream, index);
+            return (T)sumInteger(spliterator, index);
         } else if (col instanceof LngCol){
-            return (T)sumLong(stream, index);
+            return (T)sumLong(spliterator, index);
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support col type %s.",
                     this.getClass().getSimpleName(),

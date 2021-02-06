@@ -2,6 +2,10 @@ package test.integration;
 
 import kind.table.Table;
 import kind.table.TableBuilder;
+import kind.table.analyzers.AnalyzerRequest;
+import kind.table.analyzers.AnalyzerResponse;
+import kind.table.analyzers.M1;
+import kind.table.analyzers.m1.M1Pkg;
 import kind.table.cols.ColRef;
 import kind.table.cols.SummaryCol;
 import kind.table.cols.funcs.Weekday;
@@ -30,6 +34,26 @@ public class DogeCoinIntegrationTest {
                 .eval(Convert.toLngCol("Volume"));
 
         table.addCol(Weekday.from("Weekday", "Date"));
+
+
+
+        M1 m1 = new M1();
+
+        final AnalyzerRequest request = new AnalyzerRequest();
+        request.setTable(table);
+
+        final AnalyzerResponse response = m1.exec(request);
+        if (response.isOk()) {
+            Table m1Table = response.getTable();
+
+            m1Table.writeTo(new WriterBuilder()
+                    .Markdown()
+                    .usingStream(System.out)
+                    .build()
+            );
+        }
+
+
 
         final Table summary = table.eval(GroupBy.of("Weekday",
                 SummaryCol.of("AverageVolume", Mean.of("Volume"))));

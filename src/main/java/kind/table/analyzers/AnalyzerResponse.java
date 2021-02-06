@@ -11,6 +11,16 @@ public final class AnalyzerResponse {
     private long time;
     private Object err;
 
+
+    /**
+     * Is ok boolean.
+     *
+     * @see this.getErr
+     * @return the boolean
+     *
+     */
+    public boolean isOk() { return err == null; }
+
     /**
      * Gets table.
      *

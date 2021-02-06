@@ -31,9 +31,7 @@ public final class Min<T extends Number> implements Func<T> {
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
-        final Spliterator<Row> spliterator = (table.allowParallelProcessing())?
-                table.getRows().parallelStream().spliterator() :
-                table.getRows().stream().spliterator();
+        final Spliterator<Row> spliterator = table.rowSpliterator( (x) -> (x.get(index) != null));
 
         if (col instanceof DblCol){
             return (T) minDouble(spliterator, index);

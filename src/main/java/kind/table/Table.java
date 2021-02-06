@@ -5,19 +5,27 @@ import kind.table.cols.ColRef;
 import kind.table.cols.Cols;
 import kind.table.cols.funcs.ColFunc;
 import kind.table.funcs.Func;
+import kind.table.funcs.Split;
 import kind.table.writers.Writer;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * The type Table.
+ */
 public class Table implements Copyable<Table>{
 
     private final Cols cols;
     private ArrayList<Row> rows;
     private final TableSettings settings;
 
+    /**
+     * Instantiates a new Table.
+     */
     public Table() {
         this.cols = new Cols();
         this.settings = TableSettings.DEFAULT_SETTINGS;
@@ -29,7 +37,7 @@ public class Table implements Copyable<Table>{
      * Create a new instance of a table with the provided settings. If the settings provided is null, setting will be
      * reassigned to TableSettings.DEFAULT_SETTINGS
      *
-     * @param settings
+     * @param settings the settings
      */
     public Table(TableSettings settings){
         if (settings == null) throw new NullPointerException("Table Settings cannot be null.");
@@ -39,24 +47,48 @@ public class Table implements Copyable<Table>{
         this.settings = settings;
     }
 
+    /**
+     * Instantiates a new Table.
+     *
+     * @param cols the cols
+     */
     public Table(Collection<Col> cols) {
         this.cols = new Cols(cols);
         this.rows = new ArrayList<>(TableSettings.DEFAULT_ROW_CAPACITY);
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
+    /**
+     * Instantiates a new Table.
+     *
+     * @param cols     the cols
+     * @param settings the settings
+     */
     public Table(Collection<Col> cols, TableSettings settings) {
         this.cols = new Cols(cols);
         this.rows = new ArrayList<>(settings.getDefaultRowCapacity());
         this.settings = settings;
     }
 
+    /**
+     * Instantiates a new Table.
+     *
+     * @param cols the cols
+     * @param rows the rows
+     */
     public Table(Collection<Col> cols, ArrayList<Row> rows) {
         this.cols = new Cols(cols);
         this.rows = rows;
         this.settings = TableSettings.DEFAULT_SETTINGS;
     }
 
+    /**
+     * Instantiates a new Table.
+     *
+     * @param cols     the cols
+     * @param rows     the rows
+     * @param settings the settings
+     */
     public Table(Collection<Col> cols, ArrayList<Row> rows, TableSettings settings) {
         this.cols = new Cols(cols);
         this.rows = rows;
@@ -65,7 +97,8 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the current table settings
-     * @return
+     *
+     * @return table settings
      */
     public TableSettings getSettings(){
         return this.settings;
@@ -82,6 +115,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the total size of columns in the current table.
+     *
      * @return The number of columns
      */
     public int getColCount(){
@@ -90,6 +124,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns an array of column names
+     *
      * @return An array of column names
      */
     public String[] getColNames() {
@@ -106,8 +141,8 @@ public class Table implements Copyable<Table>{
     /**
      * Returns all the columns that are assignable from the provided column class
      *
-     * @param type
-     * @return
+     * @param type the type
+     * @return cols of type
      */
     public Set<Col> getColsOfType(Class<? extends Col> type) {
         return this.cols.values()
@@ -118,12 +153,19 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the total size of rows in the current table.
+     *
      * @return The number of rows
      */
     public int getRowCount(){
         return this.rows.size();
     }
 
+    /**
+     * Gets col.
+     *
+     * @param any the any
+     * @return the col
+     */
     @Deprecated
     public Col getCol(Object any) {
         if (any instanceof Integer) {
@@ -135,6 +177,12 @@ public class Table implements Copyable<Table>{
         }
     }
 
+    /**
+     * Gets col by ref.
+     *
+     * @param ref the ref
+     * @return the col by ref
+     */
     public Col getColByRef(ColRef ref) {
         if (ref.isInt()) return getColByIndex(ref.asInt());
 
@@ -143,6 +191,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the column of the provided name if available, otherwise null
+     *
      * @param name The column name
      * @return The column if found, otherwise null
      */
@@ -152,6 +201,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the column of the provided index if available, otherwise null
+     *
      * @param index The column index
      * @return The column if found, otherwise null
      */
@@ -161,6 +211,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the column index of the provided name if available, otherwise null
+     *
      * @param name The column name
      * @return The column index if found, otherwise null
      */
@@ -168,8 +219,10 @@ public class Table implements Copyable<Table>{
         final Col col = getColByName(name);
         return (col == null)? null : col.getIndex();
     }
+
     /**
      * Returns the column index of the provided a ColRef if available, otherwise null
+     *
      * @param colRef The column ref
      * @return The column index if found, otherwise null
      */
@@ -180,13 +233,20 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns true if the current table has an existing column with the same name, otherwise false
-     * @param name
+     *
+     * @param name the name
      * @return Returns true if the current table as a column with the same name, otherwise false
      */
     public boolean hasCol(String name) {
         return this.getColByName(name) != null;
     }
 
+    /**
+     * Has col boolean.
+     *
+     * @param index the index
+     * @return the boolean
+     */
     public boolean hasCol(int index) {
         return this.cols.hasIndex(index);
     }
@@ -194,10 +254,10 @@ public class Table implements Copyable<Table>{
     /**
      * Attempts to add the provided col to the table and returns the index if the col was added, otherwise null.
      * The col will not be added if one of the same name already exists.
-     *
+     * <p>
      * If the current table contains rows a null value will be appended to each row
      *
-     * @param col
+     * @param col the col
      * @return the newly added col index
      */
     public synchronized Integer addCol(Col col) {
@@ -211,10 +271,20 @@ public class Table implements Copyable<Table>{
         return getColIndex(col.getName());
     }
 
+    /**
+     * Add cols.
+     *
+     * @param cols the cols
+     */
     public void addCols(Collection<Col> cols) {
         cols.forEach( (c) -> this.addCol(c) );
     }
 
+    /**
+     * Add col.
+     *
+     * @param colFunc the col func
+     */
     public void addCol(ColFunc colFunc) {
         colFunc.eval(this);
     }
@@ -226,6 +296,12 @@ public class Table implements Copyable<Table>{
         return true;
     }
 
+    /**
+     * Add col.
+     *
+     * @param col the col
+     * @param map the map
+     */
     public synchronized void addCol(Col col, Function<Row, Row> map) {
         if (!acceptCol(col) || map == null) return;
 
@@ -254,6 +330,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Clears all existing cols and adds the provided cols to the table.
+     *
      * @param cols A list of cols
      */
     public void setCols(Collection<Col> cols){
@@ -263,6 +340,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Adds the provided row to the current rows and returns true if added, otherwise false
+     *
      * @param row The row to add to the current table
      * @return Return true if added, otherwise false
      */
@@ -280,8 +358,8 @@ public class Table implements Copyable<Table>{
     /**
      * Creates a row from the provided values and returns true if added, otherwise false
      *
-     * @param vals
-     * @return
+     * @param vals the vals
+     * @return boolean
      */
     public boolean addRow(Object... vals) {
         return addRow(Row.of(vals));
@@ -314,11 +392,12 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the value of the provide row and column index
+     *
+     * @param <T> The return type
      * @param row The row index of the value
      * @param col The column index of the value
-     * @param <T> The return type
-     * @throws IndexOutOfBoundsException
      * @return Returns the value at the provided row and column index
+     * @throws IndexOutOfBoundsException
      */
     public <T> T get(int row, int col){
         return this.rows.get(row).get(col);
@@ -326,10 +405,11 @@ public class Table implements Copyable<Table>{
 
     /**
      * Sets the value at the provided row and column with the provided value and returns
-     * @param row
-     * @param col
-     * @param val
-     * @return
+     *
+     * @param row the row
+     * @param col the col
+     * @param val the val
+     * @return object
      */
     public Object set(int row, int col, Object val) {
         return getRow(row).set(col, val);
@@ -337,6 +417,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the row for the given row index, otherwise null
+     *
      * @param row The row index to return
      * @return Returns the row for the provided index, otherwise null
      */
@@ -348,8 +429,8 @@ public class Table implements Copyable<Table>{
      * Returns the rows that are equal to the provided ref and object.
      *
      * @param ref a valid column reference
-     * @param eq a value ot compare equals to
-     * @return
+     * @param eq  a value ot compare equals to
+     * @return rows eq
      */
     public List<Row> getRowsEq(ColRef ref, Comparable eq) {
         final int index = getColIndex(ref);
@@ -385,10 +466,11 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns all the values in the provided column index
-     * @param col A valid column index in the current table
+     *
      * @param <T> The return type
-     * @throws IndexOutOfBoundsException
+     * @param col A valid column index in the current table
      * @return A list of typed values in the provided col
+     * @throws IndexOutOfBoundsException
      */
     public <T> List<T> getVals(int col){
 
@@ -401,18 +483,33 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns all values in the provided column
-     * @param col
-     * @param <T>
-     * @return
+     *
+     * @param <T> the type parameter
+     * @param col the col
+     * @return vals
      */
     public <T> List<T> getVals(Col col) {
         return getVals(col.getIndex());
     }
 
+    /**
+     * Gets vals.
+     *
+     * @param <T>  the type parameter
+     * @param name the name
+     * @return the vals
+     */
     public <T> List<T> getVals(String name) {
         return getVals(getColIndex(name));
     }
 
+    /**
+     * Gets vals.
+     *
+     * @param <T> the type parameter
+     * @param ref the ref
+     * @return the vals
+     */
     public <T> List<T> getVals(ColRef ref) {
         return (ref.isInt())?
                 getVals(ref.asInt()) :
@@ -421,9 +518,10 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns all the values in the provided column index as a Double
+     *
      * @param col A valid column index in the current table
-     * @throws IndexOutOfBoundsException
      * @return A list of Double values in the provided col
+     * @throws IndexOutOfBoundsException
      */
     public List<Double> valuesToDoubles(int col){
         return getVals(col)
@@ -435,9 +533,10 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns all the values in the provided column index as a Integer
+     *
      * @param col A valid column index in the current table
-     * @throws IndexOutOfBoundsException
      * @return A list of Integer values in the provided col
+     * @throws IndexOutOfBoundsException
      */
     public List<Integer> valuesToInt(int col){
         return getVals(col)
@@ -449,9 +548,10 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns all the values in the provided column index as a Long
+     *
      * @param col A valid column index in the current table
-     * @throws IndexOutOfBoundsException
      * @return A list of Long values in the provided col
+     * @throws IndexOutOfBoundsException
      */
     public List<Long> valuesToLong(int col){
         return getVals(col)
@@ -461,21 +561,64 @@ public class Table implements Copyable<Table>{
                 .collect(Collectors.toCollection(() -> new ArrayList<>(getRowCount())));
     }
 
+    /**
+     * Row iterator iterator.
+     *
+     * @return the iterator
+     */
+    @Deprecated
     public Iterator<Row> rowIterator() {
         return rows.iterator();
     }
 
+    /**
+     * Row spliterator spliterator.
+     *
+     * @return the spliterator
+     */
+    public Spliterator<Row> rowSpliterator() {
+        return (this.allowParallelProcessing())?
+                this.getRows().parallelStream().spliterator() :
+                this.getRows().stream().spliterator();
+    }
+
+    /**
+     * Row spliterator spliterator.
+     *
+     * @param filter the filter
+     * @return the spliterator
+     */
+    public Spliterator<Row> rowSpliterator(Predicate<Row> filter) {
+        return (this.allowParallelProcessing())?
+                this.getRows().parallelStream().filter(filter).spliterator() :
+                this.getRows().stream().filter(filter).spliterator();
+    }
+
+
+    /**
+     * Column iterator iterator.
+     *
+     * @return the iterator
+     */
     public Iterator<Col> columnIterator() {
         return cols.values().iterator();
     }
 
+    /**
+     * Eval t.
+     *
+     * @param <T>  the type parameter
+     * @param func the func
+     * @return the t
+     */
     public <T> T eval(Func<T> func) {
         return func.eval(this);
     }
 
     /**
      * Returns an unmodifiable list of current rows
-     * @return
+     *
+     * @return list
      */
     public List<Row> getRows(){
         return Collections.unmodifiableList(this.rows);
@@ -483,16 +626,17 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns an unmodifiable list of current cols
-     * @return
+     *
+     * @return collection
      */
     public Collection<Col> getCols(){
         return Collections.unmodifiableCollection(this.cols.values());
     }
 
 
-
     /**
      * Returns the first row in the current table or null if the table is empty.
+     *
      * @return Returns the first row or null if the table is empty.
      */
     public Row getFirstRow(){
@@ -504,6 +648,7 @@ public class Table implements Copyable<Table>{
 
     /**
      * Returns the last row in the current table or null if the table is empty.
+     *
      * @return Returns the last row or null if the table is empty.
      */
     public Row getLastRow(){
@@ -513,6 +658,11 @@ public class Table implements Copyable<Table>{
         return this.rows.get(getRowCount()-1);
     }
 
+    /**
+     * Is empty boolean.
+     *
+     * @return the boolean
+     */
     public boolean isEmpty(){
         return this.rows.isEmpty();
     }
@@ -541,6 +691,8 @@ public class Table implements Copyable<Table>{
     }
 
     /**
+     * Sort table.
+     *
      * @param col the column name to sort.
      * @return new table with simple comparator sorting
      */
@@ -549,6 +701,8 @@ public class Table implements Copyable<Table>{
     }
 
     /**
+     * Sortr table.
+     *
      * @param col the column name to sort.
      * @return new table with simple comparator sorting in reverse
      */
@@ -557,6 +711,8 @@ public class Table implements Copyable<Table>{
     }
 
     /**
+     * Sort table.
+     *
      * @param col the column index to sort.
      * @return new table with simple comparator sorting.
      */
@@ -565,6 +721,7 @@ public class Table implements Copyable<Table>{
     }
 
     /**
+     * Sort table.
      *
      * @param comparator IColComparator
      * @return new table sorted by provided comparator
@@ -576,6 +733,8 @@ public class Table implements Copyable<Table>{
     }
 
     /**
+     * Sortr table.
+     *
      * @param col the column index to sort.
      * @return new table with simple comparator sorting in reverse.
      */
@@ -596,12 +755,18 @@ public class Table implements Copyable<Table>{
      *
      * @param col a valid column
      * @return Returns true if the column was removed an no longer exists in the current table
-     *
      */
     public boolean removeCol(Col col) {
         return removeCol(col.getName());
     }
 
+    /**
+     * Rename col boolean.
+     *
+     * @param from the from
+     * @param to   the to
+     * @return the boolean
+     */
     public boolean renameCol(String from, String to) {
         return this.cols.renameCol(from, to);
     }
@@ -610,7 +775,7 @@ public class Table implements Copyable<Table>{
      * Removes the values and the column from the table and returns the removed
      * values.
      *
-     * @param col
+     * @param col the col
      * @return the removed values
      */
     public synchronized boolean removeCol(String col) {
@@ -639,13 +804,19 @@ public class Table implements Copyable<Table>{
 
     }
 
+    /**
+     * Write to.
+     *
+     * @param writer the writer
+     */
     public void writeTo(Writer writer) {
         writer.write(this);
     }
 
     /**
      * Increases the capacity of the rows
-     * @param minCapacity
+     *
+     * @param minCapacity the min capacity
      */
     public void ensureRowCapacity(int minCapacity) {
         this.rows.ensureCapacity(minCapacity);

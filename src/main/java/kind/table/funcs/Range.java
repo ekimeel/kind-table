@@ -5,6 +5,7 @@ import kind.table.cols.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.stream.Collectors;
 
 public class Range<T extends Number> implements Func<T> {
@@ -30,15 +31,27 @@ public class Range<T extends Number> implements Func<T> {
         if (table == null) {
             return null;
         }
-
         final Col col = table.getColByRef(this.colRef);
+        final int index = col.getIndex();
+
+        final T min = table.eval(Min.of(index));
+        final T max = table.eval(Max.of(index));
 
         if (col instanceof DblCol){
-            return (T) rangeDouble();
+            final Double low = min.doubleValue();
+            final Double high = max.doubleValue();
+            final Double range = high - low;
+            return (T)range;
         } else if (col instanceof IntCol){
-            return (T) rangeInteger();
+            final Integer low = min.intValue();
+            final Integer high = max.intValue();
+            final Integer range = high - low;
+            return (T)range;
         } else if (col instanceof LngCol){
-            return (T) rangeLong();
+            final Long low = min.longValue();
+            final Long high = max.longValue();
+            final Long range = high - low;
+            return (T)range;
         } else {
             throw new UnsupportedOperationException(String.format("%s does not support col type %.",
             this.getClass().getSimpleName(),
@@ -47,9 +60,11 @@ public class Range<T extends Number> implements Func<T> {
 
     }
 
-    private Double rangeDouble() {
+    private Double rangeDouble(Spliterator<Row> rowSpliterator, int index) {
         final List<Double> values = table.getVals(colRef)
-                .stream().mapToDouble(x -> ((Number)x).intValue())
+                .stream()
+                .filter( x -> (x != null))
+                .mapToDouble(x -> ((Number)x).intValue())
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -58,9 +73,11 @@ public class Range<T extends Number> implements Func<T> {
         return max - min;
     }
 
-    private Integer rangeInteger() {
+    private Integer rangeInteger(Spliterator<Row> rowSpliterator, int index) {
         final List<Integer> values = table.getVals(colRef)
-                .stream().mapToInt(x -> ((Number)x).intValue())
+                .stream()
+                .filter( x -> (x != null))
+                .mapToInt(x -> ((Number)x).intValue())
                 .boxed()
                 .collect(Collectors.toList());
 
@@ -69,9 +86,11 @@ public class Range<T extends Number> implements Func<T> {
         return max - min;
     }
 
-    private Long rangeLong() {
+    private Long rangeLong(Spliterator<Row> rowSpliterator, int index) {
         final List<Long> values = table.getVals(colRef)
-                .stream().mapToLong(x -> ((Number)x).longValue())
+                .stream()
+                .filter( x -> (x != null))
+                .mapToLong(x -> ((Number)x).longValue())
                 .boxed()
                 .collect(Collectors.toList());
 

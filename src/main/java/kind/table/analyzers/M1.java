@@ -52,7 +52,12 @@ public final class M1 extends AbstractAnalyzer {
            result.addRow(name, max, min, mean, range, count, max_occurs, min_occurs);
        }
 
+
+
+
        response.setTable(result);
+
+
 
 
        //"The maximum $column is $max.";
@@ -63,9 +68,4 @@ public final class M1 extends AbstractAnalyzer {
     }
 
 
-    private class M1x1 {
-
-
-
-    }
 }
