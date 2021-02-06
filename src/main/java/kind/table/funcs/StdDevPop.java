@@ -1,21 +1,19 @@
 package kind.table.funcs;
 
-import com.google.common.math.Stats;
+import com.google.common.math.PairedStats;
 import com.google.common.math.StatsAccumulator;
 import kind.table.Row;
 import kind.table.cols.ColRef;
 import kind.table.cols.Col;
-import kind.table.cols.DblCol;
 import kind.table.Table;
 import kind.table.cols.NumCol;
 
-import java.util.List;
 import java.util.Spliterator;
 
 /**
  * The population standard deviation
  */
-public final class StandardDeviation implements Func<Double> {
+public final class StdDevPop extends AbstractFunc<Double> {
 
     /**
      * Of standard deviation.
@@ -23,7 +21,7 @@ public final class StandardDeviation implements Func<Double> {
      * @param col the col
      * @return the standard deviation
      */
-    public static StandardDeviation of(String col) { return new StandardDeviation(ColRef.of(col)); }
+    public static StdDevPop of(String col) { return new StdDevPop(ColRef.of(col)); }
 
     /**
      * Of standard deviation.
@@ -31,21 +29,24 @@ public final class StandardDeviation implements Func<Double> {
      * @param col the col
      * @return the standard deviation
      */
-    public static StandardDeviation of(int col) { return new StandardDeviation(ColRef.of(col)); }
+    public static StdDevPop of(int col) { return new StdDevPop(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
-    private StandardDeviation(ColRef colRef) {
+    private StdDevPop(ColRef colRef) {
         this.colRef = colRef;
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return (col instanceof NumCol);
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfNotNumCol(this.colRef, table);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public Double eval(Table table) {
+    public Double evalTemplate(Table table) {
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
@@ -55,7 +56,6 @@ public final class StandardDeviation implements Func<Double> {
         spliterator.forEachRemaining( (r) -> accumulator.add( ((Number)r.get(index)).doubleValue() ));
 
         return accumulator.populationStandardDeviation();
-
     }
 
 

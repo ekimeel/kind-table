@@ -36,10 +36,6 @@ public final class Remove extends AbstractFunc<Table> {
         this.colRef = colRef;
     }
 
-    @Override
-    public boolean acceptCol(Col col) {
-        return true;
-    }
 
     @Override
     protected void beforeEval(Table table) {

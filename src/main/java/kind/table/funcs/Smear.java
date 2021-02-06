@@ -14,7 +14,7 @@ import java.util.List;
  * Last observation carried forward (Smear) is a method of imputing missing data. If a is non-null and
  * becomes null, then the last non-null value replaces the null values
  */
-public final class Smear implements Func<Table> {
+public final class Smear extends AbstractFunc<Table> {
 
     /**
      * Of smear.
@@ -39,18 +39,17 @@ public final class Smear implements Func<Table> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return (col instanceof NumCol);
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfNotNumCol(this.colRef, table);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public Table eval(Table table) {
+    public Table evalTemplate(Table table) {
         final Table copy = table.copy();
         final Col col = copy.getColByRef(this.colRef);
-
-        if (!this.acceptCol(col)) {
-            throw new UnsupportedColException(col);
-        }
 
         Object priorInstance = null;
         final List values = copy.getVals(this.colRef);

@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 /**
  * The type Count if.
  */
-public final class CountIf implements Func<Integer> {
+public final class CountIf extends AbstractFunc<Integer> {
 
     /**
      * Of count if.
@@ -42,18 +42,21 @@ public final class CountIf implements Func<Integer> {
      * @param colRef    the col ref
      * @param predicate the predicate
      */
-    public CountIf(ColRef colRef, Predicate predicate) {
+    private CountIf(ColRef colRef, Predicate predicate) {
         this.colRef = colRef;
         this.predicate = predicate;
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
+
     @Override
-    public Integer eval(Table table) {
+    public Integer evalTemplate(Table table) {
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();

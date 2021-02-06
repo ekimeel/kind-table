@@ -8,7 +8,7 @@ import kind.table.cols.NumCol;
 /**
  * The type Mean.
  */
-public final class Mean implements Func<Double> {
+public final class Mean extends AbstractFunc<Double> {
 
     /**
      * Of mean.
@@ -33,12 +33,15 @@ public final class Mean implements Func<Double> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return (col instanceof NumCol);
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfNotNumCol(this.colRef, table);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public Double eval(Table table) {
+    public Double evalTemplate(Table table) {
         final Col col = table.getColByRef(this.colRef);
         final Number sum = table.eval(Sum.of(col.getIndex()));
         return sum.doubleValue() / table.getRowCount();

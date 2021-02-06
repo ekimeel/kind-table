@@ -15,11 +15,6 @@ public class Copy implements Func<Table> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
-    }
-
-    @Override
     public Table eval(Table table) {
         return table.copy();
     }

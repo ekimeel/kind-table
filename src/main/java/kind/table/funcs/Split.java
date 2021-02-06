@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * The type Split.
  */
-public class Split implements Func<List<Table>> {
+public class Split extends AbstractFunc<List<Table>> {
 
     /**
      * Of split.
@@ -51,10 +51,14 @@ public class Split implements Func<List<Table>> {
     }
 
     @Override
-    public boolean acceptCol(Col col) { return true; }
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfColRefNotFound(table, this.colRef);
+    }
 
     @Override
-    public List<Table> eval(Table table) {
+    public List<Table> evalTemplate(Table table) {
         final List<Table> results = new ArrayList<>();
         final Col splitCol = table.getColByRef(this.colRef);
         final Map<Object, List<Row>> splits = table.

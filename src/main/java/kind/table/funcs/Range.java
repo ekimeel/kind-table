@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  *
  * @param <T> the type parameter
  */
-public class Range<T extends Number> implements Func<T> {
+public class Range<T extends Number> extends AbstractFunc<T> {
 
     /**
      * Of range.
@@ -41,12 +41,15 @@ public class Range<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return (col instanceof NumCol);
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfNotNumCol(this.colRef, table);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public T eval(Table table) {
+    public T evalTemplate(Table table) {
         this.table = table;
         if (table == null) {
             return null;

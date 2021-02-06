@@ -45,7 +45,7 @@ public final class M1 extends AbstractAnalyzer {
            final Number max = table.eval(Max.of(c.getIndex()));
            final Number min = table.eval(Min.of(c.getIndex()));
            final Number mean = table.eval(Mean.of(c.getIndex()));
-           final Number std_dev = table.eval(StandardDeviation.of(c.getIndex()));
+           final Number std_dev = table.eval(StdDevPop.of(c.getIndex()));
            final Number count = table.eval(Count.of(c.getIndex()));
            final Number max_occurs = table.eval(CountIf.of(c.getIndex(), (val) -> val.equals(max)));
            final Number min_occurs = table.eval(CountIf.of(c.getIndex(), (val) -> val.equals(min)));

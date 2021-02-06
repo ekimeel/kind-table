@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * The type Keep cols.
  */
-public final class KeepCols implements Func<Table> {
+public final class KeepCols extends AbstractFunc<Table> {
 
     private final List<Integer> cols = new ArrayList();
 
@@ -30,13 +30,12 @@ public final class KeepCols implements Func<Table> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
     }
 
-
     @Override
-    public Table eval(Table table) {
+    public Table evalTemplate(Table table) {
         final Table result = table.copy();
         final List<Col> removable = new ArrayList(cols.size());
 

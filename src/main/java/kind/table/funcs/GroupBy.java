@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * The type Group by.
  */
-public final class GroupBy implements Func<Table> {
+public final class GroupBy extends AbstractFunc<Table> {
 
     private static final String COLUMN_POSTFIX = " Group";
 
@@ -68,14 +68,15 @@ public final class GroupBy implements Func<Table> {
         this.aggs = Arrays.asList(agg);
     }
 
-
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public Table eval(Table table) {
+    public Table evalTemplate(Table table) {
 
         final Col keyCol = table.getColByRef(this.colRef);
         final Map<Object, List<Row>> grouping = table.

@@ -48,15 +48,9 @@ public class Histogram extends AbstractFunc<Table> {
     private final ColRef colRef;
     private final int bins;
 
-
     private Histogram(ColRef colRef, int bins) {
         this.colRef = colRef;
         this.bins = bins;
-    }
-
-    @Override
-    public boolean acceptCol(Col col) {
-        return true;
     }
 
     @Override

@@ -9,9 +9,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type Linear interpolation.
- */
 public class LinearInterpolation implements Func<Table> {
 
     private static final short DEFAULT_DECIMAL_PRECISION = 4;
@@ -21,32 +18,20 @@ public class LinearInterpolation implements Func<Table> {
     private short decimalPrecision;
     private RoundingMode roundingMode;
 
-    /**
-     * Instantiates a new Linear interpolation.
-     *
-     * @param col the col
-     */
     public LinearInterpolation(int col) {
         this.col = col;
         this.decimalPrecision = DEFAULT_DECIMAL_PRECISION;
         this.roundingMode = DEFAULT_ROUNDING_MODE;
     }
 
-    /**
-     * Instantiates a new Linear interpolation.
-     *
-     * @param col              the col
-     * @param decimalPrecision the decimal precision
-     * @param roundingMode     the rounding mode
-     */
     public LinearInterpolation(int col, short decimalPrecision, RoundingMode roundingMode) {
         this.col = col;
         this.decimalPrecision = decimalPrecision;
         this.roundingMode = roundingMode;
     }
 
-    @Override
-    public boolean acceptCol(Col col) {
+
+    private boolean acceptCol(Col col) {
         return (col instanceof NumCol);
     }
 

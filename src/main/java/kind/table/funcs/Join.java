@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * The type Join.
  */
-public final class Join implements Func<Table> {
+public final class Join extends AbstractFunc<Table> {
 
     /**
      * Of join.
@@ -57,13 +57,14 @@ public final class Join implements Func<Table> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
-
     @Override
-    public Table eval(Table table) {
+    public Table evalTemplate(Table table) {
 
         //todo: this join logic is a full scan each join, find a better impl
         final Table a = table.copy();

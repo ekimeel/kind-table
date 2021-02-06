@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  *
  * @param <T> the type parameter
  */
-public final class Min<T extends Number> implements Func<T> {
+public final class Min<T extends Number> extends AbstractFunc<T> {
 
     /**
      * Of min.
@@ -41,12 +41,15 @@ public final class Min<T extends Number> implements Func<T> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return (col instanceof NumCol);
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfNotNumCol(this.colRef, table);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public T eval(Table table) {
+    public T evalTemplate(Table table) {
         if (table.isEmpty()) return null;
 
         final Col col = table.getColByRef(this.colRef);

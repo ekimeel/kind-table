@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 /**
  * The type Count.
  */
-public final class Count implements Func<Integer> {
+public final class Count extends AbstractFunc<Integer> {
 
     /**
      * Of count.
@@ -42,12 +42,14 @@ public final class Count implements Func<Integer> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public Integer eval(Table table) {
+    public Integer evalTemplate(Table table) {
         if (table == null) {
             return null;
         }

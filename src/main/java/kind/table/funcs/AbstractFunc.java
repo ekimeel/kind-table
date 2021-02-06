@@ -3,6 +3,7 @@ package kind.table.funcs;
 import kind.table.Table;
 import kind.table.cols.Col;
 import kind.table.cols.ColRef;
+import kind.table.cols.NumCol;
 
 /**
  * The type Abstract func.
@@ -48,6 +49,19 @@ public abstract class AbstractFunc<T> implements Func<T> {
     }
 
     /**
+     * Error if not num col.
+     *
+     * @param ref   the ref
+     * @param table the table
+     */
+    protected void errorIfNotNumCol(ColRef ref, Table table) {
+        Col col = table.getColByRef(ref);
+        if (!(col instanceof NumCol)) {
+            throw new NullPointerException(String.format("col of type [%s] is not supported", col.getClass()));
+        }
+    }
+
+    /**
      * Error if col ref not found.
      *
      * @param table the table
@@ -77,8 +91,4 @@ public abstract class AbstractFunc<T> implements Func<T> {
         return t;
     }
 
-    @Override
-    public boolean acceptCol(Col col) {
-        return false;
-    }
 }

@@ -10,7 +10,7 @@ import kind.table.Table;
  *
  * @param <T> the type parameter
  */
-public final class Last<T> implements Func<T> {
+public final class Last<T> extends AbstractFunc<T> {
 
     /**
      * Of last.
@@ -37,12 +37,14 @@ public final class Last<T> implements Func<T> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
+    protected void beforeEval(Table table) {
+        errorIfNull(table);
+        errorIfNull(this.colRef);
+        errorIfColRefNotFound(table, this.colRef);
     }
 
     @Override
-    public T eval(Table table) {
+    public T evalTemplate(Table table) {
         if (table == null) {
             return null;
         }

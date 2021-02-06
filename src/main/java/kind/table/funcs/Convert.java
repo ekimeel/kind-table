@@ -127,11 +127,6 @@ public final class Convert extends AbstractFunc<Table> {
     }
 
     @Override
-    public boolean acceptCol(Col col) {
-        return true;
-    }
-
-    @Override
     protected void beforeEval(Table table) {
         errorIfNull(table);
         errorIfNull(this.colRef);
