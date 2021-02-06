@@ -69,7 +69,7 @@ public final class Join implements Func<Table> {
             if (!i.getName().equals(joinCol.getName())) {
                 final Col c = (Col) i.copy();
                 final int fromIndex = c.getIndex();
-                c.setName(TableUtils.enumerateColName(a, c.getName()));
+                a.renameCol(c.getName(), TableUtils.enumerateColName(a, c.getName()));
                 fromToColIndexMap.put(fromIndex, a.addCol(c));
             }
         });

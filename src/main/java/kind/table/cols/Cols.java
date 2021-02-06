@@ -1,18 +1,17 @@
-package kind.table;
+package kind.table.cols;
 
 import kind.table.cols.Col;
-import kind.table.cols.ColRef;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The type Cols.
  */
 public final class Cols implements Serializable {
 
-    private TreeMap<Integer, Col> values = new TreeMap();
+    private final TreeMap<Integer, Col> imap = new TreeMap();
+    private final TreeMap<String, Integer> nmap = new TreeMap();
 
     /**
      * Instantiates a new Cols.
@@ -27,7 +26,7 @@ public final class Cols implements Serializable {
      */
     public Cols(Collection<Col> cols) {
         super();
-        cols.forEach( (i) -> this.values.put(size(), i));
+        cols.forEach( (i) -> this.imap.put(size(), i));
         indexCols();
     }
 
@@ -37,7 +36,7 @@ public final class Cols implements Serializable {
      * @return the integer
      */
     public Integer size() {
-        return this.values.size();
+        return this.imap.size();
     }
 
     /**
@@ -48,7 +47,7 @@ public final class Cols implements Serializable {
      */
     public boolean add(Col col) {
         col.setIndex(size());
-        this.values.put(size(), col);
+        this.imap.put(size(), col);
         indexCols();
         return true;
     }
@@ -69,7 +68,7 @@ public final class Cols implements Serializable {
      * @param col the col
      */
     public void remove(Col col){
-        this.values.remove(col.getIndex());
+        this.imap.remove(col.getIndex());
         indexCols();
     }
 
@@ -79,14 +78,14 @@ public final class Cols implements Serializable {
      * @return the collection
      */
     public Collection<Col> values() {
-        return this.values.values();
+        return this.imap.values();
     }
 
     /**
      * Clear.
      */
     public void clear() {
-        this.values.clear();
+        this.imap.clear();
     }
 
     /**
@@ -95,13 +94,12 @@ public final class Cols implements Serializable {
      * @param index the index
      * @return the col
      */
-    public Col get(int index) {
-        return this.values.get(index);
+    public Col get(Integer index) {
+        return (index == null)? null : this.imap.get(index);
     }
 
     public Col get(String name) {
-        final Optional<Col> option = this.values.values().stream().filter(c -> c.getName().equals(name)).findFirst();
-        return (!option.isPresent())? null : option.get();
+        return get(this.nmap.get(name));
     }
 
     /**
@@ -111,21 +109,37 @@ public final class Cols implements Serializable {
      * @return the boolean
      */
     public boolean hasIndex(Integer index) {
-        return this.values.containsKey(index);
+        return this.imap.containsKey(index);
+    }
+
+    public boolean renameCol(String from, String to) {
+        if (this.nmap.containsKey(to)) {
+            throw new RuntimeException(String.format("col with name [%s] already exists", to));
+        }
+
+        get(from).setName(to);
+        this.nmap.put(to, this.nmap.remove(from));
+        return this.nmap.containsKey(to);
     }
 
     /**
      * Index cols.
      */
-    protected synchronized void indexCols() {
+    private synchronized void indexCols() {
         //todo: shift around instead of collect, clear, add
         final Collection<Col> cols = new ArrayList<>(size());
-        this.values.forEach( (k, v) -> cols.add(v));
-        this.values.clear();
+        this.imap.forEach( (k, v) -> cols.add(v));
+        this.imap.clear();
+        this.nmap.clear();
         cols.forEach( (i) -> {
             i.setIndex(this.size());
-            this.values.put(this.values.size(), i);
+            this.imap.put(this.imap.size(), i);
+            this.nmap.put(i.getName(), i.getIndex());
         });
+
+        if (imap.size() != nmap.size()) {
+            throw new IllegalStateException("corrupt index state.");
+        }
     }
 
 }
