@@ -8,7 +8,7 @@ import kind.table.Table;
  * @see Markdown Csv
  * {@link Tsv}
  */
-public interface TableWriter {
+public interface Writer {
     String NULL_VALUE = "{null}";
     void write(Table table);
 }

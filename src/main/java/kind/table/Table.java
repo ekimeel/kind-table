@@ -5,7 +5,7 @@ import kind.table.cols.ColRef;
 import kind.table.cols.Cols;
 import kind.table.cols.funcs.ColFunc;
 import kind.table.funcs.Func;
-import kind.table.writers.TableWriter;
+import kind.table.writers.Writer;
 
 import java.util.*;
 import java.util.function.Function;
@@ -639,7 +639,7 @@ public class Table implements Copyable<Table>{
 
     }
 
-    public void writeTo(TableWriter writer) {
+    public void writeTo(Writer writer) {
         writer.write(this);
     }
 

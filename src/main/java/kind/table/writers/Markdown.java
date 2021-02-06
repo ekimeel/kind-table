@@ -2,19 +2,15 @@ package kind.table.writers;
 
 
 import kind.table.Table;
-import kind.table.cols.Col;
 import kind.table.cols.ColRef;
 
 import java.io.PrintStream;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The type Markdown.
  */
-public final class Markdown extends AbstractTableWriter {
+public final class Markdown extends AbstractWriter {
 
 
     Markdown(PrintStream stream, Map<ColRef, String> formats) {

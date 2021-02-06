@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * The type Abstract table writer.
  */
-public abstract class AbstractTableWriter implements TableWriter {
+public abstract class AbstractWriter implements Writer {
 
     protected final Map<ColRef, String> formats;
     protected final PrintStream stream;
@@ -23,7 +23,7 @@ public abstract class AbstractTableWriter implements TableWriter {
      * @param stream  the stream
      * @param formats the formats
      */
-    AbstractTableWriter(PrintStream stream, Map<ColRef, String> formats) {
+    AbstractWriter(PrintStream stream, Map<ColRef, String> formats) {
         this.stream = stream;
         this.formats = formats;
     }

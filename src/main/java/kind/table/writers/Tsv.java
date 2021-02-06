@@ -6,7 +6,7 @@ import kind.table.Table;
 import java.io.PrintStream;
 import java.util.Iterator;
 
-public final class Tsv implements TableWriter {
+public final class Tsv implements Writer {
 
     /**/
     private PrintStream stream;

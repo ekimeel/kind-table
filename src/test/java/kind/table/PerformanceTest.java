@@ -2,8 +2,7 @@ package kind.table;
 
 import kind.table.cols.SummaryCol;
 import kind.table.funcs.*;
-import kind.table.writers.Markdown;
-import kind.table.writers.TableWriterBuilder;
+import kind.table.writers.WriterBuilder;
 import org.junit.Test;
 
 import java.time.Instant;
@@ -110,7 +109,7 @@ public class PerformanceTest {
                 SummaryCol.of("rows", Max.of("rows"))
         ));
 
-        results.writeTo(new TableWriterBuilder().Markdown().usingStream(System.out).build());
+        results.writeTo(new WriterBuilder().Markdown().usingStream(System.out).build());
 
 
     }

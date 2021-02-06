@@ -3,9 +3,9 @@ package kind.table.writers;
 /**
  * The type Table writer builder.
  */
-public class TableWriterBuilder {
+public class WriterBuilder {
 
-    private TableWriter tableWriter;
+    private Writer tableWriter;
 
     /**
      * Markdown markdown builder.

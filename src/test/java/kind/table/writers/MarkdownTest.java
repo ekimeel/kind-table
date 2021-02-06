@@ -35,7 +35,7 @@ public class MarkdownTest {
 
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         final PrintStream ps = new PrintStream(os);
-        table.writeTo(new TableWriterBuilder().Markdown().usingStream(ps).build());
+        table.writeTo(new WriterBuilder().Markdown().usingStream(ps).build());
 
         String actual = os.toString("UTF8");
 

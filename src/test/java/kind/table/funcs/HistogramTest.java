@@ -1,8 +1,7 @@
 package kind.table.funcs;
 
 import kind.table.Table;
-import kind.table.writers.Markdown;
-import kind.table.writers.TableWriterBuilder;
+import kind.table.writers.WriterBuilder;
 import org.junit.Test;
 import test.util.TestTableFactory;
 
@@ -28,7 +27,7 @@ public class HistogramTest {
 
 
 
-        result.writeTo(new TableWriterBuilder().Markdown().usingStream(System.out).build());
+        result.writeTo(new WriterBuilder().Markdown().usingStream(System.out).build());
 
     }
 

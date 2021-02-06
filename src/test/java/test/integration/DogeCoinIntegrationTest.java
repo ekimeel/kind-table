@@ -9,7 +9,7 @@ import kind.table.funcs.Convert;
 import kind.table.funcs.GroupBy;
 import kind.table.funcs.Histogram;
 import kind.table.funcs.Mean;
-import kind.table.writers.TableWriterBuilder;
+import kind.table.writers.WriterBuilder;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -36,7 +36,7 @@ public class DogeCoinIntegrationTest {
 
 
         System.out.println("Volume by day of the week");
-        summary.writeTo( new TableWriterBuilder()
+        summary.writeTo( new WriterBuilder()
                 .Markdown()
                 .usingStream(System.out)
                 .withFormat(ColRef.of("AverageVolume"), "%.3f")
@@ -44,7 +44,7 @@ public class DogeCoinIntegrationTest {
         );
 
         final Table histogram = table.eval(Histogram.of("Close", 10));
-        histogram.writeTo( new TableWriterBuilder()
+        histogram.writeTo( new WriterBuilder()
                 .Markdown()
                 .usingStream(System.out)
                 .build()
