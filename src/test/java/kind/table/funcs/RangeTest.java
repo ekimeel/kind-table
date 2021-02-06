@@ -37,7 +37,7 @@ public class RangeTest {
         table.addRow(Row.of(1.1, 6.6));
 
         final Double result = table.eval(Range.of("Odd"));
-        assertEquals((Double) 4.0, result);
+        assertEquals((Double) 4.4, result);
     }
 
     @Test
