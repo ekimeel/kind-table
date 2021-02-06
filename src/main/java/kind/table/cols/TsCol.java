@@ -3,6 +3,9 @@ package kind.table.cols;
 import java.io.Serializable;
 import java.time.Instant;
 
+/**
+ * The type Ts col.
+ */
 public final class TsCol extends Col<Instant> implements Serializable {
     /**
      * returns a new [[TsCol]] with the provided name
@@ -14,9 +17,21 @@ public final class TsCol extends Col<Instant> implements Serializable {
         return new TsCol(name);
     }
 
+    /**
+     * Instantiates a new Ts col.
+     *
+     * @param name the name
+     */
     public TsCol(String name) {
         super(name);
     }
+
+    /**
+     * Instantiates a new Ts col.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     public TsCol(String name, int index) {
         super(name, index);
     }

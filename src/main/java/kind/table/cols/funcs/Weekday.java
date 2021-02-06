@@ -10,13 +10,46 @@ import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
+/**
+ * The type Weekday.
+ */
 public final class Weekday implements ColFunc {
 
     private static final String DEFAULT_NAME = "Weekday";
+
+    /**
+     * From weekday.
+     *
+     * @param name the name
+     * @param col  the col
+     * @return the weekday
+     */
     public static Weekday from(String name, int col) { return new Weekday(name, ColRef.of(col)); }
+
+    /**
+     * From weekday.
+     *
+     * @param col the col
+     * @return the weekday
+     */
     public static Weekday from(int col) { return new Weekday(DEFAULT_NAME, ColRef.of(col)); }
+
+    /**
+     * From weekday.
+     *
+     * @param col the col
+     * @return the weekday
+     */
     /**/
     public static Weekday from(String col) { return new Weekday(DEFAULT_NAME, ColRef.of(col)); }
+
+    /**
+     * From weekday.
+     *
+     * @param name the name
+     * @param col  the col
+     * @return the weekday
+     */
     public static Weekday from(String name, String col) { return new Weekday(name, ColRef.of(col)); }
     /**/
 

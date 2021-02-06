@@ -7,13 +7,12 @@ import kind.table.cols.SummaryCol;
 import kind.table.cols.funcs.Weekday;
 import kind.table.funcs.Convert;
 import kind.table.funcs.GroupBy;
+import kind.table.funcs.Histogram;
 import kind.table.funcs.Mean;
-import kind.table.writers.Markdown;
 import kind.table.writers.TableWriterBuilder;
 import org.junit.Test;
 
 import java.nio.file.Paths;
-import java.time.DayOfWeek;
 
 public class DogeCoinIntegrationTest {
 
@@ -32,13 +31,22 @@ public class DogeCoinIntegrationTest {
 
         table.addCol(Weekday.from("Weekday", "Date"));
 
-        table = table.eval(GroupBy.of("Weekday",
+        final Table summary = table.eval(GroupBy.of("Weekday",
                 SummaryCol.of("AverageVolume", Mean.of("Volume"))));
 
-        table.writeTo( new TableWriterBuilder()
+
+        System.out.println("Volume by day of the week");
+        summary.writeTo( new TableWriterBuilder()
                 .Markdown()
                 .usingStream(System.out)
                 .withFormat(ColRef.of("AverageVolume"), "%.3f")
+                .build()
+        );
+
+        final Table histogram = table.eval(Histogram.of("Close", 10));
+        histogram.writeTo( new TableWriterBuilder()
+                .Markdown()
+                .usingStream(System.out)
                 .build()
         );
 

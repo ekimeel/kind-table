@@ -5,7 +5,7 @@ import kind.table.Table;
 /**
  * Interface for
  *
- * @see {@link Markdown}, {@link Csv},
+ * @see Markdown Csv
  * {@link Tsv}
  */
 public interface TableWriter {

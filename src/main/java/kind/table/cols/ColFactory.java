@@ -1,10 +1,12 @@
 package kind.table.cols;
 
+/**
+ * The type Col factory.
+ */
 public final class ColFactory {
 
     /**
-     *
-     *<table>
+     * <table>
      *     <caption>Attempts to return a matching column type for the provided valu</caption>
      *     <thead>
      *         <tr>
@@ -39,8 +41,10 @@ public final class ColFactory {
      *         </tr>
      *     </tbody>
      * </table>
-     * @param val
-     * @return
+     *
+     * @param name the name
+     * @param val  the val
+     * @return col
      */
     public static Col from(String name, Object val) {
         if (val == null) { return null; }
@@ -54,6 +58,13 @@ public final class ColFactory {
         else { return null; }
     }
 
+    /**
+     * From col.
+     *
+     * @param name the name
+     * @param type the type
+     * @return the col
+     */
     public static Col from(String name, Class<? extends Col> type) {
         if (type == null) { return null; }
         else if (DblCol.class.equals(type)) { return DblCol.of(name); }

@@ -98,6 +98,12 @@ public final class Cols implements Serializable {
         return (index == null)? null : this.imap.get(index);
     }
 
+    /**
+     * Get col.
+     *
+     * @param name the name
+     * @return the col
+     */
     public Col get(String name) {
         return get(this.nmap.get(name));
     }
@@ -112,6 +118,13 @@ public final class Cols implements Serializable {
         return this.imap.containsKey(index);
     }
 
+    /**
+     * Rename col boolean.
+     *
+     * @param from the from
+     * @param to   the to
+     * @return the boolean
+     */
     public boolean renameCol(String from, String to) {
         if (this.nmap.containsKey(to)) {
             throw new RuntimeException(String.format("col with name [%s] already exists", to));

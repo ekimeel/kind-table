@@ -6,6 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The type Date col.
+ */
 public final class DateCol extends Col<Date> implements Serializable {
 
     /**
@@ -18,10 +21,21 @@ public final class DateCol extends Col<Date> implements Serializable {
         return new DateCol(name);
     }
 
+    /**
+     * Instantiates a new Date col.
+     *
+     * @param name the name
+     */
     public DateCol(String name) {
         super(name);
     }
 
+    /**
+     * Instantiates a new Date col.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     public DateCol(String name, int index) {
         super(name, index);
     }
@@ -35,7 +49,7 @@ public final class DateCol extends Col<Date> implements Serializable {
      *     <li>java.lang.Number</li>
      * </ul>
      * @param value The value to try to cast
-     * @return
+     * @return The converted date
      */
     @Override
     public Date convert(Object value, String format) {

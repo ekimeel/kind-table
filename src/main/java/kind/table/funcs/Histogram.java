@@ -4,14 +4,44 @@ import kind.table.Table;
 import kind.table.TableBuilder;
 import kind.table.cols.*;
 
+/**
+ * The type Histogram.
+ */
 public class Histogram extends AbstractFunc<Table> {
 
+    /**
+     * The constant COL_BIN_NUM.
+     */
     public static final String COL_BIN_NUM = "bin_num";
+    /**
+     * The constant COL_BIN_START.
+     */
     public static final String COL_BIN_START = "bin_start";
+    /**
+     * The constant COL_BIN_END.
+     */
     public static final String COL_BIN_END = "bin_end";
+    /**
+     * The constant COL_BIN_SIZE.
+     */
     public static final String COL_BIN_SIZE = "bin_size";
 
+    /**
+     * Of histogram.
+     *
+     * @param col  the col
+     * @param bins the bins
+     * @return the histogram
+     */
     public static Histogram of(String col, int bins) { return new Histogram(ColRef.of(col), bins); }
+
+    /**
+     * Of histogram.
+     *
+     * @param col  the col
+     * @param bins the bins
+     * @return the histogram
+     */
     public static Histogram of(int col, int bins) { return new Histogram(ColRef.of(col), bins); }
 
     /**/
@@ -19,7 +49,7 @@ public class Histogram extends AbstractFunc<Table> {
     private final int bins;
 
 
-    public Histogram(ColRef colRef, int bins) {
+    private Histogram(ColRef colRef, int bins) {
         this.colRef = colRef;
         this.bins = bins;
     }
@@ -67,38 +97,16 @@ public class Histogram extends AbstractFunc<Table> {
             final Double start = row.get(1);
             final Double end = row.get(2);
             final Long count = table.getRows().stream().filter( x -> {
-                final Double v = ((Number)x.get(col.getIndex())).doubleValue();
+                final Object obj = x.get(col.getIndex());
+                if (obj == null) { return false; }
+
+                final Double v = ((Number)obj).doubleValue();
                 return (v > start && v <= end)? true : (start == max || end == max);
             } ).count();
             row.set(3, count.intValue());
         });
 
-
-
         return result;
-        /*
-
-        // Make sure that all bins are initialized
-        final Map<Integer, Integer> histogram = range(0, bins).boxed()
-                .collect(toMap(identity(), x -> 0));
-
-
-
-
-        final Stream<Double> data = table.getRows().stream()
-                .mapToDouble( x -> ((Number)x.get(col.getIndex())).doubleValue() )
-                .boxed();
-
-        histogram.putAll(data
-                .collect(groupingBy(x -> findBin(x, bins, min, max),
-                        mapping(x -> 1, summingInt(x -> x)))));
-
-        histogram.forEach( (k, v) -> {
-            result.addRow(k, v);
-        });
-
-        return result;
-*/
 
     }
 

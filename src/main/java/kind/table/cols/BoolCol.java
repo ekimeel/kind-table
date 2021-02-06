@@ -2,6 +2,9 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
+/**
+ * The type Bool col.
+ */
 public final class BoolCol extends Col<Boolean> implements Serializable {
 
     /**
@@ -14,9 +17,21 @@ public final class BoolCol extends Col<Boolean> implements Serializable {
         return new BoolCol(name);
     }
 
+    /**
+     * Instantiates a new Bool col.
+     *
+     * @param name the name
+     */
     public BoolCol(String name) {
         super(name);
     }
+
+    /**
+     * Instantiates a new Bool col.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     public BoolCol(String name, int index) {
         super(name, index);
     }

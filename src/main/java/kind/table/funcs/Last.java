@@ -5,9 +5,29 @@ import kind.table.cols.ColRef;
 import kind.table.Table;
 
 
+/**
+ * The type Last.
+ *
+ * @param <T> the type parameter
+ */
 public final class Last<T> implements Func<T> {
 
+    /**
+     * Of last.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the last
+     */
     public static <E> Last<E> of(int col) { return new Last(ColRef.of(col)); }
+
+    /**
+     * Of last.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the last
+     */
     public static <E> Last<E> of(String col) { return new Last(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
