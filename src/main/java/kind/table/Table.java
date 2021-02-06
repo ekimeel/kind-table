@@ -123,6 +123,7 @@ public class Table implements Copyable<Table>{
         return this.rows.size();
     }
 
+    @Deprecated
     public Col getCol(Object any) {
         if (any instanceof Integer) {
             return getColByIndex((Integer) any);
@@ -134,7 +135,9 @@ public class Table implements Copyable<Table>{
     }
 
     public Col getColByRef(ColRef ref) {
-        return getCol(ref.getRef());
+        if (ref.isInt()) return getColByIndex(ref.asInt());
+
+        return getColByName(ref.asStr());
     }
 
     /**
@@ -143,12 +146,7 @@ public class Table implements Copyable<Table>{
      * @return The column if found, otherwise null
      */
     public Col getColByName(String name){
-
-        final Optional<Col> result = getCols().stream().filter(t ->
-                t.getName().equals(name)
-        ).findFirst();
-
-        return (!result.isPresent())? null : result.get();
+        return this.columns.get(name);
     }
 
     /**

@@ -24,7 +24,7 @@ public class M1Test {
 
         AnalyzerResponse response = analyzer.exec(request);
 
-        response.getTable().writeTo(new Markdown(System.out));
+        //response.getTable().writeTo(new Markdown(System.out));
 
 
 

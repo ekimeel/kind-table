@@ -2,19 +2,30 @@ package kind.table.writers;
 
 
 import kind.table.Table;
+import kind.table.cols.Col;
+import kind.table.cols.ColRef;
+
 import java.io.PrintStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-public final class Markdown implements TableWriter {
+/**
+ * The type Markdown.
+ */
+public final class Markdown extends AbstractTableWriter {
 
 
-    private PrintStream stream;
-
-    public Markdown(PrintStream stream) {
-        this.stream = stream;
+    Markdown(PrintStream stream, Map<ColRef, String> formats) {
+        super(stream, formats);
     }
 
+
     @Override
-    public void write(Table table) {
+    public void writeTemplate(Table table) {
+        this.evaluateFormatIndexes(table);
+
         final StringBuilder sb = new StringBuilder(500);
 
         table.getCols().forEach( (i) -> sb.append("| ").append(i.getName()) );
@@ -28,11 +39,16 @@ public final class Markdown implements TableWriter {
         sb.setLength(0);
 
         table.rowIterator().forEachRemaining( row -> {
-            row.values().forEach( (v) -> sb.append("| ").append( (v == null)? NULL_VALUE : v ));
+            for (int i = 0; i < row.size(); i++) {
+                final Object obj = row.get(i);
+                final String value = this.format(i, obj);
+                sb.append("| ").append(value);
+            };
             sb.append("|"); // end cap
             stream.println(sb.toString());
             sb.setLength(0);
         });
         sb.setLength(0);
     }
+
 }

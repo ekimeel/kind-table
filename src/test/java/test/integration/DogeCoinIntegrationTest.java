@@ -2,12 +2,14 @@ package test.integration;
 
 import kind.table.Table;
 import kind.table.TableBuilder;
+import kind.table.cols.ColRef;
 import kind.table.cols.SummaryCol;
 import kind.table.cols.funcs.Weekday;
 import kind.table.funcs.Convert;
 import kind.table.funcs.GroupBy;
 import kind.table.funcs.Mean;
 import kind.table.writers.Markdown;
+import kind.table.writers.TableWriterBuilder;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -30,13 +32,15 @@ public class DogeCoinIntegrationTest {
 
         table.addCol(Weekday.from("Weekday", "Date"));
 
-        table = table.eval(GroupBy.of("Weekday", SummaryCol.of("AverageVolume", Mean.of("Volume"))));
+        table = table.eval(GroupBy.of("Weekday",
+                SummaryCol.of("AverageVolume", Mean.of("Volume"))));
 
-        //table.writeTo(new Markdown(System.out));
-
-
-
-
+        table.writeTo( new TableWriterBuilder()
+                .Markdown()
+                .usingStream(System.out)
+                .withFormat(ColRef.of("AverageVolume"), "%.3f")
+                .build()
+        );
 
     }
 
