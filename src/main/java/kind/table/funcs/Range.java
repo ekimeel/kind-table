@@ -8,9 +8,29 @@ import java.util.List;
 import java.util.Spliterator;
 import java.util.stream.Collectors;
 
+/**
+ * The type Range.
+ *
+ * @param <T> the type parameter
+ */
 public class Range<T extends Number> implements Func<T> {
 
+    /**
+     * Of range.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the range
+     */
     public static <E extends Number> Range<E> of(String col) { return new Range<>(ColRef.of(col)); }
+
+    /**
+     * Of range.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the range
+     */
     public static <E extends Number> Range<E> of(int col) { return new Range<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;

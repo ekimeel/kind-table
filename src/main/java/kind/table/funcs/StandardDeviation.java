@@ -11,11 +11,23 @@ import java.util.List;
 
 /**
  * The population standard deviation
- *
  */
 public final class StandardDeviation implements Func<Double> {
 
+    /**
+     * Of standard deviation.
+     *
+     * @param col the col
+     * @return the standard deviation
+     */
     public static StandardDeviation of(String col) { return new StandardDeviation(ColRef.of(col)); }
+
+    /**
+     * Of standard deviation.
+     *
+     * @param col the col
+     * @return the standard deviation
+     */
     public static StandardDeviation of(int col) { return new StandardDeviation(ColRef.of(col)); }
     /**/
     private final ColRef colRef;

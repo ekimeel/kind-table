@@ -9,13 +9,38 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
+/**
+ * The type Sum.
+ *
+ * @param <T> the type parameter
+ */
 public final class Sum<T extends Number> implements Func<T> {
 
+    /**
+     * Of sum.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the sum
+     */
     public static <E extends Number> Sum<E> of(String col) { return new Sum<>(ColRef.of(col)); }
+
+    /**
+     * Of sum.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the sum
+     */
     public static <E extends Number> Sum<E> of(int col) { return new Sum<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
+    /**
+     * Instantiates a new Sum.
+     *
+     * @param colRef the col ref
+     */
     public Sum(ColRef colRef) {
         this.colRef = colRef;
     }

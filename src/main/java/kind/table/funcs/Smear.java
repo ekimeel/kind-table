@@ -7,13 +7,29 @@ import kind.table.cols.NumCol;
 
 import java.util.List;
 
+/**
+ * The type Smear.
+ */
 /*
  * Last observation carried forward (Smear) is a method of imputing missing data. If a is non-null and
  * becomes null, then the last non-null value replaces the null values
  */
 public final class Smear implements Func<Table> {
 
+    /**
+     * Of smear.
+     *
+     * @param col the col
+     * @return the smear
+     */
     public static Smear of(String col) { return new Smear(ColRef.of(col)); }
+
+    /**
+     * Of smear.
+     *
+     * @param col the col
+     * @return the smear
+     */
     public static Smear of(int col) { return new Smear(ColRef.of(col)); }
     /**/
     private final ColRef colRef;

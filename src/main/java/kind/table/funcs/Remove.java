@@ -3,14 +3,35 @@ package kind.table.funcs;
 import kind.table.Table;
 import kind.table.cols.*;
 
+/**
+ * The type Remove.
+ */
 public final class Remove extends AbstractFunc<Table> {
 
+    /**
+     * From remove.
+     *
+     * @param col the col
+     * @return the remove
+     */
     public static Remove from(String col) { return new Remove(ColRef.of(col)); }
+
+    /**
+     * From remove.
+     *
+     * @param col the col
+     * @return the remove
+     */
     public static Remove from(int col) { return new Remove(ColRef.of(col)); }
 
     /**/
     private final ColRef colRef;
 
+    /**
+     * Instantiates a new Remove.
+     *
+     * @param colRef the col ref
+     */
     public Remove(ColRef colRef) {
         this.colRef = colRef;
     }

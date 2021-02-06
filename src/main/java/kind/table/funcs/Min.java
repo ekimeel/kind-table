@@ -9,9 +9,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
+/**
+ * The type Min.
+ *
+ * @param <T> the type parameter
+ */
 public final class Min<T extends Number> implements Func<T> {
 
+    /**
+     * Of min.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the min
+     */
     public static <E extends Number> Min<E> of(String col) { return new Min(ColRef.of(col)); }
+
+    /**
+     * Of min.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the min
+     */
     public static <E extends Number> Min<E> of(int col) { return new Min(ColRef.of(col)); }
     /**/
     private final ColRef colRef;

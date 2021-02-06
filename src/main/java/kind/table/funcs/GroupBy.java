@@ -9,17 +9,60 @@ import kind.table.cols.RowCol;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Group by.
+ */
 public final class GroupBy implements Func<Table> {
 
     private static final String COLUMN_POSTFIX = " Group";
+
+    /**
+     * Of group by.
+     *
+     * @param col   the col
+     * @param col1  the col 1
+     * @param func1 the func 1
+     * @return the group by
+     */
     public static GroupBy of(int col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+
+    /**
+     * Of group by.
+     *
+     * @param col         the col
+     * @param summaryCols the summary cols
+     * @return the group by
+     */
     public static GroupBy of(int col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
+
+    /**
+     * Of group by.
+     *
+     * @param col   the col
+     * @param col1  the col 1
+     * @param func1 the func 1
+     * @return the group by
+     */
     public static GroupBy of(String col, String col1, Func func1) { return new GroupBy(ColRef.of(col), SummaryCol.of(col1,func1)); }
+
+    /**
+     * Of group by.
+     *
+     * @param col         the col
+     * @param summaryCols the summary cols
+     * @return the group by
+     */
     public static GroupBy of(String col, SummaryCol... summaryCols) { return new GroupBy(ColRef.of(col), summaryCols); }
     /**/
     private final ColRef colRef;
     private final List<SummaryCol> aggs;
 
+    /**
+     * Instantiates a new Group by.
+     *
+     * @param colRef the col ref
+     * @param agg    the agg
+     */
     public GroupBy(ColRef colRef, SummaryCol... agg) {
         this.colRef = colRef;
         this.aggs = Arrays.asList(agg);

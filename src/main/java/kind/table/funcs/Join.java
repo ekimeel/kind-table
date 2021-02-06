@@ -10,14 +10,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Join.
+ */
 public final class Join implements Func<Table> {
 
+    /**
+     * Of join.
+     *
+     * @param col   the col
+     * @param table the table
+     * @return the join
+     */
     public static Join of(int col, Table table) { return new Join(ColRef.of(col), table); }
+
+    /**
+     * Of join.
+     *
+     * @param col   the col
+     * @param table the table
+     * @return the join
+     */
     public static Join of(String col, Table table) { return new Join(ColRef.of(col), table); }
+
+    /**
+     * Of join.
+     *
+     * @param colRef the col ref
+     * @param table  the table
+     * @return the join
+     */
     public static Join of(ColRef colRef, Table table) { return new Join(colRef, table); }
     /**/
     private final ColRef colRef;
     private final Table b;
+
+    /**
+     * Instantiates a new Join.
+     *
+     * @param colRef the col ref
+     * @param b      the b
+     */
     public Join(ColRef colRef, Table b) {
         this.colRef = colRef;
         this.b = b;

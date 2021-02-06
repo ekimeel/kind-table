@@ -9,13 +9,38 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
+/**
+ * The type Max.
+ *
+ * @param <T> the type parameter
+ */
 public final class Max<T extends Number> implements Func<T> {
 
+    /**
+     * Of max.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the max
+     */
     public static <E extends Number> Max<E> of(String col) { return new Max<>(ColRef.of(col)); }
+
+    /**
+     * Of max.
+     *
+     * @param <E> the type parameter
+     * @param col the col
+     * @return the max
+     */
     public static <E extends Number> Max<E> of(int col) { return new Max<>(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
 
+    /**
+     * Instantiates a new Max.
+     *
+     * @param colRef the col ref
+     */
     public Max(ColRef colRef) {
         this.colRef = colRef;
     }

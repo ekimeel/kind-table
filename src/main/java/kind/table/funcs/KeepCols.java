@@ -5,11 +5,26 @@ import kind.table.cols.Col;
 
 import java.util.*;
 
+/**
+ * The type Keep cols.
+ */
 public final class KeepCols implements Func<Table> {
 
     private final List<Integer> cols = new ArrayList();
 
+    /**
+     * Of keep cols.
+     *
+     * @param cols the cols
+     * @return the keep cols
+     */
     public static KeepCols of(int... cols) { return new KeepCols(cols); }
+
+    /**
+     * Instantiates a new Keep cols.
+     *
+     * @param cols the cols
+     */
     public KeepCols(int... cols) {
         Arrays.stream(cols).forEach( (i) -> this.cols.add(i));
     }
