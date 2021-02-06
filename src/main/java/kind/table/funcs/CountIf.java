@@ -57,9 +57,7 @@ public final class CountIf implements Func<Integer> {
 
         final Col col = table.getColByRef(this.colRef);
         final int index = col.getIndex();
-        final Spliterator<Row> spliterator = (table.allowParallelProcessing())?
-                table.getRows().parallelStream().spliterator() :
-                table.getRows().stream().spliterator();
+        final Spliterator<Row> spliterator = table.rowSpliterator( (r) -> r.get(index) != null );
 
         final AtomicInteger count = new AtomicInteger(0);
         spliterator.forEachRemaining( (i) -> {
