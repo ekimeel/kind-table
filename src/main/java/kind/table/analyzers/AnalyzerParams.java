@@ -5,9 +5,15 @@ package kind.table.analyzers;
  */
 public enum AnalyzerParams {
     /**
-     * The X cols.
+     * The cols to exclude for analysis.
      */
-    x_cols("x_cols", "exclude cols");
+    x_cols("x_cols", "exclude cols"),
+
+
+    /**
+     * The packages to run
+     */
+    pkgs("pkgs", "packages to run");
 
     /**
      * The Key.
