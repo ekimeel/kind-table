@@ -53,6 +53,8 @@ public final class Convert extends AbstractFunc<Table> {
         final Table copy = table.copy();
         final Col oldCol = copy.getColByRef(this.colRef);
         final Col newCol = ColFactory.from(oldCol.getName(), this.type);
+
+
         oldCol.setName(UUID.randomUUID().toString());
 
         copy.addCol(newCol, (i) -> i.append( newCol.convert(i.get(oldCol.getIndex()), format)) );
