@@ -1,6 +1,8 @@
 package kind.table.funcs;
 
 import com.google.common.math.Stats;
+import com.google.common.math.StatsAccumulator;
+import kind.table.Row;
 import kind.table.cols.ColRef;
 import kind.table.cols.Col;
 import kind.table.cols.DblCol;
@@ -8,6 +10,7 @@ import kind.table.Table;
 import kind.table.cols.NumCol;
 
 import java.util.List;
+import java.util.Spliterator;
 
 /**
  * The population standard deviation
@@ -31,7 +34,6 @@ public final class StandardDeviation implements Func<Double> {
     public static StandardDeviation of(int col) { return new StandardDeviation(ColRef.of(col)); }
     /**/
     private final ColRef colRef;
-    private Table table;
 
     private StandardDeviation(ColRef colRef) {
         this.colRef = colRef;
@@ -44,19 +46,16 @@ public final class StandardDeviation implements Func<Double> {
 
     @Override
     public Double eval(Table table) {
-        this.table = table;
-        if (table == null) {
-            return null;
-        }
 
         final Col col = table.getColByRef(this.colRef);
+        final int index = col.getIndex();
+        final Spliterator<Row> spliterator = table.rowSpliterator( (r) -> r.get(index) != null );
 
-        if (col instanceof DblCol) {
-            return Stats.of(table.getVals(colRef)).populationStandardDeviation();
-        } else {
-            final List<Double> values = table.valuesToDoubles(col.getIndex());
-            return Stats.of(values).populationStandardDeviation();
-        }
+        final StatsAccumulator accumulator = new StatsAccumulator();
+        spliterator.forEachRemaining( (r) -> accumulator.add( ((Number)r.get(index)).doubleValue() ));
+
+        return accumulator.populationStandardDeviation();
+
     }
 
 

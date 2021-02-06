@@ -34,8 +34,8 @@ public final class M1 extends AbstractAnalyzer {
                .withDblCol("max")
                .withDblCol("min")
                .withDblCol("mean")
+               .withDblCol("std_dev")
                .withIntCol("count")
-               .withDblCol("range")
                .withIntCol("max_occurs")
                .withIntCol("min_occurs")
                .build();
@@ -45,11 +45,11 @@ public final class M1 extends AbstractAnalyzer {
            final Number max = table.eval(Max.of(c.getIndex()));
            final Number min = table.eval(Min.of(c.getIndex()));
            final Number mean = table.eval(Mean.of(c.getIndex()));
-           final Number range = table.eval(Range.of(c.getIndex()));
+           final Number std_dev = table.eval(StandardDeviation.of(c.getIndex()));
            final Number count = table.eval(Count.of(c.getIndex()));
            final Number max_occurs = table.eval(CountIf.of(c.getIndex(), (val) -> val.equals(max)));
            final Number min_occurs = table.eval(CountIf.of(c.getIndex(), (val) -> val.equals(min)));
-           result.addRow(name, max, min, mean, range, count, max_occurs, min_occurs);
+           result.addRow(name, max, min, mean, std_dev, count, max_occurs, min_occurs);
        }
 
 
