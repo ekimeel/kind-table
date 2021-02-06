@@ -8,13 +8,46 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+/**
+ * The type Hour of day.
+ */
 public final class HourOfDay implements ColFunc {
 
     private static final String DEFAULT_NAME = "HourOfDay";
+
+    /**
+     * From hour of day.
+     *
+     * @param name the name
+     * @param col  the col
+     * @return the hour of day
+     */
     public static HourOfDay from(String name, int col) { return new HourOfDay(name, ColRef.of(col)); }
+
+    /**
+     * From hour of day.
+     *
+     * @param col the col
+     * @return the hour of day
+     */
     public static HourOfDay from(int col) { return new HourOfDay(DEFAULT_NAME, ColRef.of(col)); }
+
+    /**
+     * From hour of day.
+     *
+     * @param col the col
+     * @return the hour of day
+     */
     /**/
     public static HourOfDay from(String col) { return new HourOfDay(DEFAULT_NAME, ColRef.of(col)); }
+
+    /**
+     * From hour of day.
+     *
+     * @param name the name
+     * @param col  the col
+     * @return the hour of day
+     */
     public static HourOfDay from(String name, String col) { return new HourOfDay(name, ColRef.of(col)); }
     /**/
 

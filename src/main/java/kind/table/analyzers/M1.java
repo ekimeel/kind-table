@@ -10,8 +10,6 @@ import java.util.Set;
 
 public final class M1 extends AbstractAnalyzer {
 
-
-
     public M1() {
         super(M1.class.getSimpleName());
     }
@@ -57,15 +55,15 @@ public final class M1 extends AbstractAnalyzer {
        response.setTable(result);
 
 
-
-
-
-
        //"The maximum $column is $max.";
        //"The minimum "
        //"The maximum $column is $max and occured $occurs time(s).";
        //"The maximum $column is $value and occured $occurs time(s). The max";
 
+    }
+
+
+    private class M1x1 {
 
 
 

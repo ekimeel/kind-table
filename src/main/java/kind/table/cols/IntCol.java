@@ -2,6 +2,9 @@ package kind.table.cols;
 
 import java.io.Serializable;
 
+/**
+ * The type Int col.
+ */
 public final class IntCol extends NumCol<Integer> implements Serializable {
 
     /**
@@ -14,9 +17,21 @@ public final class IntCol extends NumCol<Integer> implements Serializable {
         return new IntCol(name);
     }
 
+    /**
+     * Instantiates a new Int col.
+     *
+     * @param name the name
+     */
     public IntCol(String name) {
         super(name);
     }
+
+    /**
+     * Instantiates a new Int col.
+     *
+     * @param name  the name
+     * @param index the index
+     */
     public IntCol(String name, int index) {
         super(name, index);
     }
