@@ -28,7 +28,7 @@ public abstract class Col<T extends Serializable> implements Copyable<Col>, Seri
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -36,7 +36,7 @@ public abstract class Col<T extends Serializable> implements Copyable<Col>, Seri
         return index;
     }
 
-    public void setIndex(int index) {
+    void setIndex(int index) {
         this.index = index;
     }
 

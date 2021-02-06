@@ -1,4 +1,4 @@
-package kind.table;
+package kind.table.cols;
 
 import kind.table.cols.Col;
 
@@ -110,6 +110,16 @@ public final class Cols implements Serializable {
      */
     public boolean hasIndex(Integer index) {
         return this.imap.containsKey(index);
+    }
+
+    public boolean renameCol(String from, String to) {
+        if (this.nmap.containsKey(to)) {
+            throw new RuntimeException(String.format("col with name [%s] already exists", to));
+        }
+
+        get(from).setName(to);
+        this.nmap.put(to, this.nmap.remove(from));
+        return this.nmap.containsKey(to);
     }
 
     /**
