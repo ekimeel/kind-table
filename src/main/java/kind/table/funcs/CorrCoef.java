@@ -51,7 +51,7 @@ public final class CorrCoef extends AbstractFunc<Double> {
     public Double evalTemplate(Table table) {
 
         final Col colA = table.getColByRef(this.colRefA);
-        final Col colB = table.getColByRef(this.colRefA);
+        final Col colB = table.getColByRef(this.colRefB);
 
         final Spliterator<Row> spliterator = table.rowSpliterator( (r) -> (r.get(colA.getIndex()) != null
                 && r.get(colB.getIndex()) != null));

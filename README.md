@@ -137,6 +137,7 @@ final Table group = table.eval(new GroupBy(2));
 |---------------------|--------|---------------------------|
 | **Convert**             | Table        | Converts a col type to another type |
 | **Copy**                | Table        | Creates a copy of a table|
+| **CorrCoef**            | Double       | Returns the Pearsons Correlation Coefficient between to columns|
 | **Count**               | Integer      | Counts the number of non-null values in a col|
 | **CountIf**             | Integer      | Counts the number of values meeting a condition a col|
 | **First**               | Any          | Returns the first value in a col |   |
@@ -153,7 +154,7 @@ final Table group = table.eval(new GroupBy(2));
 | **Min**                 | Number       | Returns the min value in a col |
 | **Range**               | Number       | Returns the range of values (max - min) |
 | **Remove**              | Table        | Removes a col from the table and returns a new table |
-| **StandardDeviation**   | Double       | Returns the entire population's standard deviation |
+| **StdDevPop**           | Double       | Returns the entire population's standard deviation |
 | **Sum**                 | Number       | Returns the sum (total) value in a col |
 
 ### Advanced

@@ -15,7 +15,7 @@ public final class AnalyzerResponse {
     /**
      * Is ok boolean.
      *
-     * @see this.getErr
+     * @see AnalyzerResponse#getErr()
      * @return the boolean
      *
      */

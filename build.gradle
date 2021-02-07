@@ -11,13 +11,18 @@ if (propertiesFile.exists()) {
     properties.load(propertiesFile.newDataInputStream())
 }
 
+
 group 'com.github.ekimeel'
 version gitVersion()
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 sourceCompatibility = 1.8
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 
-
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 tasks.withType(Sign) {
     onlyIf { isReleaseVersion }
@@ -59,9 +64,16 @@ publishing {
             pom {
                 groupId = 'com.github.ekimeel'
                 name = 'kind-table'
-                description = ''
+                description = 'A simple to use but, robust table data struction with fast functions, pretty output and extensable tools.'
                 url = 'https://github.com/ekimeel/kind-table'
                 from components.java
+                developers {
+                    developer {
+                        id = 'ekimeel'
+                        name = 'Michael Lee'
+                        email = 'michaeljlee0@gmail.com'
+                    }
+                }
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
