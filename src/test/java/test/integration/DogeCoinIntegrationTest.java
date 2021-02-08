@@ -5,7 +5,6 @@ import kind.table.TableBuilder;
 import kind.table.analyzers.AnalyzerRequest;
 import kind.table.analyzers.AnalyzerResponse;
 import kind.table.analyzers.M1;
-import kind.table.analyzers.m1.M1Pkg;
 import kind.table.cols.ColRef;
 import kind.table.cols.SummaryCol;
 import kind.table.cols.funcs.Weekday;

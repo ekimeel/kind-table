@@ -20,7 +20,6 @@ public final class M1 extends AbstractAnalyzer {
             stop();
             response.setErr(new NullPointerException("No table provided"));
         }
-
     }
 
     @Override
@@ -52,10 +51,9 @@ public final class M1 extends AbstractAnalyzer {
            result.addRow(name, max, min, mean, std_dev, count, max_occurs, min_occurs);
        }
 
-
-
-
        response.setTable(result);
+
+
 
 
 
