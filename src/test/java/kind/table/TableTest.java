@@ -1,6 +1,7 @@
 package kind.table;
 
 import kind.table.cols.*;
+import kind.table.funcs.Sum;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -44,9 +45,9 @@ public class TableTest {
         table.addCol(new IntCol("Odd"));
         table.addCol(new IntCol("Even"));
 
-        table.addRow(Row.of(1, 2));
-        table.addRow(Row.of(3, 4));
-        table.addRow(Row.of(5, 6));
+        table.addRow(Row.from(1, 2));
+        table.addRow(Row.from(3, 4));
+        table.addRow(Row.from(5, 6));
 
         assertEquals(3, table.getRowCount());
         assertEquals(2, table.getColCount());
@@ -80,9 +81,9 @@ public class TableTest {
         table.addCol(new DblCol("Even"));
         table.addCol(new StrCol("Name"));
 
-        table.addRow(Row.of(1, 2.0, "Foo"));
-        table.addRow(Row.of(3, 4.0, "Bar"));
-        table.addRow(Row.of(5, 6.0, "Foo Bar"));
+        table.addRow(Row.from(1, 2.0, "Foo"));
+        table.addRow(Row.from(3, 4.0, "Bar"));
+        table.addRow(Row.from(5, 6.0, "Foo Bar"));
 
         assertEquals( (Integer) 1, table.get(0,0));
         assertEquals( 4.0, table.get(1,1), 0.0);
@@ -107,7 +108,7 @@ public class TableTest {
         table.addCol(new IntCol("Even"));
 
         assertTrue(table.isEmpty());
-        table.addRow(Row.of(1, 2));
+        table.addRow(Row.from(1, 2));
         assertFalse(table.isEmpty());
     }
 
@@ -120,9 +121,9 @@ public class TableTest {
 
         assertNull(table.getFirstRow());
 
-        table.addRow(Row.of(1, 2));
-        table.addRow(Row.of(3, 4));
-        table.addRow(Row.of(5, 6));
+        table.addRow(Row.from(1, 2));
+        table.addRow(Row.from(3, 4));
+        table.addRow(Row.from(5, 6));
 
         assertNotNull(table.getFirstRow());
         final Row firstRow = table.getFirstRow();
@@ -139,9 +140,9 @@ public class TableTest {
         table.addCol(new IntCol("Odd"));
         table.addCol(new IntCol("Even"));
 
-        table.addRow(Row.of(1, 2));
-        table.addRow(Row.of(3, 4));
-        table.addRow(Row.of(5, 6));
+        table.addRow(Row.from(1, 2));
+        table.addRow(Row.from(3, 4));
+        table.addRow(Row.from(5, 6));
 
     }
 
@@ -154,9 +155,9 @@ public class TableTest {
         tableA.addCol(new IntCol("Odd"));
         tableA.addCol(new IntCol("Even"));
 
-        tableA.addRow(Row.of(1, 2));
-        tableA.addRow(Row.of(3, 4));
-        tableA.addRow(Row.of(5, 6));
+        tableA.addRow(Row.from(1, 2));
+        tableA.addRow(Row.from(3, 4));
+        tableA.addRow(Row.from(5, 6));
 
         final Table tableB = tableA.copy();
         assertNotEquals(tableA, tableB);
@@ -183,9 +184,9 @@ public class TableTest {
         tableA.addCol(new IntCol("Odd"));
         tableA.addCol(new IntCol("Even"));
 
-        tableA.addRow(Row.of(1, 2));
-        tableA.addRow(Row.of(3, 4));
-        tableA.addRow(Row.of(5, 6));
+        tableA.addRow(Row.from(1, 2));
+        tableA.addRow(Row.from(3, 4));
+        tableA.addRow(Row.from(5, 6));
 
         assertEquals(2, tableA.getColCount());
         assertEquals(2, tableA.getRow(0).size());
@@ -224,6 +225,25 @@ public class TableTest {
 
         assertEquals(6, table.getColsOfType(NumCol.class).size() ); // abstract
         assertEquals(10, table.getColsOfType(Col.class).size() ); // interface
+
+    }
+
+    @Test
+    public void test_addRow_withRowSetter() {
+        final Table table = new TableBuilder()
+                .withStrCol("player")
+                .withIntCol("score")
+                .build();
+
+        table.addRow("player 1", 10);
+        table.addRow(Row.from("player 2", 12));
+        table.addRow()
+                .set("player", "player 3")
+                .set("score", 13)
+                .add();
+
+        assertEquals(3, table.getRowCount());
+        assertEquals((Integer)35, table.eval(Sum.of("score")));
 
     }
 

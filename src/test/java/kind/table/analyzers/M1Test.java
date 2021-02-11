@@ -1,7 +1,6 @@
 package kind.table.analyzers;
 
 import kind.table.Table;
-import kind.table.writers.Markdown;
 import org.junit.Test;
 import test.util.TestTableFactory;
 
@@ -18,11 +17,11 @@ public class M1Test {
         final Table table = TestTableFactory.hw_25000();
 
         M1 analyzer = new M1();
-        AnalyzerRequest request = new AnalyzerRequest();
+        Request request = new Request();
         request.setTable(table);
         request.addParam(AnalyzerParams.x_cols.getKey(), "Index");
 
-        AnalyzerResponse response = analyzer.exec(request);
+        Response response = analyzer.exec(request);
 
         //response.getTable().writeTo(new Markdown(System.out));
 

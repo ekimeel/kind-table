@@ -5,7 +5,6 @@ import kind.table.cols.ColRef;
 import kind.table.cols.Cols;
 import kind.table.cols.funcs.ColFunc;
 import kind.table.funcs.Func;
-import kind.table.funcs.Split;
 import kind.table.writers.Writer;
 
 import java.util.*;
@@ -30,7 +29,6 @@ public class Table implements Copyable<Table>{
         this.cols = new Cols();
         this.settings = TableSettings.DEFAULT_SETTINGS;
         this.rows = new ArrayList<>(TableSettings.DEFAULT_ROW_CAPACITY);
-
     }
 
     /**
@@ -356,13 +354,22 @@ public class Table implements Copyable<Table>{
     }
 
     /**
+     * Add row row setter.
+     *
+     * @return the row setter
+     */
+    public RowSetter addRow() {
+        return new RowSetter(this);
+    }
+
+    /**
      * Creates a row from the provided values and returns true if added, otherwise false
      *
      * @param vals the vals
      * @return boolean
      */
     public boolean addRow(Object... vals) {
-        return addRow(Row.of(vals));
+        return addRow(Row.from(vals));
     }
 
     /**
@@ -821,4 +828,6 @@ public class Table implements Copyable<Table>{
     public void ensureRowCapacity(int minCapacity) {
         this.rows.ensureCapacity(minCapacity);
     }
+
+
 }

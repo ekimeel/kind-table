@@ -65,23 +65,23 @@ public abstract class AbstractAnalyzer implements Analyzer {
     }
 
     @Override
-    public AnalyzerResponse exec(AnalyzerRequest request) {
+    public Response exec(Request request) {
 
         if (request == null) { return null; }
 
-        final AnalyzerResponse response = new AnalyzerResponse();
+        final Response response = new Response();
         this.startTimer();
 
         beforeExec(request, response);
-        response.setTime(currentTime());
+        //response.setTime(currentTime());
         if (stop) { return response; };
 
         execTemplate(request, response);
-        response.setTime(currentTime());
+        //response.setTime(currentTime());
         if (stop) { return response; };
 
         afterExec(request, response);
-        response.setTime(currentTime());
+        //response.setTime(currentTime());
 
         return response;
 
@@ -93,7 +93,7 @@ public abstract class AbstractAnalyzer implements Analyzer {
      * @param request  the request
      * @param response the response
      */
-    protected void beforeExec(AnalyzerRequest request, AnalyzerResponse response) {
+    protected void beforeExec(Request request, Response response) {
 
     }
 
@@ -103,7 +103,7 @@ public abstract class AbstractAnalyzer implements Analyzer {
      * @param request  the request
      * @param response the response
      */
-    protected void afterExec(AnalyzerRequest request, AnalyzerResponse response) {
+    protected void afterExec(Request request, Response response) {
 
     }
 
@@ -113,7 +113,7 @@ public abstract class AbstractAnalyzer implements Analyzer {
      * @param request  the request
      * @param response the response
      */
-    protected abstract void execTemplate(AnalyzerRequest request, AnalyzerResponse response);
+    protected abstract void execTemplate(Request request, Response response);
 
 
 

@@ -2,8 +2,8 @@ package test.integration;
 
 import kind.table.Table;
 import kind.table.TableBuilder;
-import kind.table.analyzers.AnalyzerRequest;
-import kind.table.analyzers.AnalyzerResponse;
+import kind.table.analyzers.Request;
+import kind.table.analyzers.Response;
 import kind.table.analyzers.M1;
 import kind.table.cols.ColRef;
 import kind.table.cols.SummaryCol;
@@ -38,10 +38,10 @@ public class DogeCoinIntegrationTest {
 
         M1 m1 = new M1();
 
-        final AnalyzerRequest request = new AnalyzerRequest();
+        final Request request = new Request();
         request.setTable(table);
 
-        final AnalyzerResponse response = m1.exec(request);
+        final Response response = m1.exec(request);
         if (response.isOk()) {
             Table m1Table = response.getTable();
 

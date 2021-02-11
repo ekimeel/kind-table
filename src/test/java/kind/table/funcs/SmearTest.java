@@ -16,15 +16,15 @@ public class SmearTest {
         table.addCol(new IntCol("ColA"));
         table.addCol(new IntCol("ColB"));
 
-        table.addRow(Row.of(1, 2));
-        table.addRow(Row.of(3, 4));
-        table.addRow(Row.of(5, 6));
-        table.addRow(Row.of(7, null));  // 6
-        table.addRow(Row.of(9, null));  // 6
-        table.addRow(Row.of(11, null)); // 6
-        table.addRow(Row.of(13, null)); // 6
-        table.addRow(Row.of(15, 16));
-        table.addRow(Row.of(17, 18));
+        table.addRow(Row.from(1, 2));
+        table.addRow(Row.from(3, 4));
+        table.addRow(Row.from(5, 6));
+        table.addRow(Row.from(7, null));  // 6
+        table.addRow(Row.from(9, null));  // 6
+        table.addRow(Row.from(11, null)); // 6
+        table.addRow(Row.from(13, null)); // 6
+        table.addRow(Row.from(15, 16));
+        table.addRow(Row.from(17, 18));
 
         final Table result = table.eval(Smear.of(1));
 

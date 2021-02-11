@@ -16,9 +16,9 @@ public class CopyTest {
         table.addCol(new IntCol("Odd"));
         table.addCol(new IntCol("Even"));
 
-        table.addRow(Row.of(1, 2));
-        table.addRow(Row.of(0, 0));
-        table.addRow(Row.of(5, 6));
+        table.addRow(Row.from(1, 2));
+        table.addRow(Row.from(0, 0));
+        table.addRow(Row.from(5, 6));
 
         final Table result = table.eval(new Copy());
         assertNotEquals(table, result);

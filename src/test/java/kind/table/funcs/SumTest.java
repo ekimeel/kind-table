@@ -16,9 +16,9 @@ public class SumTest {
         table.addCol(new IntCol("Odd"));
         table.addCol(new IntCol("Even"));
 
-        table.addRow(Row.of(1, 2));
-        table.addRow(Row.of(3, 4));
-        table.addRow(Row.of(5, 6));
+        table.addRow(Row.from(1, 2));
+        table.addRow(Row.from(3, 4));
+        table.addRow(Row.from(5, 6));
 
         final Integer sum = table.eval(Sum.of("Odd"));
         assertEquals((Integer)9, sum);
@@ -31,9 +31,9 @@ public class SumTest {
         table.addCol(new DblCol(("Odd")));
         table.addCol(new DblCol("Even"));
 
-        table.addRow(Row.of(1.1, 2.2));
-        table.addRow(Row.of(3.3, 4.4));
-        table.addRow(Row.of(5.5, 6.6));
+        table.addRow(Row.from(1.1, 2.2));
+        table.addRow(Row.from(3.3, 4.4));
+        table.addRow(Row.from(5.5, 6.6));
 
         final Double sum = table.eval(Sum.of(0));
         assertEquals((Double) 9.9, sum);
@@ -46,9 +46,9 @@ public class SumTest {
         table.addCol(new LngCol(("Odd")));
         table.addCol(new LngCol("Even"));
 
-        table.addRow(Row.of(10L, 20L));
-        table.addRow(Row.of(30L, 40L));
-        table.addRow(Row.of(50L, 60L));
+        table.addRow(Row.from(10L, 20L));
+        table.addRow(Row.from(30L, 40L));
+        table.addRow(Row.from(50L, 60L));
 
         final Long sum = table.eval(Sum.of(0));
         assertEquals((Long) 90L, sum);

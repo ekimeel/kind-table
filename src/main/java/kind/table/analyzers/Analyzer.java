@@ -17,5 +17,5 @@ public interface Analyzer {
      * @param request the request
      * @return the analyzer response
      */
-    AnalyzerResponse exec(AnalyzerRequest request);
+    Response exec(Request request);
 }

@@ -153,7 +153,7 @@ public class TableBuilder {
      * @return the table builder
      */
     public TableBuilder addRow(Object[] row) {
-        return this.addRow(Row.from((ArrayList) Arrays.asList(row)));
+        return this.addRow(Row.fromC((ArrayList) Arrays.asList(row)));
     }
 
     /**
@@ -163,7 +163,7 @@ public class TableBuilder {
      * @return the table builder
      */
     public TableBuilder addRow(Collection row) {
-        return this.addRow(Row.from(row));
+        return this.addRow(Row.fromC(row));
     }
 
     /**

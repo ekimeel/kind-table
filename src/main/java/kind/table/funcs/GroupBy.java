@@ -91,7 +91,7 @@ public final class GroupBy extends AbstractFunc<Table> {
         result.addCol(rowCol);
 
         for(Map.Entry<Object, List<Row>> entry : grouping.entrySet()) {
-            result.addRow(Row.of(entry.getKey(), entry.getValue()));
+            result.addRow(Row.from(entry.getKey(), entry.getValue()));
         }
 
         doAg(result, rowCol, table.getCols());

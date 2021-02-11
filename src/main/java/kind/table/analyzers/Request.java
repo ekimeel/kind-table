@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * The type Analyzer request.
  */
-public class AnalyzerRequest {
+public class Request {
 
     private Table table;
     private String lang;
@@ -17,7 +17,7 @@ public class AnalyzerRequest {
     /**
      * Instantiates a new Analyzer request.
      */
-    public AnalyzerRequest() {
+    public Request() {
     }
 
     /**

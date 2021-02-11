@@ -21,11 +21,11 @@ public class Row implements Serializable, Copyable<Row> {
         return row;
     }
 
-    public static Row of(Object... values) {
+    public static Row from(Object... values) {
         return new Row(values);
     }
 
-    public static Row from(Collection items) {
+    public static Row fromC(Collection items) {
         final Row row = new Row();
         row.values = new ArrayList(items);
         return row;

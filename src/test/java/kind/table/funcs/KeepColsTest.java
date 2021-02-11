@@ -18,9 +18,9 @@ public class KeepColsTest {
         table.addCol(StrCol.of("player"));
         table.addCol(IntCol.of("points"));
 
-        table.addRow(Row.of("a-team", "player-1", 1));
-        table.addRow(Row.of("a-team", "player-1", 2));
-        table.addRow(Row.of("a-team", "player-1", 3));
+        table.addRow(Row.from("a-team", "player-1", 1));
+        table.addRow(Row.from("a-team", "player-1", 2));
+        table.addRow(Row.from("a-team", "player-1", 3));
 
         final Table result = table.eval(new KeepCols(0, 2));
         assertEquals(2, result.getColCount());

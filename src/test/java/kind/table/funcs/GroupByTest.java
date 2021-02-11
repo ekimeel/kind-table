@@ -20,20 +20,20 @@ public class GroupByTest {
         table.addCol(StrCol.of("player"));
         table.addCol(IntCol.of("points"));
 
-        table.addRow(Row.of("a-team", "player-1", 1));
-        table.addRow(Row.of("a-team", "player-1", 2));
-        table.addRow(Row.of("a-team", "player-1", 1));
+        table.addRow(Row.from("a-team", "player-1", 1));
+        table.addRow(Row.from("a-team", "player-1", 2));
+        table.addRow(Row.from("a-team", "player-1", 1));
 
-        table.addRow(Row.of("a-team", "player-2", 4));
-        table.addRow(Row.of("a-team", "player-2", 10));
+        table.addRow(Row.from("a-team", "player-2", 4));
+        table.addRow(Row.from("a-team", "player-2", 10));
 
-        table.addRow(Row.of("b-team", "player-1", 4));
-        table.addRow(Row.of("b-team", "player-1", 1));
+        table.addRow(Row.from("b-team", "player-1", 4));
+        table.addRow(Row.from("b-team", "player-1", 1));
 
-        table.addRow(Row.of("c-team", "player-1", 10));
-        table.addRow(Row.of("c-team", "player-1", 8));
-        table.addRow(Row.of("c-team", "player-2", 15));
-        table.addRow(Row.of("c-team", "player-2", 12));
+        table.addRow(Row.from("c-team", "player-1", 10));
+        table.addRow(Row.from("c-team", "player-1", 8));
+        table.addRow(Row.from("c-team", "player-2", 15));
+        table.addRow(Row.from("c-team", "player-2", 12));
 
         final Table result = table.eval(GroupBy.of(0));
 

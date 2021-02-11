@@ -10,39 +10,29 @@ import kind.table.funcs.*;
 
 import java.util.Set;
 
-public class B1 implements Interpreter {
+public class B1 extends Interpreter {
 
     public static final String NAME = "B1";
-    public static final String[] REQUIREMENTS = new String[0];
+    public static final String COL_COLUMN = "column";
+    public static final String COL_MAX = "max";
+    public static final String COL_MIN = "min";
+    public static final String COL_MEAN = "mean";
+    public static final String COL_STD_DEV = "std_dev";
+    public static final String COL_COUNT = "count";
+    public static final String COL_MAX_OCCURS = "max_occurs";
+    public static final String COL_MIN_OCCURS = "min_occurs";
 
-    private Session session;
 
-    @Override
-    public String[] getRequirements() {
-        return REQUIREMENTS;
+    public B1() {
+        super(NAME);
     }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    @Override
-    public Session getSession() {
-        return null;
-    }
-
 
     @Override
     public Object call() throws Exception {
 
 
-        final Table table = session.getResponse().getTable();
+
+        final Table table = getSession().getResponse().getTable();
 
         final Set<Col> numericCols = table.getColsOfType(NumCol.class);
 
@@ -68,6 +58,8 @@ public class B1 implements Interpreter {
             final Number min_occurs = table.eval(CountIf.of(c.getIndex(), (val) -> val.equals(min)));
             result.addRow(name, max, min, mean, std_dev, count, max_occurs, min_occurs);
         }
+
+        getData().put("b1.table", result);
 
         return null;
 

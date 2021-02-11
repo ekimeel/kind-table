@@ -31,7 +31,7 @@ public class TestTableFactory {
         Instant now = Instant.now();
 
         for (int i = 0; i < 525600; i++) {
-            tableA.addRow(Row.of(now, i));
+            tableA.addRow(Row.from(now, i));
             now = now.plus(Duration.ofMinutes(1));
         }
         return tableA;

@@ -5,19 +5,17 @@ import kind.table.Table;
 /**
  * The type Analyzer response.
  */
-public final class AnalyzerResponse {
+public final class Response {
 
+    private String id;
     private Table table;
-    private long time;
     private Object err;
-
 
     /**
      * Is ok boolean.
      *
-     * @see AnalyzerResponse#getErr()
      * @return the boolean
-     *
+     * @see Response#getErr() Response#getErr()
      */
     public boolean isOk() { return err == null; }
 
@@ -39,23 +37,6 @@ public final class AnalyzerResponse {
         this.table = table;
     }
 
-    /**
-     * Gets response time.
-     *
-     * @return the response time
-     */
-    public long getResponseTime() {
-        return 0;
-    }
-
-    /**
-     * Sets time.
-     *
-     * @param time the time
-     */
-    void setTime(long time) {
-        this.time = time;
-    }
 
     /**
      * Gets err.
@@ -74,4 +55,23 @@ public final class AnalyzerResponse {
     void setErr(Object err) {
         this.err = err;
     }
+
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
+    void setId(String id) {
+        this.id = id;
+    }
+
 }

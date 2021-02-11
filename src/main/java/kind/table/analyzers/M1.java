@@ -15,7 +15,7 @@ public final class M1 extends AbstractAnalyzer {
     }
 
     @Override
-    protected void beforeExec(AnalyzerRequest request, AnalyzerResponse response) {
+    protected void beforeExec(Request request, Response response) {
         if (request.getTable() == null) {
             stop();
             response.setErr(new NullPointerException("No table provided"));
@@ -23,7 +23,7 @@ public final class M1 extends AbstractAnalyzer {
     }
 
     @Override
-    protected void execTemplate(AnalyzerRequest request, AnalyzerResponse response) {
+    protected void execTemplate(Request request, Response response) {
        final Table table = request.getTable();
 
        final Set<Col> numericCols = table.getColsOfType(NumCol.class);

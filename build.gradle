@@ -1,6 +1,7 @@
 
 plugins {
     id 'java'
+    id 'idea'
     id 'maven-publish'
     id 'signing'
     id "com.palantir.git-version" version "0.12.3"
@@ -17,16 +18,21 @@ version gitVersion()
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 sourceCompatibility = 1.8
 
-java {
-    withJavadocJar()
-    withSourcesJar()
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allJava
 }
 
-ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
-
-tasks.withType(Sign) {
-    onlyIf { isReleaseVersion }
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
 }
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
 
 repositories {
     mavenCentral()
@@ -58,15 +64,18 @@ publishing {
             }
         }
     }
-
     publications {
-        mavenJava(MavenPublication) {
+        mavenJava(MavenPublication) { publication ->
+            from components.java
+
+            artifact sourcesJar
+            artifact javadocJar
+
             pom {
                 groupId = 'com.github.ekimeel'
                 name = 'kind-table'
                 description = 'A simple to use but, robust table data struction with fast functions, pretty output and extensable tools.'
                 url = 'https://github.com/ekimeel/kind-table'
-                from components.java
                 developers {
                     developer {
                         id = 'ekimeel'
